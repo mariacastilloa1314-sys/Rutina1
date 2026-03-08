@@ -4,513 +4,628 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>El arte de dormir terriblemente mal</title>
-<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cinzel+Decorative:wght@400&family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
 <style>
+/* ── Variables ── */
 :root {
-  --pw: clamp(220px, 30vw, 420px);
-  --ph: calc(var(--pw) * 1.46);
-  --sw: 18px;
-  --bw: calc(var(--pw) * 2 + var(--sw));
-  --dark:    #06060e;
-  --burg:    #4a0f0f;
-  --burg2:   #2a0808;
-  --sand:    #d4b896;
-  --sand2:   #9e8a76;
-  --faint:   #5c4e40;
-  --coral:   #c94040;
-  --mauve:   #b88080;
-  --page-l:  #0e0810;
-  --page-r:  #10080e;
-  --text:    #d0c4b0;
-  --text2:   #8a7a6a;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden}
-body{
-  background:radial-gradient(ellipse at 40% 40%, #130808 0%, #06060e 70%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-family:'Crimson Pro',serif;cursor:none;user-select:none;
-  min-height:100vh;
+  --pw:  clamp(200px, 25vw, 360px);
+  --ph:  calc(var(--pw) * 1.54);
+  --sw:  clamp(16px, 2vw, 24px);
+
+  --leather-dk:  #0e0404;
+  --leather:     #1c0808;
+  --leather-mid: #2a0c0c;
+  --leather-hi:  #3a1010;
+  --gold:        #b8956a;
+  --gold-hi:     #d4af7a;
+  --gold-mid:    #8a6e48;
+  --gold-dim:    #5a4530;
+  --gold-faint:  #2e2010;
+
+  --page:    #0e0a07;
+  --page2:   #130d09;
+
+  --ink:     #d0c4a8;
+  --ink2:    #8a7a62;
+  --ink3:    #52402e;
+
+  --crimson:  #8a1e1e;
+  --crimson2: #c44040;
 }
 
-/* noise */
-body::before{
+/* ── Reset ── */
+*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
+html,body {height:100%;overflow:hidden;background:#08050400}
+
+body {
+  background:
+    radial-gradient(ellipse at 30% 20%, #1a0808 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, #0f0810 0%, transparent 60%),
+    #06050a;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  cursor:none;user-select:none;min-height:100vh;
+  font-family:'Crimson Pro',serif;
+}
+
+/* noise grain */
+body::before {
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity:.03;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.032;
 }
 
-/* cursor */
-#cd,#cr{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#cd{width:5px;height:5px;background:var(--coral);border-radius:50%;transition:transform .1s}
-#cr{width:24px;height:24px;border:1px solid rgba(201,64,64,.4);border-radius:50%;transition:width .25s,height .25s,border-color .25s}
+/* ── Cursor ── */
+#cd,#cr {position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cd {width:4px;height:4px;background:var(--gold);border-radius:50%}
+#cr {width:22px;height:22px;border:1px solid rgba(184,149,106,.35);border-radius:50%;transition:width .25s,height .25s,border-color .25s}
 
-/* ── SCENE ── */
-.scene{
+/* ── Scene ── */
+.scene {
   position:relative;z-index:1;
-  display:flex;align-items:center;justify-content:center;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:clamp(1rem,3vh,2rem);
   width:100%;height:100%;
-  perspective:4000px;
 }
 
-/* ── BOOK WRAP ── */
-.book-wrap{
+/* ── BOOK CONTAINER ── */
+.book {
   position:relative;
-  width:var(--bw);height:var(--ph);
-  transform-style:preserve-3d;
-  transition:transform .9s cubic-bezier(.4,0,.2,1);
-  transform:rotateY(-12deg) rotateX(2deg);
-  filter:drop-shadow(-30px 40px 60px rgba(0,0,0,.9));
-}
-.book-wrap.open{
-  transform:rotateY(0deg) rotateX(0deg);
+  /* Book page edges (stacked paper effect) */
+  filter:
+    drop-shadow(0 40px 80px rgba(0,0,0,.9))
+    drop-shadow(0 10px 30px rgba(0,0,0,.6));
 }
 
-/* ── PAGES ── */
-.page-left,.page-right{
-  position:absolute;top:0;
-  width:var(--pw);height:var(--ph);
-  overflow:hidden;
+/* Closed book — portrait single cover */
+.book-closed {
+  position:relative;
+  width:var(--pw);
+  height:var(--ph);
+  cursor:pointer;
+  transform-style:preserve-3d;
+  perspective:2000px;
+  /* Page stack visible on right edge */
 }
-.page-left{
-  left:0;
-  background:linear-gradient(135deg,#0d0810 0%,#120810 100%);
+/* page stack edges */
+.book-closed::before {
+  content:"";position:absolute;
+  top: 4px; bottom: 4px; right: -6px;
+  width: 7px;
+  background: linear-gradient(to right,
+    #c4b090 0%, #e8d8b0 30%, #c0a878 60%, #a08860 100%
+  );
+  z-index:-1;
+  border-radius:0 1px 1px 0;
+}
+.book-closed::after {
+  content:"";position:absolute;
+  top: 8px; bottom: 8px; right: -10px;
+  width: 5px;
+  background: #8a7050;
+  z-index:-2;
+  border-radius:0 1px 1px 0;
+}
+
+/* ── LEATHER COVER ── */
+.cover {
+  position:absolute;inset:0;
+  overflow:hidden;
+  border-radius:1px 2px 2px 1px;
+  background:
+    radial-gradient(ellipse at 20% 15%, rgba(80,20,20,.7) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 85%, rgba(55,12,12,.6) 0%, transparent 45%),
+    radial-gradient(ellipse at 60% 40%, rgba(255,255,255,.015) 0%, transparent 50%),
+    linear-gradient(168deg,
+      #3a1414 0%,
+      #250a0a 15%,
+      #1c0808 30%,
+      #220c0c 55%,
+      #1a0808 70%,
+      #2e1010 85%,
+      #200a0a 100%
+    );
+  box-shadow:
+    inset 3px 0 8px rgba(0,0,0,.5),
+    inset -1px 0 4px rgba(0,0,0,.3),
+    inset 0 0 40px rgba(0,0,0,.4);
+}
+
+/* gold border frame */
+.cover-frame {
+  position:absolute;inset:clamp(10px,2.5vw,18px);
+  border:1px solid var(--gold-mid);
+  pointer-events:none;
+  opacity:.6;
+}
+.cover-frame::before {
+  content:"";position:absolute;inset:5px;
+  border:1px solid var(--gold-faint);
+}
+
+/* corner ornaments */
+.cover-frame::after {
+  content:"";
+  position:absolute;
+  top:-2px;left:-2px;
+  width:14px;height:14px;
+  border-top:2px solid var(--gold-mid);
+  border-left:2px solid var(--gold-mid);
+  opacity:.8;
+  box-shadow: 8px 8px 0 -6px var(--gold-mid), calc(var(--pw) - clamp(30px,5vw,36px)*2 - 14px) 0 0 0 var(--gold-mid);
+}
+
+/* Spine on left of closed cover */
+.cover-spine {
+  position:absolute;top:0;left:0;bottom:0;
+  width:var(--sw);
+  background:linear-gradient(to right,
+    #0e0404 0%,
+    #250a0a 30%,
+    #2e0c0c 50%,
+    #1c0808 70%,
+    #0e0404 100%
+  );
+  border-right:1px solid rgba(90,40,20,.4);
+  z-index:5;
+}
+
+/* Cover content */
+.cover-content {
+  position:absolute;
+  inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:clamp(24px,5vw,48px) clamp(16px,3.5vw,32px);
+  padding-left:calc(var(--sw) + clamp(16px,3.5vw,32px));
+  text-align:center;
+  gap:.6rem;
+  z-index:2;
+}
+.cov-eyebrow {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.4rem,.7vw,.58rem);
+  letter-spacing:.38em;text-transform:uppercase;
+  color:var(--gold-mid);opacity:.7;
+}
+.cov-title {
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(1rem,2.2vw,1.9rem);
+  line-height:1.18;
+  color:var(--gold);
+  text-shadow:
+    0 1px 0 rgba(60,30,10,.8),
+    0 -1px 0 rgba(220,190,130,.2),
+    0 0 30px rgba(184,149,106,.2);
+  letter-spacing:.04em;
+}
+.cov-rule {
+  width:clamp(28px,3vw,42px);height:1px;
+  background:linear-gradient(to right,transparent,var(--gold-mid),transparent);
+  margin:.3rem auto;
+}
+.cov-sub {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.38rem,.62vw,.52rem);
+  letter-spacing:.5em;text-transform:uppercase;
+  color:var(--gold-dim);
+}
+.cov-star {
+  color:var(--crimson2);font-size:.8rem;
+  animation:starPulse 4s ease-in-out infinite;
+  display:inline-block;
+}
+@keyframes starPulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.9;transform:scale(1.3)}}
+
+.cov-author {
+  position:absolute;bottom:clamp(1.2rem,3vw,2.2rem);
+  right:clamp(1rem,2.5vw,1.8rem);
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:clamp(.75rem,1.4vw,1.1rem);
+  color:var(--gold-dim);
+  letter-spacing:.04em;
+}
+
+/* Corner open hint */
+.open-hint {
+  position:absolute;bottom:0;right:0;
+  width:50px;height:50px;
+  cursor:pointer;z-index:10;
+}
+.open-hint::before {
+  content:"";position:absolute;bottom:0;right:0;
+  width:0;height:0;
+  border-style:solid;
+  border-width:0 0 42px 42px;
+  border-color:transparent transparent rgba(184,149,106,.18) transparent;
+  transition:border-width .3s,border-color .3s;
+}
+.open-hint:hover::before {
+  border-width:0 0 54px 54px;
+  border-color:transparent transparent rgba(184,149,106,.35) transparent;
+}
+
+/* ── OPEN BOOK ── */
+.book-open {
+  display:none;
+  position:relative;
+}
+/* Desktop: two pages side by side */
+.book-open.spread {
+  width:calc(var(--pw)*2 + var(--sw));
+  height:var(--ph);
+  flex-direction:row;
+}
+
+/* Page common */
+.pg {
+  width:var(--pw);
+  height:var(--ph);
+  position:relative;
+  overflow:hidden;
+  flex-shrink:0;
+  background:var(--page);
+}
+/* Left page */
+.pg-l {
+  background:linear-gradient(to right, #130d09, #0e0a07);
   box-shadow:inset -8px 0 20px rgba(0,0,0,.5);
 }
-.page-right{
-  right:0;
-  background:linear-gradient(225deg,#100810 0%,#0e0610 100%);
+/* Right page */
+.pg-r {
+  background:linear-gradient(to left, #130d09, #0e0a07);
   box-shadow:inset 8px 0 20px rgba(0,0,0,.5);
 }
 
-/* ── SPINE ── */
-.spine{
-  position:absolute;left:var(--pw);top:0;
-  width:var(--sw);height:var(--ph);
-  background:linear-gradient(to right,#1a0505 0%,#3a0a0a 40%,#3a0a0a 60%,#1a0505 100%);
-  z-index:5;
-  box-shadow:0 0 20px rgba(0,0,0,.8),inset 0 0 8px rgba(0,0,0,.5);
+/* page stack right edge */
+.pg-r::after {
+  content:"";position:absolute;
+  top:4px;bottom:4px;right:-7px;
+  width:8px;
+  background:linear-gradient(to right,
+    #c4b090 0%,#e0d0a8 30%,#bea870 60%,#9a8858 100%
+  );
+  border-radius:0 1px 1px 0;
 }
-.spine::before,.spine::after{
-  content:"";position:absolute;left:50%;
-  width:1px;height:100%;
-  background:rgba(196,100,60,.15);
-}
-.spine::before{transform:translateX(-3px)}
-.spine::after{transform:translateX(3px)}
 
-/* 3D book sides when closed */
-.book-side-bottom{
-  position:absolute;bottom:0;left:0;right:0;
-  height:var(--sw);
-  background:linear-gradient(to bottom,#c4b090,#a09070);
-  transform:rotateX(-90deg);
-  transform-origin:bottom center;
-  box-shadow:0 3px 10px rgba(0,0,0,.5);
+/* Aged paper texture on pages */
+.pg::before {
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(40,28,14,.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 0% 100%, rgba(30,18,8,.25) 0%, transparent 50%);
+  pointer-events:none;z-index:0;
 }
-.book-side-right{
-  position:absolute;top:0;right:0;bottom:0;
+
+/* Spine between pages */
+.book-spine {
   width:var(--sw);
-  background:linear-gradient(to right,#c4b090,#9a8860);
-  transform:rotateY(90deg);
-  transform-origin:right center;
+  height:var(--ph);
+  flex-shrink:0;
+  position:relative;
+  background:linear-gradient(to right,
+    #0e0404 0%, #200808 25%, #2a0c0c 50%, #1c0808 75%, #0e0404 100%
+  );
+  box-shadow:
+    inset 3px 0 6px rgba(0,0,0,.5),
+    inset -3px 0 6px rgba(0,0,0,.5);
+  z-index:5;
 }
+.book-spine::before,.book-spine::after {
+  content:"";position:absolute;
+  top:0;bottom:0;width:1px;
+  background:rgba(90,50,20,.25);
+}
+.book-spine::before {left:3px}
+.book-spine::after {right:3px}
 
-/* ── COVER ── */
-.cover{
-  position:absolute;inset:0;
-  z-index:30;
-  transform-origin:left center;
-  transform-style:preserve-3d;
-  transition:transform .8s cubic-bezier(.4,0,.2,1);
-  cursor:pointer;
-}
-.cover.flipped{
-  transform:rotateY(-180deg);
-}
-.cover-front,.cover-back{
-  position:absolute;inset:0;
-  backface-visibility:hidden;
-}
-.cover-back{
-  transform:rotateY(180deg);
-  background:linear-gradient(135deg,#0d0810 0%,#120810 100%);
-}
-
-/* Cover design */
-.cover-front{
-  display:grid;grid-template-columns:1fr 1fr;
+/* ── PAGE CONTENT STYLES ── */
+.p {
+  position:relative;z-index:1;
+  width:100%;height:100%;
+  padding:clamp(1.4rem,3.5vw,2.6rem) clamp(1.1rem,2.8vw,2.2rem);
+  display:flex;flex-direction:column;
   overflow:hidden;
 }
-.cover-half-l{
-  background:linear-gradient(160deg,#5a1212 0%,#3d0b0b 50%,#250606 100%);
-  position:relative;
-}
-.cover-half-r{
-  background:linear-gradient(200deg,#0a080f 0%,#070710 60%,#04040c 100%);
-  position:relative;
-}
-/* vertical seam glow */
-.cover-half-r::before{
-  content:"";position:absolute;left:0;top:0;bottom:0;width:1px;
-  background:linear-gradient(to bottom,transparent,rgba(201,64,64,.6) 30%,rgba(201,64,64,.6) 70%,transparent);
+/* decorative inner border */
+.p::before {
+  content:"";position:absolute;
+  inset:clamp(8px,1.5vw,14px);
+  border:1px solid rgba(184,149,106,.05);
+  pointer-events:none;z-index:0;
 }
 
-/* cover frame */
-.cover-frame{
-  position:absolute;inset:14px;
-  border:1px solid rgba(212,184,150,.18);
-  pointer-events:none;z-index:2;
+.p-deco {
+  display:flex;align-items:center;justify-content:center;
 }
-.cover-frame::before{
-  content:"";position:absolute;inset:5px;
-  border:1px solid rgba(212,184,150,.08);
+.deco-center {
+  width:80%;opacity:.6;
 }
 
-/* cover title area — spans full width via absolute */
-.cover-content{
-  position:absolute;inset:0;
+/* Title page */
+.p-title {
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  z-index:3;padding:2rem;
-  text-align:center;
+  text-align:center;padding:clamp(1.2rem,3vw,2.4rem);
 }
-.cover-eyebrow{
-  font-family:'DM Sans',sans-serif;
-  font-size:clamp(.45rem,.8vw,.65rem);
-  letter-spacing:.38em;text-transform:uppercase;
-  color:var(--mauve);margin-bottom:1.5rem;opacity:.8;
+.title-inner {
+  display:flex;flex-direction:column;
+  align-items:center;
+  height:100%;width:100%;
 }
-.cover-title{
+
+.tp-eyebrow {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.38rem,.6vw,.52rem);
+  letter-spacing:.4em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:1rem;
+}
+.tp-ornament {
+  font-size:clamp(.7rem,1.2vw,1rem);
+  color:var(--gold-mid);letter-spacing:.2em;
+  margin-bottom:1rem;opacity:.6;
+}
+.tp-title {
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(.95rem,2vw,1.65rem);
+  line-height:1.25;color:var(--gold);
+  text-shadow:0 0 20px rgba(184,149,106,.12);
+}
+.tp-rule {
+  width:28px;height:1px;
+  background:var(--crimson);
+  margin:.8rem auto;opacity:.6;
+}
+.tp-sub {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.38rem,.58vw,.5rem);
+  letter-spacing:.4em;text-transform:uppercase;
+  color:var(--ink3);
+}
+.tp-author {
   font-family:'IM Fell English',serif;
   font-style:italic;
-  font-size:clamp(1.6rem,4vw,3.6rem);
-  line-height:1.05;
-  color:var(--sand);
-  text-shadow:0 0 60px rgba(180,60,60,.4),0 2px 4px rgba(0,0,0,.8);
-  margin-bottom:1.2rem;
+  font-size:clamp(1rem,2vw,1.4rem);
+  color:var(--gold-mid);margin-top:.5rem;
 }
-.cover-rule{
-  width:40px;height:1px;background:var(--coral);
-  margin:.8rem auto;opacity:.8;
+.tp-place {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.36rem,.55vw,.48rem);
+  letter-spacing:.35em;color:var(--ink3);
+  margin-top:.3rem;
 }
-.cover-sub{
-  font-family:'DM Sans',sans-serif;
-  font-size:clamp(.4rem,.6vw,.55rem);
+
+/* Chapter label */
+.ch-label {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.38rem,.6vw,.52rem);
   letter-spacing:.4em;text-transform:uppercase;
-  color:var(--sand2);margin-bottom:1rem;
-}
-.cover-star{color:var(--coral);font-size:.9rem;animation:starPulse 4s ease-in-out infinite}
-@keyframes starPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
-
-/* SVG tangle on cover — positioned center-split */
-.cover-tangle{
-  position:absolute;
-  left:50%;top:50%;
-  transform:translate(-50%,-44%);
-  width:clamp(100px,18vw,200px);
-  z-index:4;opacity:.65;
-  pointer-events:none;
+  color:var(--crimson2);margin-bottom:clamp(.6rem,1.5vw,1rem);
+  opacity:.8;
 }
 
-.cover-author{
-  position:absolute;bottom:2rem;right:2rem;
-  font-family:'Great Vibes',cursive;
-  font-size:clamp(1rem,2.2vw,1.8rem);
-  color:rgba(196,144,144,.75);
-  z-index:5;
+/* Page title */
+.pt {
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:clamp(1.1rem,2.2vw,1.8rem);
+  line-height:1.15;color:var(--gold);
+  margin-bottom:.6rem;
+}
+.pt-sm {
+  font-size:clamp(.9rem,1.7vw,1.35rem);
 }
 
-/* corner hint */
-.corner-hint{
-  position:absolute;bottom:0;right:0;
-  width:60px;height:60px;z-index:35;
-  cursor:pointer;
-  overflow:hidden;
-}
-.corner-hint::before{
-  content:"";position:absolute;
-  bottom:0;right:0;
-  width:0;height:0;
-  border-style:solid;
-  border-width:0 0 50px 50px;
-  border-color:transparent transparent rgba(201,64,64,.25) transparent;
-  transition:border-width .3s;
-}
-.corner-hint:hover::before{
-  border-width:0 0 70px 70px;
-  border-color:transparent transparent rgba(201,64,64,.45) transparent;
-}
-.corner-hint::after{
-  content:"›";
-  position:absolute;bottom:6px;right:8px;
-  font-size:1rem;color:rgba(201,64,64,.6);
+/* Body text */
+.pb {
   font-family:'Crimson Pro',serif;
-  transition:opacity .3s;
+  font-size:clamp(.85rem,1.4vw,1.08rem);
+  line-height:1.82;
+  color:var(--ink2);
+  font-weight:300;
+  position:relative;z-index:1;
+}
+.pb em {color:var(--ink);font-style:italic}
+
+/* Horizontal rule */
+.hr {
+  width:36px;height:1px;
+  background:linear-gradient(to right,transparent,var(--crimson),transparent);
+  margin:.8rem 0;opacity:.5;
 }
 
-/* ── LEAF (flip element) ── */
-.leaf{
+/* Quote block */
+.qblock {
+  border-left:2px solid rgba(201,64,64,.28);
+  padding:.5rem .9rem .5rem 1rem;
+  margin:.5rem 0;
+}
+.qtext {
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:clamp(.85rem,1.4vw,1.08rem);
+  line-height:1.58;color:var(--ink);
+}
+.qcite {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.35rem,.55vw,.48rem);
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink3);margin-top:.5rem;
+}
+
+/* Index list */
+.idx-list {
+  display:flex;flex-direction:column;
+  gap:0;
+}
+.idx-item {
+  display:flex;align-items:baseline;
+  gap:.8rem;
+  padding:clamp(.45rem,.9vw,.7rem) 0;
+  border-bottom:1px solid rgba(184,149,106,.07);
+  cursor:pointer;transition:border-color .3s;
+}
+.idx-item:hover {border-color:rgba(201,64,64,.2)}
+.idx-item:hover .idx-t {color:var(--crimson2)}
+.idx-n {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.5rem,.8vw,.65rem);
+  color:var(--ink3);min-width:1.8rem;
+  letter-spacing:.05em;
+}
+.idx-t {
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:clamp(.82rem,1.4vw,1.05rem);
+  color:var(--ink);flex:1;line-height:1.25;
+  transition:color .3s;
+}
+.idx-more {
+  padding:.5rem 0;border-bottom:none;
+  justify-content:flex-end;
+}
+.idx-more-txt {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.38rem,.6vw,.52rem);
+  letter-spacing:.3em;color:var(--ink3);
+  text-transform:uppercase;font-style:normal;
+}
+
+/* Page number */
+.pnum {
+  position:absolute;bottom:clamp(.6rem,1.5vw,1.1rem);
+  left:0;right:0;
+  font-family:'Cinzel',serif;
+  font-size:clamp(.38rem,.6vw,.52rem);
+  letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ink3);text-align:center;
+  opacity:.7;
+}
+
+/* Subscribe */
+.sub-wrap {display:flex;flex-direction:column;gap:.8rem}
+.sub-label {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.38rem,.6vw,.52rem);
+  letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ink3);
+}
+.sub-input {
+  background:transparent;
+  border:none;border-bottom:1px solid rgba(184,149,106,.2);
+  color:var(--ink);font-family:'Crimson Pro',serif;
+  font-size:clamp(.85rem,1.4vw,1.05rem);
+  padding:.4rem 0;outline:none;font-style:italic;
+  transition:border-color .3s;
+}
+.sub-input::placeholder {color:var(--ink3)}
+.sub-input:focus {border-color:rgba(201,64,64,.5)}
+.sub-btn {
+  align-self:flex-start;background:transparent;
+  border:1px solid var(--gold-dim);
+  color:var(--gold-mid);
+  font-family:'Cinzel',serif;
+  font-size:clamp(.38rem,.6vw,.52rem);
+  letter-spacing:.3em;text-transform:uppercase;
+  padding:.5rem 1.1rem;cursor:pointer;
+  transition:all .3s;
+}
+.sub-btn:hover {background:var(--gold-faint);border-color:var(--gold)}
+
+/* ── FLIP LEAF ── */
+.leaf {
   position:absolute;top:0;right:0;
   width:var(--pw);height:var(--ph);
   transform-origin:left center;
   transform-style:preserve-3d;
-  z-index:20;display:none;
-}
-.leaf-front,.leaf-back{
-  position:absolute;inset:0;
-  backface-visibility:hidden;overflow:hidden;
-}
-.leaf-back{transform:rotateY(180deg)}
-
-/* ── PAGE CONTENT ── */
-.p{
-  width:100%;height:100%;
-  display:flex;flex-direction:column;
-  padding:clamp(1.2rem,3vw,2.8rem) clamp(1rem,2.5vw,2.4rem);
-  position:relative;overflow:hidden;
-}
-
-/* page decorative border */
-.p::before{
-  content:"";position:absolute;
-  inset:12px;
-  border:1px solid rgba(212,184,150,.06);
+  z-index:20;
+  display:none;
   pointer-events:none;
 }
-
-/* page number */
-.pnum{
-  font-family:'IM Fell English',serif;
-  font-size:.65rem;letter-spacing:.15em;
-  color:var(--faint);text-align:center;
-  position:absolute;bottom:1rem;
-  width:100%;left:0;
+.leaf-face,.leaf-back {
+  position:absolute;inset:0;
+  backface-visibility:hidden;
+  overflow:hidden;
 }
-.pnum-l{text-align:left;padding-left:1.5rem}
-.pnum-r{text-align:right;padding-right:1.5rem}
-
-/* chapter label */
-.ch-label{
-  font-family:'DM Sans',sans-serif;
-  font-size:clamp(.4rem,.6vw,.58rem);
-  letter-spacing:.38em;text-transform:uppercase;
-  color:var(--coral);margin-bottom:1.2rem;opacity:.8;
+.leaf-back {transform:rotateY(180deg)}
+/* Shadow on flipping leaf */
+.leaf-face::after,.leaf-back::after {
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(0,0,0,.4),transparent 30%,transparent 70%,rgba(0,0,0,.2));
+  pointer-events:none;z-index:10;
 }
 
-/* page title */
-.pt{
-  font-family:'IM Fell English',serif;
-  font-style:italic;
-  font-size:clamp(1.4rem,3vw,2.6rem);
-  line-height:1.1;color:var(--sand);
-  margin-bottom:1rem;
+/* ── NAVIGATION ── */
+.nav-row {
+  display:flex;align-items:center;
+  gap:clamp(1rem,3vw,2.5rem);
+  z-index:10;
+  opacity:0;transition:opacity .5s;
 }
-.pt-sm{font-size:clamp(1rem,2vw,1.7rem)}
+.nav-row.show {opacity:1}
 
-/* body text */
-.pb{
-  font-family:'Crimson Pro',serif;
-  font-size:clamp(.78rem,1.2vw,1rem);
-  line-height:1.82;color:var(--text2);
-  font-weight:300;
-}
-.pb em{color:var(--text);font-style:italic}
-.pb strong{color:var(--sand);font-weight:400}
-
-/* story list item */
-.story-item{
-  display:flex;align-items:baseline;gap:.7rem;
-  padding:.5rem 0;
-  border-bottom:1px solid rgba(212,184,150,.06);
-  text-decoration:none;color:inherit;cursor:pointer;
-  transition:border-color .3s;
-}
-.story-item:hover{border-color:rgba(201,64,64,.25)}
-.story-item:hover .si-title{color:var(--coral)}
-.si-num{
-  font-family:'IM Fell English',serif;
-  font-size:.75rem;color:var(--faint);
-  min-width:2rem;
-}
-.si-title{
-  font-family:'IM Fell English',serif;
-  font-style:italic;
-  font-size:clamp(.8rem,1.3vw,1.05rem);
-  color:var(--sand);flex:1;
-  transition:color .3s;
-  line-height:1.3;
-}
-.si-tag{
-  font-family:'DM Sans',sans-serif;
-  font-size:.5rem;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--faint);
-}
-
-/* horizontal rule */
-.hr{
-  width:40px;height:1px;background:rgba(201,64,64,.3);
-  margin:1rem 0;
-}
-.hr-center{margin:1rem auto}
-
-/* quote block */
-.qblock{
-  border-left:2px solid rgba(201,64,64,.3);
-  padding:.6rem 1rem .6rem 1.2rem;
-  margin:1rem 0;
-}
-.qtext{
-  font-family:'IM Fell English',serif;
-  font-style:italic;
-  font-size:clamp(.9rem,1.5vw,1.25rem);
-  line-height:1.55;color:var(--sand);
-}
-.qcite{
-  font-family:'DM Sans',sans-serif;
-  font-size:.55rem;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--faint);
-  margin-top:.4rem;
-}
-
-/* inside cover decorative */
-.inside-cover{
-  width:100%;height:100%;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;
-}
-.inside-cover::before{
-  content:"";position:absolute;inset:14px;
-  border:1px solid rgba(212,184,150,.08);
-}
-.inside-deco{
-  font-family:'IM Fell English',serif;
-  font-style:italic;
-  font-size:clamp(3rem,8vw,7rem);
-  color:rgba(201,64,64,.06);
-  line-height:1;
-  text-align:center;
-}
-
-/* title page special */
-.title-page-inner{
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  height:100%;text-align:center;
-  gap:.5rem;
-}
-.tp-title{
-  font-family:'IM Fell English',serif;
-  font-style:italic;
-  font-size:clamp(1.2rem,2.8vw,2.4rem);
-  line-height:1.1;color:var(--sand);
-}
-.tp-author{
-  font-family:'Great Vibes',cursive;
-  font-size:clamp(1.4rem,3vw,2.4rem);
-  color:var(--mauve);margin-top:.5rem;
-}
-.tp-rule{width:30px;height:1px;background:var(--coral);margin:.8rem auto}
-.tp-sub{
-  font-family:'DM Sans',sans-serif;
-  font-size:.55rem;letter-spacing:.35em;
-  text-transform:uppercase;color:var(--faint);
-}
-
-/* subscribe page */
-.sub-wrap{
-  display:flex;flex-direction:column;
-  gap:1rem;height:100%;justify-content:center;
-}
-.sub-input{
-  background:transparent;
-  border:none;border-bottom:1px solid rgba(212,184,150,.2);
-  color:var(--text);font-family:'Crimson Pro',serif;
-  font-size:clamp(.8rem,1.2vw,1rem);
-  padding:.4rem 0;outline:none;width:100%;
-  font-style:italic;
-  transition:border-color .3s;
-}
-.sub-input::placeholder{color:var(--faint)}
-.sub-input:focus{border-color:rgba(201,64,64,.5)}
-.sub-btn{
-  align-self:flex-start;
-  background:transparent;border:1px solid var(--coral);
-  color:var(--coral);
-  font-family:'DM Sans',sans-serif;
-  font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;
-  padding:.5rem 1.2rem;cursor:pointer;
-  transition:background .3s,color .3s;
-}
-.sub-btn:hover{background:var(--coral);color:#fff}
-
-/* ── NAV ── */
-.book-nav{
-  position:absolute;
-  bottom:-2.5rem;
-  width:100%;
-  display:flex;justify-content:space-between;align-items:center;
-  z-index:40;
-  opacity:0;transition:opacity .4s;
-}
-.book-wrap.open .book-nav{opacity:1}
-
-.nav-btn{
+.nav-btn {
   background:transparent;border:none;
-  color:var(--faint);cursor:pointer;
-  font-family:'IM Fell English',serif;
-  font-size:1.1rem;letter-spacing:.1em;
-  transition:color .3s;padding:.3rem .6rem;
+  font-family:'Cinzel',serif;
+  font-size:clamp(.4rem,.65vw,.58rem);
+  letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ink3);cursor:pointer;
+  padding:.3rem .5rem;
+  transition:color .3s;
 }
-.nav-btn:hover{color:var(--coral)}
-.nav-btn:disabled{opacity:.2;cursor:default}
+.nav-btn:hover:not(:disabled) {color:var(--gold)}
+.nav-btn:disabled {opacity:.2;cursor:default}
 
-.spread-indicator{
-  font-family:'DM Sans',sans-serif;
-  font-size:.55rem;letter-spacing:.3em;
-  text-transform:uppercase;color:var(--faint);
+.nav-label {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.36rem,.58vw,.5rem);
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink3);opacity:.6;
+  text-align:center;min-width:120px;
 }
 
 /* ── CLICK ZONES ── */
-.click-prev,.click-next{
-  position:absolute;top:0;
-  width:30%;height:100%;
-  z-index:25;cursor:pointer;
+.zone {
+  position:absolute;top:0;bottom:0;
+  width:40%;z-index:15;cursor:pointer;
   display:none;
 }
-.click-prev{left:0}
-.click-next{right:0}
-.book-wrap.open .click-prev,
-.book-wrap.open .click-next{display:block}
+.zone-l {left:0}
+.zone-r {right:0}
+.book-open .zone {display:block}
 
-/* hover glow on click zones */
-.click-next::after,.click-prev::after{
-  content:"";position:absolute;
-  top:50%;transform:translateY(-50%);
-  width:30px;height:60px;
-  background:rgba(201,64,64,.04);
-  transition:opacity .3s;
-  opacity:0;
-  border-radius:2px;
-}
-.click-next::after{right:8px}
-.click-prev::after{left:8px}
-.click-next:hover::after,.click-prev:hover::after{opacity:1}
+/* ── MOBILE ── */
+/* Single page view on mobile */
+@media (max-width: 750px) {
+  :root {
+    --pw: clamp(240px, 85vw, 380px);
+    --ph: calc(var(--pw) * 1.54);
+    --sw: 14px;
+  }
+  .book-open.spread {
+    width:var(--pw);
+    /* On mobile only show right page */
+  }
+  .pg-l,.book-spine {display:none}
+  .pg-r::after {display:none}
+  .pg-r {box-shadow:none}
 
-/* shadow on page flip */
-.leaf-shadow{
-  position:absolute;
-  top:0;bottom:0;
-  width:30px;
-  background:linear-gradient(to right,rgba(0,0,0,.3),transparent);
-  pointer-events:none;z-index:25;
-  opacity:0;
-  transition:opacity .3s;
-}
+  .leaf {right:auto;left:0;width:var(--pw)}
 
-@media(max-width:700px){
-  :root{--pw:clamp(160px,45vw,280px)}
-  .cover-tangle{width:clamp(70px,14vw,120px)}
+  .pb {font-size:clamp(.95rem,3.5vw,1.12rem);line-height:1.85}
+  .pt {font-size:clamp(1.15rem,4.5vw,1.6rem)}
+  .pt-sm {font-size:clamp(.95rem,3.8vw,1.3rem)}
+  .idx-t {font-size:clamp(.92rem,3.5vw,1.1rem)}
+  .idx-item {padding:.65rem 0}
+  .ch-label {font-size:clamp(.45rem,1.8vw,.62rem)}
+  .qtext {font-size:clamp(.9rem,3.5vw,1.1rem)}
+  .tp-title {font-size:clamp(1rem,4vw,1.5rem)}
+  .tp-author {font-size:clamp(1rem,4vw,1.35rem)}
+  .sub-input {font-size:clamp(.95rem,3.5vw,1.1rem)}
 }
 </style>
 </head>
@@ -519,665 +634,258 @@ body::before{
 <div id="cd"></div>
 
 <div class="scene">
-  <div class="book-wrap" id="book">
-
-    <!-- 3D book sides (visible when tilted) -->
-    <div class="book-side-bottom"></div>
-    <div class="book-side-right"></div>
-
-    <!-- Left page -->
-    <div class="page-left" id="pageLeft">
-      <div class="inside-cover">
-        <div class="inside-deco">✦</div>
-      </div>
-    </div>
-
-    <!-- Right page -->
-    <div class="page-right" id="pageRight"></div>
-
-    <!-- Spine -->
-    <div class="spine"></div>
-
-    <!-- Flipping leaf -->
-    <div class="leaf" id="leaf">
-      <div class="leaf-front" id="leafFront"></div>
-      <div class="leaf-back"  id="leafBack"></div>
-    </div>
-
-    <!-- Cover -->
-    <div class="cover" id="cover">
-      <div class="cover-front">
-        <div class="cover-half-l"></div>
-        <div class="cover-half-r"></div>
+  <!-- CLOSED BOOK (cover) -->
+  <div class="book" id="bookWrap">
+    <div class="book-closed" id="bookClosed">
+      <div class="cover" id="cover">
+        <div class="cover-spine"></div>
         <div class="cover-frame"></div>
-
-        <!-- Tangle SVG centered on split -->
-        <div class="cover-tangle">
-          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g stroke="#b88080" stroke-linecap="round" stroke-linejoin="round">
-              <!-- Outer loose tangle -->
-              <path stroke-width="1.1" opacity=".6"
-                d="M100 28 C128 22 162 38 168 70 C174 102 152 128 132 138
-                   C148 148 158 168 140 180 C122 192 98 178 84 162
-                   C60 172 38 156 36 132 C34 108 52 88 68 80
-                   C48 66 42 42 62 32 C78 24 92 30 100 28Z"/>
-              <!-- Second layer -->
-              <path stroke-width="1" opacity=".55"
-                d="M100 42 C120 36 148 50 152 76 C156 102 136 120 118 128
-                   C132 138 140 154 124 164 C108 174 88 164 76 150
-                   C58 158 44 144 44 122 C44 100 60 84 74 78
-                   C58 66 54 48 70 40 C84 33 94 40 100 42Z"/>
-              <!-- Inner chaos loops -->
-              <path stroke-width=".9" opacity=".5"
-                d="M80 70 C100 58 128 64 138 84 C148 104 136 126 116 132
-                   C128 144 126 162 108 164 C90 166 76 150 74 132
-                   C56 130 46 112 54 96 C62 80 74 76 80 70Z"/>
-              <!-- Random tendrils -->
-              <path stroke-width=".8" opacity=".4"
-                d="M70 55 C88 45 114 52 122 70 C108 60 88 62 78 78
-                   C92 68 110 72 118 90 C100 78 78 82 68 98
-                   C80 86 96 88 102 106 C86 96 68 100 62 118
-                   C72 104 88 104 92 120"/>
-              <path stroke-width=".8" opacity=".4"
-                d="M130 58 C148 68 158 90 148 110 C136 98 142 78 128 70
-                   C140 82 144 104 132 118 C122 104 128 84 116 76
-                   C126 88 128 110 116 122"/>
-              <!-- Stray wisps -->
-              <path stroke-width=".7" opacity=".35"
-                d="M60 88 C50 100 48 118 60 128 C52 116 54 100 64 92"/>
-              <path stroke-width=".7" opacity=".35"
-                d="M140 88 C150 100 152 118 140 128 C148 116 146 100 136 92"/>
-              <path stroke-width=".7" opacity=".3"
-                d="M92 36 C84 28 78 18 88 12 C96 8 104 14 100 24"/>
-              <path stroke-width=".7" opacity=".3"
-                d="M108 36 C116 28 122 18 112 12 C104 8 96 14 100 24"/>
-              <!-- Star accent -->
-              <text x="95" y="24" font-size="8" fill="#c94040" font-family="serif" opacity="0.9">✦</text>
-            </g>
-          </svg>
-        </div>
-
         <div class="cover-content">
-          <p class="cover-eyebrow">Horror onírico · Relatos experimentales</p>
-          <h1 class="cover-title">El arte de dormir<br>terriblemente mal</h1>
-          <div class="cover-rule"></div>
-          <p class="cover-sub">Experimental &nbsp;<span class="cover-star">✦</span></p>
+          <p class="cov-eyebrow">Horror onírico</p>
+          <div class="cov-rule"></div>
+          <h1 class="cov-title">El arte<br>de dormir<br>terriblemente<br>mal</h1>
+          <div class="cov-rule"></div>
+          <p class="cov-sub">Experimental &nbsp;<span class="cov-star">✦</span></p>
         </div>
-
-        <div class="cover-author">Maria E. Castillo</div>
+        <p class="cov-author">Maria E. Castillo</p>
+        <div class="open-hint" id="openHint"></div>
       </div>
-      <div class="cover-back"></div>
-      <!-- corner hint -->
-      <div class="corner-hint" id="cornerHint"></div>
     </div>
 
-    <!-- Click zones -->
-    <div class="click-prev" id="clickPrev"></div>
-    <div class="click-next" id="clickNext"></div>
-
-    <!-- Nav -->
-    <div class="book-nav" id="bookNav">
-      <button class="nav-btn" id="navPrev" disabled>← atrás</button>
-      <span class="spread-indicator" id="spreadInd"></span>
-      <button class="nav-btn" id="navNext">adelante →</button>
+    <!-- OPEN BOOK -->
+    <div class="book-open spread" id="bookOpen" style="display:none">
+      <!-- Left page -->
+      <div class="pg pg-l" id="pageL"></div>
+      <!-- Spine -->
+      <div class="book-spine"></div>
+      <!-- Right page -->
+      <div class="pg pg-r" id="pageR">
+        <!-- click zones -->
+        <div class="zone zone-l" id="zoneL"></div>
+        <div class="zone zone-r" id="zoneR"></div>
+      </div>
+      <!-- Flip leaf -->
+      <div class="leaf" id="leaf">
+        <div class="leaf-face" id="leafFace"></div>
+        <div class="leaf-back" id="leafBack"></div>
+      </div>
     </div>
+  </div>
 
+  <!-- Navigation -->
+  <div class="nav-row" id="navRow">
+    <button class="nav-btn" id="navPrev" disabled>← Atrás</button>
+    <span class="nav-label" id="navLabel"></span>
+    <button class="nav-btn" id="navNext">Adelante →</button>
   </div>
 </div>
 
 <script>
-// ─────────────────────────────────────────────
-// SPREADS DATA
-// ─────────────────────────────────────────────
-const spreads = [
-  // Spread 0 — Inside cover + Title page
-  {
-    left: `<div class="inside-cover"><div class="inside-deco" style="font-size:clamp(4rem,10vw,9rem);color:rgba(201,64,64,.05)">ADTM</div></div>`,
-    right: `<div class="p"><div class="title-page-inner">
-      <p class="tp-sub" style="margin-bottom:1.2rem">Una colección de relatos oníricos</p>
-      <h2 class="tp-title">El arte de dormir<br>terriblemente mal</h2>
-      <div class="tp-rule"></div>
-      <p class="tp-sub">Experimental</p>
-      <p class="tp-author">Maria E. Castillo</p>
-      <div class="tp-rule" style="margin-top:1.5rem"></div>
-      <p class="pb" style="max-width:220px;margin-top:.8rem;text-align:center;font-size:.78rem">
-        Esta es una colección de relatos oníricos, perturbadores e irónicos,<br>
-        donde el terror susurra, baila, lame y besa.<br><br>
-        <em>No la escribe una mente perturbada.</em><br>
-        Es solo un subconsciente con complejo de productor.
-      </p>
-    </div>
-    <div class="pnum pnum-r">I</div></div>`,
-    label: 'Portadilla · I'
-  },
-
-  // Spread 1 — Prólogo
-  {
-    left: `<div class="p">
-      <p class="ch-label" style="margin-bottom:3rem">Prólogo</p>
-      <p class="pt" style="font-size:clamp(1.2rem,2.5vw,2rem);line-height:1.15">
-        Prefiero pensar que los sueños son historias que buscan ser contadas.
-      </p>
-      <div class="hr"></div>
-      <p class="pb">
-        Alguna vez leí que todos los sueños tienen significado, pero yo creo que son mensajes codificados que mi subconsciente usa para arruinarme el día.
-      </p>
-      <br>
-      <p class="pb">
-        Cada vez que me despertaba intranquila, abría Google y buscaba cosas como: <em>"soñar con ver ballenas voladoras"</em>. Los resultados eran alentadores: grandes proyectos, creatividad, prosperidad.
-      </p>
-      <br>
-      <p class="pb">
-        En mis sueños, las ballenas eran extremadamente terroríficas y yo estaba atrapada en una caja de cristal mientras ellas intentaban romperla. Exactamente eso no se encuentra en Google.
-      </p>
-      <div class="pnum pnum-l">II</div>
-    </div>`,
-    right: `<div class="p" style="justify-content:center">
-      <p class="pb">
-        Mi oráculo moderno no me da las respuestas que necesito. Prefiero pensar que los sueños son historias que buscan ser contadas.
-      </p>
-      <br>
-      <p class="pb">
-        Por ello, decidí plasmar parte de mi mundo onírico en relatos cortos. Quizás al escribirlos pueda entender por qué mi mente profunda insiste en mostrarme ballenas voladoras.
-      </p>
-      <br>
-      <p class="pb">
-        Y de paso, contribuir al arte y la ficción — porque la ficción me ha salvado la vida en más de una ocasión. Y si lo piensas bien, probablemente también haya salvado la tuya.
-      </p>
-      <div class="hr" style="margin-top:2rem"></div>
-      <p class="pb" style="font-style:italic;color:var(--sand);margin-top:1rem">
-        Así que, si te gustan las historias cortas, perturbadoras y sin gracia — bienvenido(a).
-      </p>
-      <div class="pnum pnum-r">III</div>
-    </div>`,
-    label: 'Prólogo · II–III'
-  },
-
-  // Spread 2 — Índice I
-  {
-    left: `<div class="p">
-      <p class="ch-label">Índice</p>
-      <h2 class="pt pt-sm" style="margin-bottom:1.2rem">Los relatos</h2>
-      <div class="story-item"><span class="si-num">01</span><span class="si-title">¿Y si yo soy la mala del cuento?</span><span class="si-tag">Apocalíptico</span></div>
-      <div class="story-item"><span class="si-num">02</span><span class="si-title">El gato</span><span class="si-tag">Noir</span></div>
-      <div class="story-item"><span class="si-num">03</span><span class="si-title">Ayúdame a matarlo</span><span class="si-tag">Horror</span></div>
-      <div class="story-item"><span class="si-num">04</span><span class="si-title">Noche críptica en Sepia</span><span class="si-tag">♪ Sepia</span></div>
-      <div class="story-item"><span class="si-num">05</span><span class="si-title">¿Desperté?</span><span class="si-tag">Espejo</span></div>
-      <div class="story-item"><span class="si-num">06</span><span class="si-title">Microchip</span><span class="si-tag">Body horror</span></div>
-      <div class="story-item"><span class="si-num">07</span><span class="si-title">Mi Miss Hyde</span><span class="si-tag">Dualidad</span></div>
-      <div class="story-item"><span class="si-num">08</span><span class="si-title">No quiero ser bella</span><span class="si-tag">Contagio</span></div>
-      <div class="pnum pnum-l">IV</div>
-    </div>`,
-    right: `<div class="p" style="padding-top:4rem">
-      <div class="story-item"><span class="si-num">09</span><span class="si-title">Adiós, Morfeo</span><span class="si-tag">Romance</span></div>
-      <div class="story-item"><span class="si-num">10</span><span class="si-title">¿Hay algún zombi en la sala?</span><span class="si-tag">♪ Zombis</span></div>
-      <div class="story-item"><span class="si-num">11</span><span class="si-title">Luces, cámara, terror</span><span class="si-tag">Meta</span></div>
-      <div class="story-item"><span class="si-num">12</span><span class="si-title">Efecto Glitch</span><span class="si-tag">Disociación</span></div>
-      <div class="story-item"><span class="si-num">13</span><span class="si-title">Distopía en el Mall</span><span class="si-tag">Absurdo</span></div>
-      <div class="story-item"><span class="si-num">14</span><span class="si-title">Vaca in blue</span><span class="si-tag">Empatía</span></div>
-      <div class="story-item"><span class="si-num">15</span><span class="si-title">No cruces la puerta</span><span class="si-tag">Tiempo</span></div>
-      <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(212,184,150,.06)">
-        <p class="ch-label" style="margin-bottom:.5rem">Bonus Experimental</p>
-        <div class="story-item"><span class="si-num">16</span><span class="si-title">Pesadilla: La Incredulidad</span><span class="si-tag">Insomnio</span></div>
-        <div class="story-item"><span class="si-num">17</span><span class="si-title">Dejen Dormir</span><span class="si-tag">Cósmico</span></div>
-      </div>
-      <div class="pnum pnum-r">V</div>
-    </div>`,
-    label: 'Índice · IV–V'
-  },
-
-  // Spread 3 — Stories 01–03
-  {
-    left: `<div class="p">
-      <p class="ch-label">Relato 01</p>
-      <h2 class="pt" style="margin-bottom:.8rem">¿Y si yo soy la mala del cuento?</h2>
-      <div class="hr"></div>
-      <p class="pb">
-        Descendí las escaleras hacia el taller de mi padre. El silencio era intrigante; nunca había silencio cuando papá estaba allí. Al llegar, encontré a mi madre, mi padre y mis dos hermanos — inmóviles, observándose entre sí con los ojos desmesuradamente abiertos.
-      </p>
-      <br>
-      <p class="pb">
-        Miré hacia la calle y vi a un hombre con gabardina y sombrero gris. Llevaba una jeringa. En mi mente lo bauticé como <em>El Inyectador</em>.
-      </p>
-      <br>
-      <p class="pb">
-        El cielo tenía un color negro azulado, un contraste demasiado bello para una situación tan perturbadora. De fondo, se escuchaban unos... ¿sonidos de trompetas?
-      </p>
-      <div class="pnum pnum-l">1</div>
-    </div>`,
-    right: `<div class="p">
-      <p class="ch-label">Relato 02</p>
-      <h2 class="pt pt-sm" style="margin-bottom:.7rem">El gato</h2>
-      <div class="hr"></div>
-      <p class="pb">
-        Un crujido inesperado me arrancó el sueño. Acaricié el pelaje sedoso del gato negro acurrucado en mi regazo, pero él se me escurrió de las manos para sentarse a mi lado. Todo se volvió silencio — ese silencio que indica que está ocurriendo algo inminente y desconocido.
-      </p>
-      <br>
-      <p class="pb">
-        No era un caballo real. Era su sombra, su espectro: una silueta sin cuerpo ni mirada.
-      </p>
-      <br>
-      <p class="pb" style="color:var(--sand);font-style:italic">
-        La dueña del gato era ella.
-      </p>
-      <div class="hr" style="margin-top:1.5rem"></div>
-      <p class="ch-label" style="margin-top:1rem">Relato 03</p>
-      <h2 class="pt pt-sm" style="font-size:clamp(.9rem,1.6vw,1.3rem);margin-bottom:.5rem">Ayúdame a matarlo</h2>
-      <p class="pb" style="font-style:italic">
-        "Soy sus miedos más ocultos, sus ganas de morir, las ganas que tiene de hacerle daño a otros, sus mentiras, sus prejuicios — todo lo negro de su alma soy yo."
-      </p>
-      <div class="pnum pnum-r">2</div>
-    </div>`,
-    label: 'Relatos 01–03 · 1–2'
-  },
-
-  // Spread 4 — Stories 04–06
-  {
-    left: `<div class="p">
-      <p class="ch-label">Relato 04</p>
-      <h2 class="pt pt-sm" style="margin-bottom:.7rem">Noche críptica en Sepia</h2>
-      <div class="hr"></div>
-      <p class="pb">
-        Las luces de los postes emanaban una luz tenue amarilla, envolviendo a la noche en un filtro sepia. Como si el mundo — o al menos mi mundo — estuviera teñido de una nostalgia amarga.
-      </p>
-      <br>
-      <p class="pb">
-        La sangre, a pesar de su brillo dorado bajo la luz amarillenta, era la única evidencia de algo que no podía entender.
-      </p>
-      <br>
-      <div class="qblock">
-        <p class="qtext" style="font-size:.9rem">De fondo sonaba <em>Midnight City</em> de M83 — una canción que solía escuchar en noches menos complicadas.</p>
-      </div>
-      <br>
-      <p class="pb" style="color:var(--sand);font-style:italic">No sé quién es él. Nunca puedo recordar su rostro.</p>
-      <div class="pnum pnum-l">3</div>
-    </div>`,
-    right: `<div class="p">
-      <p class="ch-label">Relato 05</p>
-      <h2 class="pt pt-sm" style="margin-bottom:.7rem">¿Desperté?</h2>
-      <div class="hr"></div>
-      <p class="pb">
-        El espejo estaba roto. La tubería del lavabo también. El agua salpicaba de formas extrañas, como si quisiera alcanzarme. Traté de mirar de reojo pero solo encontré oscuridad.
-      </p>
-      <br>
-      <p class="pb">
-        Esa no era yo. O al menos, me veía — pero no me reconocía.
-      </p>
-      <div class="hr" style="margin-top:1.2rem"></div>
-      <p class="ch-label" style="margin-top:1rem">Relato 06</p>
-      <h2 class="pt pt-sm" style="font-size:clamp(.9rem,1.6vw,1.3rem);margin-bottom:.6rem">Microchip</h2>
-      <p class="pb">
-        Tomé el bisturí sin vacilar y con total frialdad empecé a despojarme de las capas que protegían mi cabeza. Parecía un robot — no pensaba, solo ejecutaba.
-      </p>
-      <br>
-      <p class="pb" style="font-style:italic;color:var(--sand)">
-        "¿Alguna vez terminarás lo que empiezas?" — sollozó, sin levantar la mirada.
-      </p>
-      <div class="pnum pnum-r">4</div>
-    </div>`,
-    label: 'Relatos 04–06 · 3–4'
-  },
-
-  // Spread 5 — Stories 07–10
-  {
-    left: `<div class="p">
-      <p class="ch-label">Relato 07</p>
-      <h2 class="pt pt-sm" style="margin-bottom:.7rem">Mi Miss Hyde</h2>
-      <div class="hr"></div>
-      <p class="pb">
-        Con los ojos cerrados, dejé que el agua me recorriera. Cuando los abrí, su imagen me golpeó: una mujer diminuta, de joroba prominente, estaba a mi lado. Vestía de negro de pies a cabeza. Su inquietante sonrisa me causó ternura.
-      </p>
-      <br>
-      <p class="pb">
-        Tomé su cabeza con mis manos y, levantándola lentamente, la metí en mi pierna derecha. Ese era el lugar al que pertenecía.
-      </p>
-      <br>
-      <p class="pb" style="color:var(--sand);font-style:italic">Despertamos.</p>
-      <div class="pnum pnum-l">5</div>
-    </div>`,
-    right: `<div class="p">
-      <p class="ch-label">Relato 08 · 09</p>
-      <h2 class="pt pt-sm" style="margin-bottom:.5rem">No quiero ser bella</h2>
-      <p class="pb" style="font-style:italic">Dentro de la piel, en mi mano, había unos gusanos blancos muy pequeños — y empecé a sentir cómo se retorcían ahí.</p>
-      <div class="hr" style="margin-top:1rem"></div>
-      <h2 class="pt pt-sm" style="font-size:clamp(.9rem,1.6vw,1.3rem);margin:.8rem 0 .5rem">Adiós, Morfeo</h2>
-      <p class="pb">
-        Cada vez que despertaba, su apariencia cambiaba. Su cabello se volvió negro, sus ojos brillaban.
-      </p>
-      <div class="qblock" style="margin-top:.8rem">
-        <p class="qtext" style="font-size:.85rem">"Para mí son meses, incluso años. Para ti son minutos, horas."</p>
-      </div>
-      <br>
-      <p class="pb" style="font-size:.78rem">
-        Vi su entrada para nada romántica — bajando por la pared como una araña. Así que tomé mi frazada y me fui a dormir a la sala.
-      </p>
-      <div class="pnum pnum-r">6</div>
-    </div>`,
-    label: 'Relatos 07–09 · 5–6'
-  },
-
-  // Spread 6 — Stories 10–13
-  {
-    left: `<div class="p">
-      <p class="ch-label">Relato 10</p>
-      <h2 class="pt pt-sm" style="margin-bottom:.7rem">¿Hay algún zombi en la sala?</h2>
-      <div class="hr"></div>
-      <p class="pb">
-        Los zombis se estaban alineando para hacer una coreografía. Empezó a sonar una melodía que yo reconocía: <em>Take Me on the Floor</em> de The Veronicas.
-      </p>
-      <br>
-      <p class="pb" style="font-style:italic;color:var(--text)">
-        "I was lonely now you make me feel alive…"
-      </p>
-      <br>
-      <p class="pb">
-        Un paso a la derecha, un giro torpe... pisé algo blando. Era una mano cercenada.
-      </p>
-      <br>
-      <p class="pb" style="font-style:italic">— ¿Eres... eres persona? — susurró sin mirarme.<br>— Sí... sí lo soy.</p>
-      <div class="pnum pnum-l">7</div>
-    </div>`,
-    right: `<div class="p">
-      <p class="ch-label">Relato 11 · 12</p>
-      <h2 class="pt pt-sm" style="margin-bottom:.5rem">Luces, cámara, terror</h2>
-      <p class="pb">
-        Mi familia — mi falsa familia — me había torturado de la manera más aterradora.
-      </p>
-      <div class="qblock" style="margin:.7rem 0">
-        <p class="qtext" style="font-size:.85rem">"Eres la protagonista de la serie más exitosa de todos los tiempos."</p>
-      </div>
-      <p class="pb" style="font-style:italic;font-size:.82rem">Quizá ahora que sé que no es real, ya no les sirva.</p>
-      <div class="hr" style="margin-top:1rem"></div>
-      <h2 class="pt pt-sm" style="font-size:clamp(.9rem,1.6vw,1.3rem);margin:.8rem 0 .5rem">Efecto Glitch</h2>
-      <p class="pb">Era invisible. Como si no existiera.</p>
-      <br>
-      <p class="pb" style="color:var(--sand);font-style:italic">Me sentí un glitch — pude verme así.</p>
-      <div class="pnum pnum-r">8</div>
-    </div>`,
-    label: 'Relatos 10–12 · 7–8'
-  },
-
-  // Spread 7 — Stories 13–15
-  {
-    left: `<div class="p">
-      <p class="ch-label">Relato 13</p>
-      <h2 class="pt pt-sm" style="margin-bottom:.7rem">Distopía en el Mall</h2>
-      <div class="hr"></div>
-      <p class="pb">Era extraño ver a personas tan ridículamente atractivas atacando a otros.</p>
-      <br>
-      <p class="pb" style="font-style:italic">— Solo lamen — dijo el hombre mientras sonreía —. Te lamen la cara y en minutos eres guapo.</p>
-      <div class="hr" style="margin-top:1rem"></div>
-      <p class="ch-label" style="margin-top:1rem">Relato 14</p>
-      <h2 class="pt pt-sm" style="font-size:clamp(.9rem,1.6vw,1.3rem);margin-bottom:.5rem">Vaca in blue</h2>
-      <p class="pb">Sus cabezas eran deformes y grotescas — el rostro de un ser humano deformado.</p>
-      <br>
-      <p class="pb">La miré. Su rostro era de una mujer vieja y afligida. Me miraba directamente — sentí como si quisiese decirme algo.</p>
-      <br>
-      <p class="pb" style="color:var(--sand);font-style:italic">Debía volver. Tenía que volver.</p>
-      <div class="pnum pnum-l">9</div>
-    </div>`,
-    right: `<div class="p" style="justify-content:center">
-      <p class="ch-label">Relato 15</p>
-      <h2 class="pt" style="margin-bottom:.8rem">No cruces la puerta</h2>
-      <div class="hr"></div>
-      <p class="pb">
-        La puerta marrón perfectamente tallada me causó intriga. Me quedé estudiándola por unos minutos — la curiosidad y el temor se apoderaron de mí al sentir un viento frío en mi espalda.
-      </p>
-      <br>
-      <p class="pb">
-        Al volver, una mujer me abrazó. Sus manos temblaban.
-      </p>
-      <br>
-      <div class="qblock">
-        <p class="qtext">
-          "¿Dónde estuviste? Te buscamos por tanto tiempo. Tantos años…"
-        </p>
-      </div>
-      <br>
-      <p class="pb" style="font-style:italic">— Solo me fui treinta minutos.</p>
-      <br>
-      <p class="pb" style="color:var(--sand)">— Ya han pasado treinta años.</p>
-      <div class="pnum pnum-r">10</div>
-    </div>`,
-    label: 'Relatos 13–15 · 9–10'
-  },
-
-  // Spread 8 — Bonus
-  {
-    left: `<div class="p">
-      <p class="ch-label">Bonus Experimental</p>
-      <p class="pb" style="font-style:italic;margin-bottom:1.2rem">
-        En los siguientes relatos encontrarás fragmentos de sueños y pensamientos donde la ironía, el sarcasmo, las crisis existenciales y ocurrencias varias se entrelazan.
-      </p>
-      <div class="qblock">
-        <p class="qtext" style="font-size:clamp(.85rem,1.4vw,1.1rem)">
-          "Sin embargo, ¡cuántas cosas estamos a punto de descubrir si la cobardía y la dejadez no entorpecieran nuestra curiosidad!"
-        </p>
-        <p class="qcite">— Mary Shelley · Frankenstein o el moderno Prometeo</p>
-      </div>
-      <div class="hr" style="margin-top:1.5rem"></div>
-      <p class="ch-label" style="margin-top:1rem">Relato 16</p>
-      <h2 class="pt pt-sm" style="font-size:clamp(.95rem,1.7vw,1.4rem);margin-bottom:.6rem">Pesadilla: La Incredulidad</h2>
-      <p class="pb">
-        <em>"¡A la mierda el diablo y a la mierda todo!"</em> — dije en voz baja, pero con intensidad.
-      </p>
-      <br>
-      <p class="pb">El pasillo que conducía a las habitaciones estaba lleno de siluetas que bailaban, iluminadas por luces multicolores, pero sin rastro de música.</p>
-      <div class="pnum pnum-l">11</div>
-    </div>`,
-    right: `<div class="p">
-      <p class="ch-label">Relato 17</p>
-      <h2 class="pt pt-sm" style="margin-bottom:.8rem">Dejen Dormir</h2>
-      <div class="hr"></div>
-      <p class="pb" style="font-style:italic">
-        ¿Qué es peor? ¿Estar loca o ser acechada por lo sobrenatural? ¿Fantasmas o extraterrestres? ¿Demonios o espíritus? ¿Exorcismo u hospital psiquiátrico?
-      </p>
-      <br>
-      <p class="pb">Irónicamente, su cama se había convertido en su mejor escondite.</p>
-      <br>
-      <p class="pb" style="color:var(--text2);font-style:italic;font-size:.82rem">
-        (Pensamiento del narrador) Claramente, ese es un pensamiento suyo. Lo estoy diciendo yo — porque ya se durmió.
-      </p>
-      <br>
-      <p class="pb" style="color:var(--faint);font-style:italic;font-size:.8rem;text-align:center">Shhh.</p>
-      <div class="hr-center" style="margin-top:2rem"></div>
-      <p class="pb" style="text-align:center;font-style:italic;color:var(--sand);margin-top:1rem">
-        Fin.
-      </p>
-      <div class="pnum pnum-r">12</div>
-    </div>`,
-    label: 'Bonus · 11–12'
-  },
-
-  // Spread 9 — Subscribe
-  {
-    left: `<div class="p" style="justify-content:center">
-      <p class="ch-label">Suscribirse</p>
-      <h2 class="pt" style="margin-bottom:.8rem">No te pierdas lo que viene</h2>
-      <div class="hr"></div>
-      <p class="pb" style="margin-bottom:1.5rem">
-        Nuevas historias, cortos y cosas perturbadoras directo a tu correo.
-      </p>
-      <div class="sub-wrap" style="height:auto">
-        <input type="email" class="sub-input" placeholder="tu@correo.com"/>
-        <button class="sub-btn">Suscribirse</button>
-      </div>
-      <div class="pnum pnum-l">XIII</div>
-    </div>`,
-    right: `<div class="p">
-      <div class="inside-cover" style="flex-direction:column;gap:1rem">
-        <svg width="60" height="60" viewBox="0 0 200 200" fill="none">
-          <g stroke="#b88080" stroke-linecap="round" opacity=".4">
-            <path stroke-width="1" d="M100 28 C128 22 162 38 168 70 C174 102 152 128 132 138 C148 148 158 168 140 180 C122 192 98 178 84 162 C60 172 38 156 36 132 C34 108 52 88 68 80 C48 66 42 42 62 32 C78 24 92 30 100 28Z"/>
-            <path stroke-width=".8" d="M100 42 C120 36 148 50 152 76 C156 102 136 120 118 128 C132 138 140 154 124 164 C108 174 88 164 76 150 C58 158 44 144 44 122 C44 100 60 84 74 78 C58 66 54 48 70 40 C84 33 94 40 100 42Z"/>
-          </g>
-          <text x="93" y="107" font-size="16" fill="#c94040" font-family="serif" opacity=".6">✦</text>
-        </svg>
-        <p style="font-family:'Great Vibes',cursive;font-size:clamp(1.4rem,3vw,2.2rem);color:var(--mauve);text-align:center">Maria E. Castillo</p>
-        <p class="pb" style="text-align:center;font-size:.75rem;margin-top:.5rem">© 2025 — Todos los sueños reservados</p>
-      </div>
-      <div class="pnum pnum-r">XIV</div>
-    </div>`,
-    label: 'Suscribirse · XIII–XIV'
-  }
+const PAGES = [
+  '<div class="p p-deco">\n  <div class="deco-center">\n    <svg width="100%" viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">\n      <g stroke="#7a6040" stroke-width=".8" opacity=".5">\n        <rect x="10" y="10" width="180" height="240" rx="1"/>\n        <rect x="16" y="16" width="168" height="228" rx="1"/>\n        <line x1="100" y1="10" x2="100" y2="250"/>\n        <line x1="10" y1="130" x2="190" y2="130"/>\n        <!-- corner florals -->\n        <path d="M10 10 Q20 10 20 20 Q10 20 10 10Z" fill="rgba(122,96,64,.2)"/>\n        <path d="M190 10 Q180 10 180 20 Q190 20 190 10Z" fill="rgba(122,96,64,.2)"/>\n        <path d="M10 250 Q20 250 20 240 Q10 240 10 250Z" fill="rgba(122,96,64,.2)"/>\n        <path d="M190 250 Q180 250 180 240 Q190 240 190 250Z" fill="rgba(122,96,64,.2)"/>\n      </g>\n      <text x="100" y="128" text-anchor="middle" font-family="Cinzel, serif" font-size="7" fill="rgba(184,149,106,.35)" letter-spacing="4">MARIA E. CASTILLO</text>\n      <text x="100" y="140" text-anchor="middle" font-family="Cinzel, serif" font-size="5" fill="rgba(122,96,64,.3)" letter-spacing="3">MMXXV</text>\n      <!-- Central ornament -->\n      <path d="M85 120 L100 105 L115 120 L100 135Z" stroke="rgba(122,96,64,.25)" stroke-width=".6" fill="none"/>\n      <circle cx="100" cy="120" r="3" fill="rgba(201,64,64,.15)"/>\n    </svg>\n  </div>\n</div>',
+  '<div class="p p-title">\n  <div class="title-inner">\n    <p class="tp-eyebrow">Una colección de relatos oníricos</p>\n    <div class="tp-ornament">⸻ ✦ ⸻</div>\n    <h1 class="tp-title">El arte de<br>dormir<br>terriblemente<br>mal</h1>\n    <div class="tp-rule"></div>\n    <p class="tp-sub">Experimental</p>\n    <div style="flex:1"></div>\n    <p class="tp-author">Maria E. Castillo</p>\n    <p class="tp-place">— Lima, 2025 —</p>\n  </div>\n  <span class="pnum">i</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Prólogo</p>\n  <h2 class="pt">Prefiero pensar que los sueños son historias que buscan ser contadas.</h2>\n  <div class="hr"></div>\n  <p class="pb">Alguna vez leí que todos los sueños tienen significado. Que el subconsciente nos envía mensajes que debemos descifrar para entendernos mejor. Así que, con esta premisa instalada en mi mente, cada vez que me despertaba intranquila abría Google y buscaba cosas como: <em>"soñar con ver ballenas voladoras"</em>.</p>\n  <br>\n  <p class="pb">Los resultados eran alentadores: grandes proyectos, creatividad, prosperidad. Un subconsciente sumamente esperanzador.</p>\n  <br>\n  <p class="pb">En mis sueños, las ballenas eran extremadamente terroríficas y yo estaba atrapada en una caja de cristal mientras ellas intentaban romperla. Exactamente eso no se encuentra en Google. Detalles que nadie consideró.</p>\n  <span class="pnum">ii</span>\n</div>',
+  '<div class="p">\n  <p class="pb">Mi oráculo moderno no me da las respuestas que necesito. Prefiero pensar que los sueños son historias que buscan ser contadas.</p>\n  <br>\n  <p class="pb">Decidí plasmar parte de mi mundo onírico en relatos cortos. Y de paso, contribuir al arte y la ficción — porque la ficción me ha salvado la vida en más de una ocasión. Si lo piensas bien, probablemente también haya salvado la tuya.</p>\n  <div class="hr" style="margin:1.5rem 0"></div>\n  <p class="pb" style="color:var(--ink);font-style:italic">Así que, si te gustan las historias cortas, perturbadoras y sin gracia — bienvenido(a).</p>\n  <br><br>\n  <p class="pb" style="font-size:.8em;color:var(--ink3)">Esta es una colección de relatos oníricos, perturbadores e irónicos, donde el terror susurra, baila, lame y besa. No la escribe una mente perturbada — es solo un subconsciente con complejo de productor.</p>\n  <span class="pnum">iii</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Índice</p>\n  <h2 class="pt pt-sm" style="margin-bottom:1.5rem">Los relatos</h2>\n  <div class="idx-list">\n    <div class="idx-item"><span class="idx-n">01</span><span class="idx-t">¿Y si yo soy la mala del cuento?</span></div>\n    <div class="idx-item"><span class="idx-n">02</span><span class="idx-t">El gato</span></div>\n    <div class="idx-item"><span class="idx-n">03</span><span class="idx-t">Ayúdame a matarlo</span></div>\n    <div class="idx-item"><span class="idx-n">04</span><span class="idx-t">Noche críptica en Sepia</span></div>\n    <div class="idx-item"><span class="idx-n">05</span><span class="idx-t">¿Desperté?</span></div>\n    <div class="idx-item"><span class="idx-n">06</span><span class="idx-t">Microchip</span></div>\n    <div class="idx-item"><span class="idx-n">07</span><span class="idx-t">Mi Miss Hyde</span></div>\n    <div class="idx-item"><span class="idx-n">08</span><span class="idx-t">No quiero ser bella</span></div>\n    <div class="idx-item idx-more"><span class="idx-more-txt">→ continúa</span></div>\n  </div>\n  <span class="pnum">iv</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label" style="opacity:0">·</p>\n  <h2 class="pt pt-sm" style="margin-bottom:1.5rem;opacity:0">·</h2>\n  <div class="idx-list">\n    <div class="idx-item"><span class="idx-n">09</span><span class="idx-t">Adiós, Morfeo</span></div>\n    <div class="idx-item"><span class="idx-n">10</span><span class="idx-t">¿Hay algún zombi en la sala?</span></div>\n    <div class="idx-item"><span class="idx-n">11</span><span class="idx-t">Luces, cámara, terror</span></div>\n    <div class="idx-item"><span class="idx-n">12</span><span class="idx-t">Efecto Glitch</span></div>\n    <div class="idx-item"><span class="idx-n">13</span><span class="idx-t">Distopía en el Mall</span></div>\n    <div class="idx-item"><span class="idx-n">14</span><span class="idx-t">Vaca in blue</span></div>\n    <div class="idx-item"><span class="idx-n">15</span><span class="idx-t">No cruces la puerta</span></div>\n    <div class="idx-item" style="margin-top:1rem;border-top:1px solid var(--gold-faint);padding-top:1rem">\n      <span class="idx-n" style="color:var(--crimson2)">✦</span>\n      <span class="idx-t" style="color:var(--ink2);font-style:italic">Bonus Experimental</span>\n    </div>\n    <div class="idx-item"><span class="idx-n">16</span><span class="idx-t">Pesadilla: La Incredulidad</span></div>\n    <div class="idx-item"><span class="idx-n">17</span><span class="idx-t">Dejen Dormir</span></div>\n  </div>\n  <span class="pnum">v</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 01</p>\n  <h2 class="pt">¿Y si yo soy la mala del cuento?</h2>\n  <div class="hr"></div>\n  <p class="pb">Descendí las escaleras hacia el taller de mi padre. El silencio era intrigante; nunca había silencio cuando papá estaba allí. Al llegar, encontré a mi madre, mi padre y mis dos hermanos. Inmóviles, se observaban entre sí con los ojos desmesuradamente abiertos.</p>\n  <br>\n  <p class="pb">Miré hacia la calle y vi a un hombre con gabardina y sombrero gris. Llevaba una jeringa. En mi mente lo bauticé como <em>El Inyectador</em>. Traté de cerrar la puerta pero no funcionó, así que corrí hacia el fondo de la casa.</p>\n  <br>\n  <p class="pb">El cielo tenía un color negro azulado, un contraste demasiado bello para una situación tan perturbadora. De fondo, se escuchaban unos... ¿sonidos de trompetas?</p>\n  <span class="pnum">1</span>\n</div>',
+  '<div class="p">\n  <p class="pb">El Inyectador se acercó. Sentí en mi espalda la presencia de alguien más — me giré. El diablo estaba detrás de mí.</p>\n  <br>\n  <p class="pb" style="color:var(--ink);font-style:italic">¿Y si la mala del cuento era yo?</p>\n  <div class="hr" style="margin:1.5rem 0"></div>\n  <p class="ch-label">Relato 02</p>\n  <h2 class="pt pt-sm">El gato</h2>\n  <div class="hr"></div>\n  <p class="pb">Un crujido inesperado me arrancó el sueño. Acaricié el pelaje sedoso del gato negro acurrucado en mi regazo, pero él se escurrió para sentarse a mi lado. Todo se volvió silencio — ese silencio que indica que está ocurriendo algo inminente.</p>\n  <br>\n  <p class="pb">Algo se acercaba. No era un caballo real. Era su sombra, su espectro: una silueta sin cuerpo ni mirada.</p>\n  <br>\n  <p class="pb" style="color:var(--ink);font-style:italic">La dueña del gato era ella.</p>\n  <span class="pnum">2</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 03</p>\n  <h2 class="pt">Ayúdame a matarlo</h2>\n  <div class="hr"></div>\n  <p class="pb">Había un niño. Estaba dentro de mí — o eso parecía. Quería salir y yo lo sentía moverse, pero no era un niño de verdad.</p>\n  <br>\n  <div class="qblock">\n    <p class="qtext">"Soy sus miedos más ocultos, sus ganas de morir, las ganas que tiene de hacerle daño a otros, sus mentiras, sus prejuicios — todo lo negro de su alma soy yo."</p>\n  </div>\n  <br>\n  <p class="pb">La voz, áspera y ronca, resonó con una gravedad inesperada. Viniendo de algo tan pequeño y aparentemente inocente, era doblemente aterrador.</p>\n  <br>\n  <p class="pb">— Ayúdame a matarlo — supliqué.</p>\n  <br>\n  <p class="pb" style="color:var(--ink2);font-style:italic">Nadie respondió. El silencio fue la respuesta.</p>\n  <span class="pnum">3</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 04</p>\n  <h2 class="pt">Noche críptica en Sepia</h2>\n  <div class="hr"></div>\n  <p class="pb">Las luces de los postes emanaban una luz tenue amarilla, envolviendo la noche en un filtro sepia. Como si el mundo estuviera teñido de una nostalgia amarga.</p>\n  <br>\n  <p class="pb">Él estaba de espaldas a mí. La sangre, a pesar de su brillo dorado bajo la luz amarillenta, era la única evidencia de algo que no podía entender. Traté de hablarle pero las palabras no salían.</p>\n  <br>\n  <div class="qblock">\n    <p class="qtext" style="font-size:.88em">De fondo sonaba <em>Midnight City</em> de M83 — una canción que solía escuchar en noches menos complicadas.</p>\n  </div>\n  <br>\n  <p class="pb">Se giró. Su rostro era el de alguien que yo debería conocer, pero no podía recordar quién era.</p>\n  <br>\n  <p class="pb" style="color:var(--ink);font-style:italic">Nunca puedo recordar su rostro.</p>\n  <span class="pnum">4</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 05</p>\n  <h2 class="pt">¿Desperté?</h2>\n  <div class="hr"></div>\n  <p class="pb">El espejo estaba roto. La tubería del lavabo también. El agua salpicaba de formas extrañas, como si quisiera alcanzarme. Intenté limpiarla pero mis manos atravesaban todo.</p>\n  <br>\n  <p class="pb">Frente al espejo roto encontré algo. Un reflejo que se movía diferente — un segundo más lento, un grado más frío.</p>\n  <br>\n  <p class="pb">Esa no era yo. O al menos, me veía — pero no me reconocía.</p>\n  <br>\n  <p class="pb">La idea de haberme perdido en algún lugar del sueño, de que solo mi cuerpo permanecía ahí frente al espejo, mientras yo estaba atrapada dentro del reflejo...</p>\n  <br>\n  <p class="pb" style="color:var(--ink2);font-style:italic">¿Desperté? ¿O aún estoy ahí adentro?</p>\n  <span class="pnum">5</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 06</p>\n  <h2 class="pt">Microchip</h2>\n  <div class="hr"></div>\n  <p class="pb">Estaba en un consultorio de aspecto clínico. El ambiente era aséptico pero la situación no tenía nada de normal. Tomé el bisturí sin vacilar y con total frialdad empecé a despojarme de las capas que protegían mi cabeza.</p>\n  <br>\n  <p class="pb">No pensaba. Solo ejecutaba. Como un robot con instrucciones muy precisas.</p>\n  <br>\n  <p class="pb">Había algo ahí adentro. Un chip. Pequeño y frío, brillando con una luz que no debería existir dentro de un cráneo humano.</p>\n  <br>\n  <div class="qblock">\n    <p class="qtext">"¿Alguna vez terminarás lo que empiezas?" — sollozó alguien sin levantar la mirada.</p>\n  </div>\n  <br>\n  <p class="pb" style="color:var(--ink2);font-style:italic">No respondí. Ya había terminado.</p>\n  <span class="pnum">6</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 07</p>\n  <h2 class="pt">Mi Miss Hyde</h2>\n  <div class="hr"></div>\n  <p class="pb">Con los ojos cerrados, dejé que el agua me recorriera. El vapor era denso, casi opaco. Cuando los abrí, su imagen me golpeó: una mujer diminuta, de joroba prominente, estaba a mi lado.</p>\n  <br>\n  <p class="pb">Vestía de negro de pies a cabeza. Su inquietante sonrisa me causó una ternura inexplicable — el tipo de ternura que te da miedo sentir.</p>\n  <br>\n  <p class="pb">Tomé su cabeza con mis manos y, levantándola lentamente, la introduje en mi pierna derecha. Ella entró sin resistencia.</p>\n  <br>\n  <p class="pb" style="color:var(--ink);font-style:italic">Ese era el lugar al que pertenecía.</p>\n  <br>\n  <p class="pb">Despertamos.</p>\n  <span class="pnum">7</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 08</p>\n  <h2 class="pt">No quiero ser bella</h2>\n  <div class="hr"></div>\n  <p class="pb">Lea llevaba semanas insistiendo. "Hazlo", decía con esa sonrisa que no llegaba a sus ojos. "Te vas a ver increíble."</p>\n  <br>\n  <p class="pb">Cedí. El procedimiento fue rápido. Demasiado rápido. Cuando miré mi mano, dentro de la piel había unos gusanos blancos, muy pequeños. Empecé a sentir cómo se retorcían ahí dentro.</p>\n  <br>\n  <p class="pb">Lea me sonrió. Su piel era perfecta.</p>\n  <br>\n  <p class="pb" style="color:var(--ink2);font-style:italic">Así de perfecta como la mía empezaba a verse mientras sentía los gusanos multiplicarse.</p>\n  <br>\n  <p class="pb">No quiero ser bella de esta manera.</p>\n  <span class="pnum">8</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 09</p>\n  <h2 class="pt">Adiós, Morfeo</h2>\n  <div class="hr"></div>\n  <p class="pb">La primera vez llegó con el cabello castaño y los ojos claros. La segunda vez, negro el cabello y los ojos — brillando. Cada vez que despertaba dentro del sueño, su apariencia cambiaba.</p>\n  <br>\n  <div class="qblock">\n    <p class="qtext">"Para mí son meses, incluso años. Para ti son minutos u horas."</p>\n  </div>\n  <br>\n  <p class="pb">Me preguntó si lo recordaría. Le dije que sí. Mentí — o al menos intenté mentir — porque en ese momento realmente quería recordarlo.</p>\n  <br>\n  <p class="pb">Vi su entrada para nada romántica: descendiendo por la pared como una araña.</p>\n  <br>\n  <p class="pb" style="color:var(--ink2);font-style:italic">Tomé mi frazada y me fui a dormir a la sala.</p>\n  <span class="pnum">9</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 10</p>\n  <h2 class="pt">¿Hay algún zombi en la sala?</h2>\n  <div class="hr"></div>\n  <p class="pb">Los zombis se estaban alineando para hacer una coreografía. Fue la cosa más extraña que había visto, incluso para un sueño.</p>\n  <br>\n  <p class="pb">Empezó a sonar una melodía que reconocí de inmediato: <em>Take Me on the Floor</em>, de The Veronicas. Los zombis conocían cada movimiento. Yo traté de imitar sus pasos macerados — torpemente, claro.</p>\n  <br>\n  <p class="pb">Pisé algo blando. Era una mano cercenada. Me disculpé por reflejo.</p>\n  <br>\n  <div class="qblock">\n    <p class="qtext">— ¿Eres persona? — susurró sin mirarme.<br>— Sí... sí lo soy.</p>\n  </div>\n  <br>\n  <p class="pb" style="color:var(--ink2);font-style:italic">Era el único humano en la sala. Y todos me dedicaban una sonrisa.</p>\n  <span class="pnum">10</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 11</p>\n  <h2 class="pt">Luces, cámara, terror</h2>\n  <div class="hr"></div>\n  <p class="pb">Todo comenzó normalmente — o lo que el sueño consideraba normal. Luego noté las cámaras. Pequeñas, estratégicamente ubicadas, siguiendo cada uno de mis movimientos.</p>\n  <br>\n  <div class="qblock">\n    <p class="qtext">"Eres la protagonista de la serie más exitosa de todos los tiempos."</p>\n  </div>\n  <br>\n  <p class="pb">Mi familia — mi falsa familia — me había torturado de la manera más aterradora posible. Y todo había sido grabado. Todo era el show.</p>\n  <br>\n  <p class="pb" style="color:var(--ink);font-style:italic">Una versión de terror de El Show de Truman, pero yo no era Jim Carrey.</p>\n  <br>\n  <p class="pb" style="color:var(--ink2)">Quizá ahora que sé que no es real, ya no les sirva como protagonista.</p>\n  <span class="pnum">11</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 12</p>\n  <h2 class="pt">Efecto Glitch</h2>\n  <div class="hr"></div>\n  <p class="pb">Caminaba entre la gente y nadie me veía. No porque me ignoraran — simplemente porque no existía para ellos. Mi presencia era un error en el sistema, algo que debería ser invisible.</p>\n  <br>\n  <p class="pb" style="color:var(--ink);font-style:italic">Me sentí un glitch.</p>\n  <br>\n  <p class="pb">Pude verme desde afuera: una silueta con bordes parpadeantes, como una imagen mal renderizada. Alguien levantó una jeringa enorme y la colocó contra mi sien. Para corregir el error, supongo.</p>\n  <br>\n  <p class="pb">La violencia se repetía en ciclos. Cada vez que terminaba, volvía a empezar desde el mismo punto. Sin avanzar. Sin salida.</p>\n  <br>\n  <p class="pb" style="color:var(--ink2);font-size:.85em;font-style:italic">El glitch persistía.</p>\n  <span class="pnum">12</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 13</p>\n  <h2 class="pt">Distopía en el Mall</h2>\n  <div class="hr"></div>\n  <p class="pb">Era extraño ver a personas tan ridículamente atractivas atacando a otros en el centro comercial. No con violencia convencional — con sus lenguas.</p>\n  <br>\n  <p class="pb">— Solo lamen — explicó el hombre a mi lado, con una calma desconcertante —. Te lamen la cara y en minutos eres guapo. Perfectamente simétrico.</p>\n  <br>\n  <p class="pb">Vi a Lea entre ellos. Perfecta. Sus rasgos eran demasiado perfectos. Algo en su mirada ya no era ella — o tal vez nunca lo fue.</p>\n  <br>\n  <p class="pb">Corrí hacia la salida. Alguien me rozó la mejilla con la lengua.</p>\n  <br>\n  <p class="pb" style="color:var(--ink2);font-style:italic">Empecé a sentir el calor en mi cara.</p>\n  <span class="pnum">13</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 14</p>\n  <h2 class="pt">Vaca in blue</h2>\n  <div class="hr"></div>\n  <p class="pb">El campo era tranquilo hasta que las vi. Las vacas pastaban normalmente, pero sus cabezas eran deformes y grotescas — rostros de seres humanos deformados, estirados sobre cráneos bovinos.</p>\n  <br>\n  <p class="pb">La de la camisa azul marino me miró directamente. Su rostro era el de una mujer vieja y afligida. Sentí como si quisiera decirme algo urgente.</p>\n  <br>\n  <p class="pb">La sensación de familiaridad me erizaba la piel. ¿La conocía? ¿O simplemente su mirada reconocía algo en mí que yo no podía ver en mí misma?</p>\n  <br>\n  <p class="pb" style="color:var(--ink);font-style:italic">Tenía que volver. No sé a dónde — pero tenía que volver.</p>\n  <span class="pnum">14</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Relato 15</p>\n  <h2 class="pt">No cruces la puerta</h2>\n  <div class="hr"></div>\n  <p class="pb">La puerta marrón perfectamente tallada me causó intriga. Estudié sus relieves por unos minutos — la curiosidad y el temor luchando dentro de mí. Un viento frío me rozó la espalda.</p>\n  <br>\n  <p class="pb">La crucé. Treinta minutos, me dije. Solo treinta minutos.</p>\n  <br>\n  <div class="qblock">\n    <p class="qtext">"¿Dónde estuviste? Te buscamos tanto tiempo. Tantos años..."</p>\n  </div>\n  <br>\n  <p class="pb">Una mujer me abrazó. Sus manos temblaban. Miré a mi alrededor — todo había cambiado. La casa era diferente. Las personas eran diferentes. Yo era diferente.</p>\n  <br>\n  <p class="pb">— Solo me fui treinta minutos — dije.</p>\n  <br>\n  <p class="pb" style="color:var(--ink);font-style:italic">— Ya han pasado treinta años.</p>\n  <span class="pnum">15</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Bonus Experimental</p>\n  <h2 class="pt pt-sm" style="margin-bottom:1rem">Una advertencia breve</h2>\n  <p class="pb" style="font-style:italic;color:var(--ink2)">En los siguientes relatos encontrarás fragmentos de sueños y pensamientos donde la ironía, el sarcasmo, las crisis existenciales y ocurrencias varias se entrelazan sin disculparse por ello.</p>\n  <div class="hr" style="margin:1.5rem 0"></div>\n  <div class="qblock">\n    <p class="qtext">"Sin embargo, ¡cuántas cosas estamos a punto de descubrir si la cobardía y la dejadez no entorpecieran nuestra curiosidad!"</p>\n    <p class="qcite">— Mary Shelley<br>Frankenstein o el moderno Prometeo</p>\n  </div>\n  <div class="hr" style="margin:1.5rem 0"></div>\n  <p class="pb" style="font-style:italic;color:var(--ink3);font-size:.85em">Continúa, si te atreves.</p>\n  <span class="pnum">xvi</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Bonus · Relato 16</p>\n  <h2 class="pt">Pesadilla: La Incredulidad</h2>\n  <div class="hr"></div>\n  <p class="pb">No podía dormir. Llevaba horas mirando el techo cuando decidí levantarme.</p>\n  <br>\n  <p class="pb" style="color:var(--ink);font-style:italic">— ¡A la mierda el diablo y a la mierda todo! — dije en voz baja pero con una intensidad sorprendente.</p>\n  <br>\n  <p class="pb">El pasillo que conducía a las habitaciones estaba lleno de siluetas. Bailaban iluminadas por luces multicolores — pero sin música. Solo movimiento. Solo cuerpos sin sonido.</p>\n  <br>\n  <p class="pb">Me quedé mirando desde el umbral.</p>\n  <br>\n  <p class="pb" style="color:var(--ink2);font-style:italic">¿Esto era real o seguía soñando? Decidí no averiguarlo y volver a la cama.</p>\n  <span class="pnum">xvii</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Bonus · Relato 17</p>\n  <h2 class="pt">Dejen Dormir</h2>\n  <div class="hr"></div>\n  <p class="pb" style="font-style:italic;color:var(--ink2)">¿Qué es peor? ¿Estar loca o ser acechada por lo sobrenatural? ¿Fantasmas o extraterrestres? ¿Demonios o espíritus? ¿Exorcismo u hospital psiquiátrico?</p>\n  <br>\n  <p class="pb">Ella seguía dando vueltas a estas preguntas mientras su cama se convertía, paradójicamente, en su único refugio seguro.</p>\n  <br>\n  <p class="pb" style="font-style:italic;color:var(--ink3);font-size:.85em">(Pensamiento del narrador: claramente, todo lo anterior es un pensamiento suyo. Lo estoy diciendo yo — el narrador — porque ella ya se durmió.)</p>\n  <br>\n  <p class="pb" style="text-align:center;letter-spacing:.3em;font-size:.9em;color:var(--ink2);margin-top:1.5rem">Shhh.</p>\n  <div class="hr" style="margin:2rem auto;width:30px"></div>\n  <p class="pb" style="text-align:center;font-style:italic;color:var(--crimson2)">Fin.</p>\n  <span class="pnum">xviii</span>\n</div>',
+  '<div class="p">\n  <p class="ch-label">Suscribirse</p>\n  <h2 class="pt" style="margin-bottom:1rem">No te pierdas lo que viene</h2>\n  <div class="hr"></div>\n  <p class="pb" style="margin-bottom:1.5rem">Nuevas historias, cortos y cosas perturbadoras, directo a tu correo. Sin spam — solo pesadillas bien escritas.</p>\n  <div class="sub-wrap">\n    <label class="sub-label">Tu correo</label>\n    <input type="email" class="sub-input" placeholder="tu@correo.com"/>\n    <button class="sub-btn">Suscribirse</button>\n  </div>\n  <span class="pnum">xix</span>\n</div>',
+  '<div class="p p-deco" style="justify-content:center;align-items:center;display:flex;flex-direction:column;gap:1.2rem;text-align:center">\n  <svg width="50" height="60" viewBox="0 0 200 240" fill="none">\n    <g stroke="#7a6040" stroke-linecap="round" opacity=".45">\n      <path stroke-width=".9" d="M100 28 C128 22 162 38 168 70 C174 102 152 128 132 138 C148 148 158 168 140 180 C122 192 98 178 84 162 C60 172 38 156 36 132 C34 108 52 88 68 80 C48 66 42 42 62 32 C78 24 92 30 100 28Z"/>\n      <path stroke-width=".7" d="M100 44 C120 38 146 52 150 76 C154 100 134 118 116 126 C128 136 136 152 120 162 C104 172 86 162 76 148 C60 156 46 142 46 120 C46 98 62 84 76 78 C60 66 56 48 72 40 C86 33 94 40 100 44Z"/>\n    </g>\n    <text x="100" y="125" text-anchor="middle" font-size="18" fill="rgba(201,64,64,.5)" font-family="serif">✦</text>\n  </svg>\n  <p style="font-family:\'Cinzel\',serif;font-size:clamp(.9rem,1.8vw,1.2rem);color:var(--gold);letter-spacing:.08em">Maria E. Castillo</p>\n  <p style="font-size:.7em;color:var(--ink3);letter-spacing:.2em;font-family:\'Cinzel\',serif">LIMA · MMXXV</p>\n  <div style="width:30px;height:1px;background:var(--gold-faint);margin:.5rem auto"></div>\n  <p style="font-size:.65em;color:var(--ink3)">© 2025 — Todos los sueños reservados</p>\n  <span class="pnum" style="position:relative;bottom:auto">xx</span>\n</div>'
 ];
 
-// ─────────────────────────────────────────────
-// BOOK ENGINE
-// ─────────────────────────────────────────────
-let currentSpread = -1; // -1 = cover
-let isAnim = false;
-const FLIP_DUR = 700;
+const FLIP_DUR = 650;
+let cur = -2; // -2=cover, then 0-based page index
+let busy = false;
+const isMob = () => window.innerWidth <= 750;
 
-const book     = document.getElementById('book');
-const cover    = document.getElementById('cover');
-const pageL    = document.getElementById('pageLeft');
-const pageR    = document.getElementById('pageRight');
-const leaf     = document.getElementById('leaf');
-const leafF    = document.getElementById('leafFront');
-const leafB    = document.getElementById('leafBack');
-const navPrev  = document.getElementById('navPrev');
-const navNext  = document.getElementById('navNext');
-const spreadInd= document.getElementById('spreadInd');
-const clickPrev= document.getElementById('clickPrev');
-const clickNext= document.getElementById('clickNext');
+const bookClosed = document.getElementById('bookClosed');
+const bookOpen   = document.getElementById('bookOpen');
+const pageL      = document.getElementById('pageL');
+const pageR      = document.getElementById('pageR');
+const leaf       = document.getElementById('leaf');
+const leafFace   = document.getElementById('leafFace');
+const leafBack   = document.getElementById('leafBack');
+const navRow     = document.getElementById('navRow');
+const navPrev    = document.getElementById('navPrev');
+const navNext    = document.getElementById('navNext');
+const navLabel   = document.getElementById('navLabel');
+const zoneL      = document.getElementById('zoneL');
+const zoneR      = document.getElementById('zoneR');
 
-function renderSpread(idx) {
-  if (idx < 0 || idx >= spreads.length) return;
-  pageL.innerHTML = spreads[idx].left;
-  pageR.innerHTML = spreads[idx].right;
-}
+function step() { return isMob() ? 1 : 2; }
+function maxPage() { return PAGES.length - (isMob() ? 1 : 2); }
 
-function updateUI() {
-  navPrev.disabled = currentSpread <= 0;
-  navNext.disabled = currentSpread >= spreads.length - 1;
-  if (currentSpread >= 0) {
-    spreadInd.textContent = spreads[currentSpread].label || '';
+function renderPages(idx) {
+  const mob = isMob();
+  // Left page: only on desktop, show PAGES[idx]
+  if (!mob && idx >= 0 && idx < PAGES.length) {
+    pageL.innerHTML = PAGES[idx];
+  } else {
+    pageL.innerHTML = '';
+  }
+  // Right page
+  const ri = mob ? idx : idx + 1;
+  if (ri >= 0 && ri < PAGES.length) {
+    pageR.innerHTML = PAGES[ri];
+    // re-append zones
+    pageR.appendChild(zoneL);
+    pageR.appendChild(zoneR);
   }
 }
 
-// ── Open book from cover ──
-function openCover() {
-  if (isAnim) return;
-  isAnim = true;
-  book.classList.add('open');
-  // load spread 0 underneath
-  renderSpread(0);
-  cover.classList.add('flipped');
-  setTimeout(() => {
-    cover.style.display = 'none';
-    currentSpread = 0;
-    updateUI();
-    isAnim = false;
-  }, FLIP_DUR + 50);
+function updateNav() {
+  navPrev.disabled = cur < 0;
+  navNext.disabled = cur >= maxPage();
+  if (cur >= 0) {
+    const mob = isMob();
+    const rightIdx = mob ? cur : cur + 1;
+    const leftIdx  = cur;
+    const total = PAGES.length;
+    navLabel.textContent = `${rightIdx + 1} / ${total}`;
+  } else {
+    navLabel.textContent = '';
+  }
 }
 
-// ── Turn page forward ──
-function nextPage() {
-  if (isAnim || currentSpread < 0) { if (currentSpread < 0) openCover(); return; }
-  if (currentSpread >= spreads.length - 1) return;
+function openBook() {
+  if (busy || cur >= 0) return;
+  busy = true;
+  cur = 0;
+  bookClosed.style.transition = 'opacity .4s, transform .4s';
+  bookClosed.style.opacity = '0';
+  bookClosed.style.transform = 'scale(.97)';
+  setTimeout(() => {
+    bookClosed.style.display = 'none';
+    bookOpen.style.display = 'flex';
+    renderPages(cur);
+    navRow.classList.add('show');
+    updateNav();
+    busy = false;
+  }, 420);
+}
 
-  isAnim = true;
-  const next = currentSpread + 1;
+function flipNext() {
+  if (busy || cur < 0 || cur >= maxPage()) return;
+  busy = true;
+  const mob = isMob();
+  const nextCur = cur + step();
+  const nextRi = mob ? nextCur : nextCur + 1;
 
-  // leafFront = current right page content
-  leafF.innerHTML = pageR.innerHTML;
-  // leafBack = next spread's left page
-  leafB.innerHTML = spreads[next].left;
-  // preload next right under (hidden by leaf during animation)
-  pageR.innerHTML = spreads[next].right;
+  // leafFace = current right page
+  leafFace.innerHTML = mob ? PAGES[cur] : (cur+1 < PAGES.length ? PAGES[cur+1] : '');
+  // leafBack = next left page (desktop) or next page (mobile)
+  leafBack.innerHTML = mob ? PAGES[nextCur] : (nextCur < PAGES.length ? PAGES[nextCur] : '');
+  // Preload next right page
+  pageR.innerHTML = nextRi < PAGES.length ? PAGES[nextRi] : '';
+  pageR.appendChild(zoneL);
+  pageR.appendChild(zoneR);
+  // Preload next left
+  if (!mob) pageL.innerHTML = nextCur < PAGES.length ? PAGES[nextCur] : '';
 
   leaf.style.display = 'block';
   leaf.style.transition = 'none';
   leaf.style.transform = 'rotateY(0deg)';
-  leaf.getBoundingClientRect(); // reflow
-
+  leaf.getBoundingClientRect();
   leaf.style.transition = `transform ${FLIP_DUR}ms cubic-bezier(.645,.045,.355,1)`;
   leaf.style.transform = 'rotateY(-180deg)';
 
   setTimeout(() => {
-    pageL.innerHTML = spreads[next].left;
     leaf.style.display = 'none';
     leaf.style.transform = '';
-    leaf.style.transition = '';
-    currentSpread = next;
-    updateUI();
-    isAnim = false;
+    cur = nextCur;
+    renderPages(cur);
+    updateNav();
+    busy = false;
   }, FLIP_DUR + 20);
 }
 
-// ── Turn page backward ──
-function prevPage() {
-  if (isAnim || currentSpread <= 0) return;
-  isAnim = true;
+function flipPrev() {
+  if (busy || cur <= 0) return;
+  busy = true;
+  const mob = isMob();
+  const prevCur = Math.max(0, cur - step());
 
-  const prev = currentSpread - 1;
+  // leafFace = prev right
+  const prevRi = mob ? prevCur : prevCur + 1;
+  leafFace.innerHTML = prevRi < PAGES.length ? PAGES[prevRi] : '';
+  // leafBack = current left
+  leafBack.innerHTML = mob ? PAGES[cur] : (cur < PAGES.length ? PAGES[cur] : '');
 
-  // leafFront = prev right page (will be visible at end at 0deg)
-  leafF.innerHTML = spreads[prev].right;
-  // leafBack = current left page (visible during start at -180deg)
-  leafB.innerHTML = pageL.innerHTML;
-
-  // preload prev left underneath
-  pageL.innerHTML = spreads[prev].left;
+  // preload prev pages
+  pageL.innerHTML = !mob && prevCur < PAGES.length ? PAGES[prevCur] : '';
 
   leaf.style.display = 'block';
-  // start at -180 (back face = current left visible, covering left half)
   leaf.style.transition = 'none';
   leaf.style.transform = 'rotateY(-180deg)';
-  leaf.getBoundingClientRect(); // reflow
-
+  leaf.getBoundingClientRect();
   leaf.style.transition = `transform ${FLIP_DUR}ms cubic-bezier(.645,.045,.355,1)`;
   leaf.style.transform = 'rotateY(0deg)';
 
   setTimeout(() => {
-    pageR.innerHTML = spreads[prev].right;
     leaf.style.display = 'none';
     leaf.style.transform = '';
-    leaf.style.transition = '';
-    currentSpread = prev;
-    updateUI();
-    isAnim = false;
+    cur = prevCur;
+    renderPages(cur);
+    updateNav();
+    busy = false;
   }, FLIP_DUR + 20);
 }
 
-// ── Events ──
-document.getElementById('cornerHint').addEventListener('click', openCover);
-cover.addEventListener('click', openCover);
-clickNext.addEventListener('click', nextPage);
-clickPrev.addEventListener('click', prevPage);
-navNext.addEventListener('click', nextPage);
-navPrev.addEventListener('click', prevPage);
+// Events
+document.getElementById('openHint').addEventListener('click', openBook);
+document.getElementById('cover').addEventListener('click', openBook);
+navNext.addEventListener('click', flipNext);
+navPrev.addEventListener('click', flipPrev);
+zoneR.addEventListener('click', flipNext);
+zoneL.addEventListener('click', flipPrev);
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextPage();
-  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp'  ) prevPage();
-  if (e.key === ' ') { e.preventDefault(); nextPage(); }
+  if (cur < 0) { if (e.key === 'Enter' || e.key === ' ') openBook(); return; }
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); flipNext(); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp'                   ) { e.preventDefault(); flipPrev(); }
 });
 
-// ── Cursor ──
+// Touch swipe
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e => {
+  if (cur < 0) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 40) { dx < 0 ? flipNext() : flipPrev(); }
+}, {passive:true});
+
+// Handle resize
+window.addEventListener('resize', () => {
+  if (cur >= 0) renderPages(cur);
+});
+
+// Cursor
 const cd = document.getElementById('cd');
 const cr = document.getElementById('cr');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cd.style.left = mx+'px'; cd.style.top = my+'px';
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cd.style.left=mx+'px'; cd.style.top=my+'px'; });
+(function loop(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; cr.style.left=rx+'px'; cr.style.top=ry+'px'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a,button,input,.open-hint,.cover,.zone').forEach(el => {
+  el.addEventListener('mouseenter', () => { cr.style.width='36px'; cr.style.height='36px'; cr.style.borderColor='rgba(184,149,106,.7)'; });
+  el.addEventListener('mouseleave', () => { cr.style.width='22px'; cr.style.height='22px'; cr.style.borderColor='rgba(184,149,106,.35)'; });
 });
-(function loop(){
-  rx += (mx-rx)*.12; ry += (my-ry)*.12;
-  cr.style.left = rx+'px'; cr.style.top = ry+'px';
-  requestAnimationFrame(loop);
-})();
-document.querySelectorAll('a,button,input,.click-next,.click-prev,.corner-hint,.cover').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cr.style.width='40px';cr.style.height='40px';cr.style.borderColor='rgba(201,64,64,.7)';});
-  el.addEventListener('mouseleave',()=>{cr.style.width='24px';cr.style.height='24px';cr.style.borderColor='rgba(201,64,64,.4)';});
-});
-
-// Initial state hint: animate corner
-setTimeout(() => {
-  const hint = document.getElementById('cornerHint');
-  hint.style.transition = 'all .3s';
-}, 800);
 </script>
 </body>
 </html>
