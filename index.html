@@ -6,7 +6,7 @@
 <title>El arte de dormir terriblemente mal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Cinzel:wght@400;600&family=Cinzel+Decorative&family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cinzel:wght@400;600&family=Cinzel+Decorative&family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
 <style>
 :root {
   --pw:  clamp(200px,25vw,360px);
@@ -16,29 +16,26 @@
   --gold-mid:   #8a6e48;
   --gold-dim:   #5a4530;
   --gold-faint: #2e2010;
-  --page:       #0e0a07;
   --ink:        #d0c4a8;
   --ink2:       #8a7a62;
   --ink3:       #52402e;
   --crimson:    #8a1e1e;
   --crimson2:   #c44040;
-
-  /* journal / diary colors */
-  --paper:      #f0e8c8;
-  --paper2:     #ede0b0;
-  --paper-dark: #d8c898;
-  --paper-line: rgba(100,70,30,0.12);
-  --sepia:      #2a1a08;
-  --sepia2:     #4a3018;
-  --sepia3:     #7a5830;
+  --paper:      #ede4c0;
+  --paper2:     #e8ddb5;
+  --paper3:     #ddd0a0;
+  --sepia:      #1e1006;
+  --sepia2:     #3a2010;
+  --sepia3:     #5a3820;
+  --line-col:   rgba(90,55,20,0.13);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
 body{
   background:
-    radial-gradient(ellipse at 30% 20%,#1a0808 0%,transparent 60%),
-    radial-gradient(ellipse at 70% 80%,#0f0810 0%,transparent 60%),
-    #06050a;
+    radial-gradient(ellipse at 25% 25%,#160a04 0%,transparent 55%),
+    radial-gradient(ellipse at 75% 75%,#0c0810 0%,transparent 55%),
+    #07050a;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   cursor:none;user-select:none;min-height:100vh;
   font-family:'Crimson Pro',serif;
@@ -49,205 +46,417 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 #cd,#cr{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
 #cd{width:4px;height:4px;background:var(--gold);border-radius:50%}
 #cr{width:22px;height:22px;border:1px solid rgba(184,149,106,.35);border-radius:50%;transition:width .25s,height .25s,border-color .25s}
+.scene{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(.6rem,1.5vh,1.2rem);width:100%;height:100%;}
 
-.scene{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(.7rem,1.8vh,1.4rem);width:100%;height:100%;}
-
-/* ── CLOSED BOOK ── */
-.book-closed{position:relative;width:var(--pw);height:var(--ph);cursor:pointer;
-  filter:drop-shadow(0 30px 70px rgba(0,0,0,.85)) drop-shadow(0 8px 24px rgba(0,0,0,.6));}
-.book-closed::before{content:"";position:absolute;top:4px;bottom:4px;right:-7px;width:8px;
-  background:linear-gradient(to right,#c4b090 0%,#e8d8b0 35%,#bea870 65%,#9a8858 100%);z-index:-1;border-radius:0 1px 1px 0;}
-.book-closed::after{content:"";position:absolute;top:8px;bottom:8px;right:-12px;width:5px;background:#8a7050;z-index:-2;border-radius:0 1px 1px 0;}
-
-/* ── COVER ── */
-.cover{position:absolute;inset:0;overflow:hidden;border-radius:1px 2px 2px 1px;
+/* ═══════════════════════════════════════════
+   DIARY COVER
+═══════════════════════════════════════════ */
+.book-closed{
+  position:relative;width:var(--pw);height:var(--ph);cursor:pointer;
+  filter:drop-shadow(-6px 12px 40px rgba(0,0,0,.75)) drop-shadow(0 4px 16px rgba(0,0,0,.5));
+}
+/* stacked pages edge — right side */
+.book-closed::before{
+  content:"";position:absolute;
+  top:3px;bottom:3px;right:-9px;width:9px;
   background:
-    repeating-linear-gradient(92deg,transparent 0px,rgba(255,255,255,.004) 1px,transparent 2px,transparent 4px),
-    repeating-linear-gradient(180deg,transparent 0px,rgba(0,0,0,.035) 1px,transparent 3px,transparent 6px),
-    radial-gradient(ellipse at 20% 15%,rgba(80,20,20,.6) 0%,transparent 38%),
-    radial-gradient(ellipse at 75% 85%,rgba(45,10,10,.45) 0%,transparent 40%),
-    linear-gradient(158deg,#2e1010 0%,#1e0808 12%,#160606 28%,#1c0a0a 45%,#140606 62%,#221010 78%,#180808 90%,#200e0e 100%);
-  box-shadow:inset 2px 0 6px rgba(0,0,0,.55),inset -1px 0 3px rgba(0,0,0,.3),inset 0 0 50px rgba(0,0,0,.35);}
-.cover::after{content:"";position:absolute;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='turbulence' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  opacity:.055;mix-blend-mode:overlay;pointer-events:none;}
-.cover-frame{position:absolute;inset:clamp(10px,2.2vw,16px);border:1px solid rgba(184,149,106,.22);pointer-events:none;}
-.cover-frame::before{content:"";position:absolute;inset:4px;border:1px solid rgba(184,149,106,.07);}
-.c-corn{position:absolute;width:12px;height:12px;opacity:.55}
-.c-corn svg{width:100%;height:100%}
-.c-corn.tl{top:clamp(8px,1.8vw,14px);left:clamp(8px,1.8vw,14px)}
-.c-corn.tr{top:clamp(8px,1.8vw,14px);right:clamp(8px,1.8vw,14px);transform:scaleX(-1)}
-.c-corn.bl{bottom:clamp(8px,1.8vw,14px);left:clamp(8px,1.8vw,14px);transform:scaleY(-1)}
-.c-corn.br{bottom:clamp(8px,1.8vw,14px);right:clamp(8px,1.8vw,14px);transform:scale(-1)}
-.cover-spine{position:absolute;top:0;left:0;bottom:0;width:var(--sw);
-  background:linear-gradient(to right,#0a0202 0%,#1e0606 40%,#1a0505 60%,#0a0202 100%);
-  border-right:1px solid rgba(80,30,10,.3);z-index:5;}
-.cover-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:clamp(20px,4.5vw,44px) clamp(14px,3vw,28px);
-  padding-left:calc(var(--sw) + clamp(14px,3vw,28px));
-  text-align:center;gap:.5rem;z-index:2;}
-.cov-eyebrow{font-family:'Cinzel',serif;font-size:clamp(.38rem,.65vw,.54rem);letter-spacing:.42em;text-transform:uppercase;color:var(--gold-mid);opacity:.65;}
-.cov-line{width:clamp(24px,2.5vw,38px);height:1px;background:linear-gradient(to right,transparent,var(--gold-dim),transparent);margin:.15rem auto;opacity:.7;}
-.cov-title{font-family:'Cinzel Decorative',serif;font-size:clamp(.9rem,2vw,1.75rem);line-height:1.2;color:var(--gold);text-shadow:0 1px 0 rgba(40,20,5,.9),0 0 25px rgba(184,149,106,.18);letter-spacing:.03em;}
-.cov-sub{font-family:'Cinzel',serif;font-size:clamp(.36rem,.58vw,.5rem);letter-spacing:.52em;text-transform:uppercase;color:var(--gold-dim);}
-.cov-author{position:absolute;bottom:clamp(1rem,2.5vw,2rem);right:clamp(.8rem,2vw,1.6rem);font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(.7rem,1.3vw,1rem);color:var(--gold-dim);letter-spacing:.03em;z-index:3;}
-.open-hint{position:absolute;bottom:0;right:0;width:48px;height:48px;cursor:pointer;z-index:10;}
-.open-hint::before{content:"";position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 38px 38px;border-color:transparent transparent rgba(184,149,106,.16) transparent;transition:border-width .3s,border-color .3s;}
-.open-hint:hover::before{border-width:0 0 50px 50px;border-color:transparent transparent rgba(184,149,106,.3) transparent;}
+    linear-gradient(to right,
+      var(--paper3) 0%,
+      var(--paper)  30%,
+      var(--paper2) 60%,
+      var(--paper3) 100%
+    );
+  z-index:-1;
+  border-radius:0 2px 2px 0;
+  box-shadow:inset -1px 0 2px rgba(0,0,0,.15);
+}
+.book-closed::after{
+  content:"";position:absolute;
+  top:6px;bottom:6px;right:-14px;width:5px;
+  background:var(--paper3);
+  z-index:-2;border-radius:0 2px 2px 0;opacity:.7;
+}
 
-/* ── OPEN BOOK ── */
-.book-open{display:none;position:relative;flex-direction:row;width:calc(var(--pw)*2 + var(--sw));height:var(--ph);
-  filter:drop-shadow(0 30px 70px rgba(0,0,0,.85)) drop-shadow(0 8px 24px rgba(0,0,0,.6));}
+/* ── JOURNAL COVER DESIGN ── */
+.cover{
+  position:absolute;inset:0;
+  border-radius:2px 4px 4px 2px;
+  overflow:visible;
+}
+
+/* Main cover body — dark cloth/fabric */
+.cover-body{
+  position:absolute;inset:0;
+  border-radius:2px 3px 3px 2px;
+  overflow:hidden;
+  background:
+    /* cloth weave micro-pattern */
+    repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,.012) 3px, rgba(255,255,255,.012) 4px),
+    repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,.012) 3px, rgba(255,255,255,.012) 4px),
+    /* base color — worn oxblood/dark wine -->
+    linear-gradient(160deg,
+      #2a0d0d 0%,
+      #1e0808 20%,
+      #160606 40%,
+      #1c0a0a 55%,
+      #250e0e 70%,
+      #1a0808 85%,
+      #200c0c 100%
+    );
+  box-shadow:
+    inset 0 0 60px rgba(0,0,0,.4),
+    inset 0 0 20px rgba(0,0,0,.3);
+}
+/* grain texture */
+.cover-body::before{
+  content:"";position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='turbulence' baseFrequency='.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+  opacity:.07;mix-blend-mode:overlay;
+}
+/* worn edge highlight */
+.cover-body::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(to right,rgba(255,220,150,.04) 0%,transparent 15%,transparent 85%,rgba(255,220,150,.02) 100%),
+    linear-gradient(to bottom,rgba(255,220,150,.03) 0%,transparent 10%,transparent 90%,rgba(255,220,150,.02) 100%);
+}
+
+/* Spine */
+.cover-spine{
+  position:absolute;top:0;left:0;bottom:0;
+  width:var(--sw);z-index:5;
+  background:linear-gradient(to right,#080202 0%,#180606 35%,#140505 65%,#080202 100%);
+  border-right:1px solid rgba(60,20,10,.4);
+}
+/* spine decorative lines */
+.cover-spine::before,.cover-spine::after{
+  content:"";position:absolute;
+  left:50%;transform:translateX(-50%);
+  width:1px;background:rgba(184,149,106,.08);
+}
+.cover-spine::before{top:12%;height:76%;}
+.cover-spine::after{top:10%;height:80%;transform:translateX(calc(-50% + 2px));}
+
+/* Elastic band across cover */
+.cover-elastic{
+  position:absolute;
+  top:50%;right:-14px;
+  transform:translateY(-50%);
+  width:calc(100% + 14px);height:clamp(8px,1.4vw,12px);
+  background:linear-gradient(to bottom,
+    rgba(20,6,6,.9) 0%,
+    rgba(35,10,10,.95) 40%,
+    rgba(30,8,8,.9) 60%,
+    rgba(18,5,5,.85) 100%
+  );
+  z-index:6;
+  border-radius:1px;
+  box-shadow:0 1px 3px rgba(0,0,0,.5),0 -1px 2px rgba(0,0,0,.3);
+}
+.cover-elastic::before{
+  content:"";position:absolute;
+  top:1px;left:0;right:0;height:1px;
+  background:rgba(255,255,255,.04);
+}
+
+/* Bookmark ribbon */
+.cover-ribbon{
+  position:absolute;
+  bottom:-18px;right:clamp(24px,4vw,36px);
+  width:clamp(8px,1.2vw,11px);
+  height:clamp(30px,5vw,45px);
+  background:linear-gradient(to bottom,#8a1e1e,#6a1414);
+  z-index:3;
+  border-radius:0 0 2px 2px;
+  box-shadow:1px 2px 4px rgba(0,0,0,.4);
+}
+.cover-ribbon::after{
+  content:"";position:absolute;bottom:0;left:0;right:0;
+  border-left:calc(clamp(8px,1.2vw,11px)/2) solid #8a1e1e;
+  border-right:calc(clamp(8px,1.2vw,11px)/2) solid #8a1e1e;
+  border-top:clamp(5px,.8vw,7px) solid transparent;
+  transform:scaleX(1) translateY(100%);
+}
+
+/* Title area — like a hand-glued label */
+.cover-label{
+  position:absolute;
+  left:calc(var(--sw) + clamp(14px,3vw,24px));
+  right:clamp(12px,2.5vw,20px);
+  top:50%;
+  transform:translateY(-54%) rotate(-1.2deg);
+  background:
+    radial-gradient(ellipse at 40% 40%,rgba(255,245,210,.12) 0%,transparent 70%),
+    rgba(240,225,185,.07);
+  border:1px solid rgba(184,149,106,.14);
+  padding:clamp(10px,2vw,18px) clamp(10px,2vw,16px);
+  z-index:7;
+  display:flex;flex-direction:column;
+  align-items:center;text-align:center;gap:.35rem;
+  backdrop-filter:blur(1px);
+  /* slight label lift */
+  box-shadow:0 2px 8px rgba(0,0,0,.35),0 1px 2px rgba(0,0,0,.2);
+}
+.label-eyebrow{
+  font-family:'Caveat',cursive;
+  font-size:clamp(.6rem,1.2vw,.85rem);
+  letter-spacing:.15em;
+  color:rgba(200,170,110,.55);
+}
+.label-title{
+  font-family:'Caveat',cursive;
+  font-weight:700;
+  font-size:clamp(1rem,2.2vw,1.8rem);
+  line-height:1.15;
+  color:rgba(220,195,145,.85);
+  text-shadow:0 1px 3px rgba(0,0,0,.4);
+}
+.label-rule{
+  width:clamp(20px,3vw,30px);height:1px;
+  background:rgba(184,149,106,.3);
+  margin:.1rem auto;
+}
+.label-sub{
+  font-family:'Caveat',cursive;
+  font-size:clamp(.55rem,1vw,.75rem);
+  letter-spacing:.22em;
+  color:rgba(180,140,90,.45);
+}
+
+/* Author on cover bottom */
+.cover-author{
+  position:absolute;
+  bottom:clamp(1rem,2.5vw,1.8rem);
+  left:calc(var(--sw) + clamp(12px,2.5vw,20px));
+  right:clamp(12px,2.5vw,20px);
+  text-align:center;z-index:7;
+}
+.cover-author-name{
+  font-family:'Caveat',cursive;
+  font-weight:600;
+  font-size:clamp(.85rem,1.6vw,1.25rem);
+  color:rgba(180,145,95,.6);
+  letter-spacing:.05em;
+}
+
+/* open corner hint */
+.open-hint{position:absolute;bottom:0;right:0;width:50px;height:50px;cursor:pointer;z-index:10;}
+.open-hint::before{content:"";position:absolute;bottom:0;right:0;width:0;height:0;
+  border-style:solid;border-width:0 0 40px 40px;
+  border-color:transparent transparent rgba(184,149,106,.14) transparent;
+  transition:border-width .35s,border-color .35s;}
+.open-hint:hover::before{border-width:0 0 54px 54px;border-color:transparent transparent rgba(184,149,106,.28) transparent;}
+
+/* ═══════════════════════════════════════════
+   OPEN BOOK
+═══════════════════════════════════════════ */
+.book-open{
+  display:none;position:relative;flex-direction:row;
+  width:calc(var(--pw)*2 + var(--sw));height:var(--ph);
+  filter:drop-shadow(-6px 14px 50px rgba(0,0,0,.8)) drop-shadow(0 4px 18px rgba(0,0,0,.5));
+}
 .pg{width:var(--pw);height:var(--ph);position:relative;overflow:hidden;flex-shrink:0;}
 .pg-l{background:linear-gradient(to right,#130d09,#0e0a07);box-shadow:inset -8px 0 18px rgba(0,0,0,.5);}
 .pg-r{background:linear-gradient(to left,#130d09,#0e0a07);box-shadow:inset 8px 0 18px rgba(0,0,0,.5);}
-.pg-r::after{content:"";position:absolute;top:4px;bottom:4px;right:-7px;width:8px;
-  background:linear-gradient(to right,#c4b090 0%,#e0d0a8 35%,#bea870 65%,#9a8858 100%);border-radius:0 1px 1px 0;}
+/* page stack edge visible on right */
+.pg-r::after{
+  content:"";position:absolute;top:3px;bottom:3px;right:-9px;width:9px;
+  background:linear-gradient(to right,var(--paper3) 0%,var(--paper) 30%,var(--paper2) 60%,var(--paper3) 100%);
+  border-radius:0 2px 2px 0;
+}
 .pg::before{content:"";position:absolute;inset:0;
-  background:radial-gradient(ellipse at 100% 0%,rgba(40,28,14,.3) 0%,transparent 50%),radial-gradient(ellipse at 0% 100%,rgba(30,18,8,.25) 0%,transparent 50%);
+  background:radial-gradient(ellipse at 100% 0%,rgba(40,28,14,.28) 0%,transparent 50%),
+    radial-gradient(ellipse at 0% 100%,rgba(30,18,8,.22) 0%,transparent 50%);
   pointer-events:none;z-index:0;}
-.book-spine{width:var(--sw);height:var(--ph);flex-shrink:0;
-  background:linear-gradient(to right,#0e0404 0%,#200808 30%,#2a0c0c 50%,#1c0808 75%,#0e0404 100%);
-  box-shadow:inset 2px 0 5px rgba(0,0,0,.5),inset -2px 0 5px rgba(0,0,0,.5);z-index:5;}
+.book-spine{
+  width:var(--sw);height:var(--ph);flex-shrink:0;
+  background:linear-gradient(to right,#0e0402 0%,#1e0808 30%,#280c0c 50%,#1a0606 75%,#0c0402 100%);
+  box-shadow:inset 2px 0 5px rgba(0,0,0,.5),inset -2px 0 5px rgba(0,0,0,.5);z-index:5;
+}
 
-/* ── JOURNAL PAGES ── */
+/* ═══════════════════════════════════════════
+   JOURNAL / DIARY PAGES
+═══════════════════════════════════════════ */
 .p-journal{
+  width:100%;height:100%;position:relative;overflow:hidden;
+  /* warm paper color with slight unevenness */
   background:
-    radial-gradient(ellipse at 30% 20%,rgba(255,245,200,.03) 0%,transparent 60%),
-    linear-gradient(170deg,var(--paper) 0%,var(--paper2) 50%,var(--paper-dark) 100%);
-  overflow:hidden;position:relative;
+    radial-gradient(ellipse at 8% 12%, rgba(210,185,125,.35) 0%,transparent 40%),
+    radial-gradient(ellipse at 92% 88%, rgba(200,175,115,.2) 0%,transparent 35%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,245,200,.08) 0%,transparent 70%),
+    linear-gradient(175deg,
+      #eee4c2 0%,
+      #e8dab8 25%,
+      #ead8b0 50%,
+      #e5d5ac 75%,
+      #dece9e 100%
+    );
 }
-/* aged paper grain */
-.journal-bg{
-  position:absolute;inset:0;pointer-events:none;z-index:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
-  opacity:.08;mix-blend-mode:multiply;
-}
-/* ruled lines like a diary */
-.journal-lines{
+
+/* Paper grain */
+.paper-grain{
   position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+  opacity:.09;mix-blend-mode:multiply;
+}
+
+/* Coffee/ink stain spots */
+.paper-stain{position:absolute;pointer-events:none;z-index:1;border-radius:50%;opacity:.55;}
+.s1{width:clamp(40px,8vw,70px);height:clamp(30px,6vw,52px);top:8%;right:10%;
+  background:radial-gradient(ellipse,rgba(140,90,40,.12) 0%,rgba(140,90,40,.04) 50%,transparent 70%);
+  transform:rotate(12deg);}
+.s2{width:clamp(25px,5vw,45px);height:clamp(20px,4vw,36px);bottom:15%;left:5%;
+  background:radial-gradient(ellipse,rgba(120,80,30,.1) 0%,transparent 65%);
+  transform:rotate(-8deg);}
+.s3{width:clamp(30px,6vw,55px);height:clamp(24px,5vw,42px);top:35%;right:5%;
+  background:radial-gradient(ellipse,rgba(130,85,35,.09) 0%,transparent 60%);
+  transform:rotate(5deg);}
+
+/* Organic page edge — subtle curve/warp using clip-path */
+/* Left journal page: clip a very slight curve on right edge */
+.pg-l .p-journal{
+  clip-path:polygon(
+    0% 0.3%,
+    98.5% 0%,
+    99.2% 15%,
+    99.5% 35%,
+    99.8% 55%,
+    99.4% 75%,
+    98.8% 90%,
+    98.5% 100%,
+    0% 99.7%
+  );
+}
+/* Right journal page: clip slight curve on left edge */
+.pg-r .p-journal{
+  clip-path:polygon(
+    0.5% 0%,
+    100% 0.3%,
+    100% 99.7%,
+    0.5% 100%,
+    0.8% 82%,
+    1.2% 60%,
+    0.6% 40%,
+    1.0% 20%,
+    0.3% 5%
+  );
+}
+
+/* Ruled lines — only on lined pages */
+.journal-lines{
+  position:absolute;inset:0;pointer-events:none;z-index:2;
   background-image:repeating-linear-gradient(
     to bottom,
     transparent 0px,
-    transparent 27px,
-    var(--paper-line) 28px,
-    var(--paper-line) 28px
+    transparent 25px,
+    var(--line-col) 26px,
+    var(--line-col) 26px
   );
-  background-size:100% 28px;
+  background-size:100% 26px;
 }
-/* red margin line */
+/* red margin */
 .journal-lines::before{
   content:"";position:absolute;
-  left:clamp(28px,6vw,44px);top:0;bottom:0;width:1px;
-  background:rgba(180,60,60,.18);
+  left:clamp(30px,6.5vw,48px);top:0;bottom:0;width:1px;
+  background:rgba(160,50,50,.15);
 }
-.journal-content{
-  position:relative;z-index:2;
-  width:100%;height:100%;
-  padding:clamp(1.2rem,3vw,2rem) clamp(1.2rem,3vw,2rem);
-  padding-left:clamp(38px,8vw,56px);
-  display:flex;flex-direction:column;
-  overflow:hidden;
-}
-.journal-content-text{gap:.5rem;}
 
-/* DOODLE area takes up most of left page */
-.doodle-area{
-  flex:1;position:relative;
-  display:flex;align-items:center;justify-content:center;
-  min-height:0;
-}
+/* DOODLE page — no lines, scattered freely */
+.p-doodle{position:relative;}
+
 .doodle-svg{
-  width:90%;height:90%;
-  max-height:clamp(150px,28vw,280px);
+  position:absolute;inset:0;
+  width:100%;height:100%;
 }
 
-/* ZZZ float animations */
-.hz1{animation:zzf1 4.5s ease-in-out infinite;}
-.hz2{animation:zzf2 5.8s ease-in-out .8s infinite;}
-.hz3{animation:zzf3 7s ease-in-out 1.6s infinite;}
-@keyframes zzf1{0%,100%{transform:translateY(0) rotate(-8deg);opacity:.62}50%{transform:translateY(-11px) translateX(3px) rotate(-10deg);opacity:.82}}
-@keyframes zzf2{0%,100%{transform:translateY(0) rotate(-6deg);opacity:.48}50%{transform:translateY(-9px) translateX(4px) rotate(-8deg);opacity:.65}}
-@keyframes zzf3{0%,100%{transform:translateY(0) rotate(-5deg);opacity:.32}50%{transform:translateY(-7px) translateX(4px) rotate(-7deg);opacity:.48}}
+/* ZZZ animations */
+.hz1{animation:zzf1 4.8s ease-in-out infinite;}
+.hz2{animation:zzf2 6s ease-in-out .9s infinite;}
+.hz3{animation:zzf3 7.4s ease-in-out 1.8s infinite;}
+@keyframes zzf1{0%,100%{transform:translateY(0) rotate(-12deg);opacity:.55}50%{transform:translateY(-13px) translateX(4px) rotate(-14deg);opacity:.78}}
+@keyframes zzf2{0%,100%{transform:translateY(0) rotate(-9deg);opacity:.38}50%{transform:translateY(-10px) translateX(5px) rotate(-11deg);opacity:.58}}
+@keyframes zzf3{0%,100%{transform:translateY(0) rotate(-7deg);opacity:.24}50%{transform:translateY(-8px) translateX(5px) rotate(-9deg);opacity:.42}}
 
 /* eye blink */
-.hd-eye{animation:eyeBlink 8s ease-in-out 2s infinite;}
-@keyframes eyeBlink{0%,85%,100%{opacity:1}88%{opacity:.1}92%{opacity:1}}
+.hd-eye{animation:eyeBlink 9s ease-in-out 2.5s infinite;}
+@keyframes eyeBlink{0%,82%,100%{opacity:1}86%{opacity:.08}90%{opacity:1}}
 
-/* star twinkle */
-.s1{animation:stw 3.8s ease-in-out infinite;}
-.s2{animation:stw 5s ease-in-out .6s infinite;}
-.s3{animation:stw 4.2s ease-in-out 1.4s infinite;}
-@keyframes stw{0%,100%{opacity:.35}50%{opacity:.85}}
-
-/* journal tagline at bottom */
-.journal-tagline{
-  padding-top:.6rem;
-  border-top:1px solid rgba(100,70,30,.14);
-  flex-shrink:0;
-}
-.jt-text{
+/* Scatter text — freely placed, no lines */
+.scatter-wrap{position:absolute;inset:0;pointer-events:none;z-index:5;}
+.scatter-text{
+  position:absolute;
   font-family:'Caveat',cursive;
-  font-size:clamp(.95rem,2vw,1.25rem);
-  line-height:1.65;
+  color:var(--sepia);
+  line-height:1.5;
+}
+/* Each piece placed individually, different angles */
+.st1{
+  font-size:clamp(.85rem,1.8vw,1.12rem);
+  top:55%;left:5%;width:62%;
+  transform:rotate(-2.5deg);
   color:var(--sepia);
 }
-.jt-line{width:20px;height:1px;background:rgba(180,60,60,.3);margin:.4rem 0;}
-.jt-byline{
-  font-family:'Caveat',cursive;
-  font-size:clamp(.82rem,1.6vw,1.05rem);
-  line-height:1.6;
+.st2{
+  font-size:clamp(.92rem,1.9vw,1.18rem);
+  top:67%;left:12%;width:70%;
+  transform:rotate(1.2deg);
   color:var(--sepia2);
-}
-
-/* journal title (Prólogo) */
-.j-title{
-  font-family:'Caveat',cursive;
   font-weight:600;
-  font-size:clamp(1.8rem,4.5vw,3rem);
-  color:var(--sepia);
-  margin-bottom:.4rem;
-  line-height:1.1;
-  /* slight hand-drawn tilt */
-  transform:rotate(-1.5deg);
-  display:inline-block;
+}
+.st3{
+  font-size:clamp(.72rem,1.4vw,.92rem);
+  bottom:14%;left:4%;width:75%;
+  transform:rotate(-1.8deg);
+  color:var(--sepia3);
+  font-style:italic;
+}
+.st4{
+  font-size:clamp(.78rem,1.5vw,.98rem);
+  bottom:6%;left:8%;width:65%;
+  transform:rotate(.8deg);
+  color:var(--sepia3);
+  font-style:italic;
 }
 
-/* journal body text */
+/* LINED page content */
+.lined-content{
+  position:relative;z-index:3;
+  width:100%;height:100%;
+  padding:clamp(1.2rem,3vw,2rem) clamp(1rem,2.5vw,1.8rem);
+  padding-left:clamp(38px,8vw,54px);
+  display:flex;flex-direction:column;gap:.4rem;
+  overflow:hidden;
+}
+.j-title{
+  font-family:'Caveat',cursive;font-weight:700;
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  color:var(--sepia);
+  transform:rotate(-1.8deg);
+  display:inline-block;
+  margin-bottom:.3rem;line-height:1.1;
+  text-shadow:1px 1px 0 rgba(0,0,0,.04);
+}
 .j-body{
   font-family:'Caveat',cursive;
-  font-size:clamp(.92rem,1.8vw,1.15rem);
-  line-height:1.72;
-  color:var(--sepia);
-  margin-bottom:.3rem;
+  font-size:clamp(.9rem,1.75vw,1.1rem);
+  line-height:1.7;color:var(--sepia);
+  font-weight:400;
 }
-.j-body em{color:var(--sepia2);font-style:italic;}
-.j-body-closing{
-  color:var(--sepia2);
-  font-style:italic;
-  margin-top:.4rem;
-}
+.j-body em{font-style:italic;color:var(--sepia2);}
+.j-closing{color:var(--sepia2);font-style:italic;}
+.j-sig-block{margin-top:clamp(.6rem,1.5vw,1.1rem);}
+.j-sig-svg{width:clamp(90px,16vw,140px);display:block;margin-bottom:.15rem;}
+.j-sig-name{font-family:'Caveat',cursive;font-size:clamp(.85rem,1.6vw,1.1rem);color:var(--sepia2);transform:rotate(-.7deg);display:inline-block;}
+.j-pnum{color:var(--sepia3) !important;font-family:'Caveat',cursive !important;font-size:clamp(.65rem,1.2vw,.82rem) !important;letter-spacing:.05em !important;}
 
-/* journal signature */
-.j-sig-wrap{margin-top:clamp(.8rem,2vw,1.4rem);}
-.j-sig-svg{width:clamp(100px,18vw,160px);display:block;margin-bottom:.1rem;}
-.j-sig-name{
-  font-family:'Caveat',cursive;
-  font-size:clamp(.85rem,1.6vw,1.1rem);
-  color:var(--sepia2);
-  transform:rotate(-.8deg);
-  display:inline-block;
-}
-
-/* pnum on journal pages */
-.j-pnum{color:var(--sepia3) !important;}
-
-/* ── DARK PAGES (stories, index) ── */
+/* ═══════════════════════════════════════════
+   DARK STORY PAGES (same as before)
+═══════════════════════════════════════════ */
 .p{position:relative;z-index:1;width:100%;height:100%;
   padding:clamp(1.3rem,3.2vw,2.4rem) clamp(1rem,2.5vw,2rem);
   display:flex;flex-direction:column;overflow:hidden;}
 .p::before{content:"";position:absolute;inset:clamp(7px,1.2vw,12px);border:1px solid rgba(184,149,106,.045);pointer-events:none;z-index:0;}
-.p-deco{display:flex;align-items:center;justify-content:center;}
+.p-deco-dark{display:flex;align-items:center;justify-content:center;}
 .ch-label{font-family:'Cinzel',serif;font-size:clamp(.38rem,.6vw,.52rem);letter-spacing:.4em;text-transform:uppercase;color:var(--crimson2);margin-bottom:clamp(.5rem,1.2vw,.9rem);opacity:.8;}
 .pt{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(1.05rem,2.1vw,1.7rem);line-height:1.15;color:var(--gold);margin-bottom:.55rem;}
 .pt-sm{font-size:clamp(.88rem,1.65vw,1.3rem);}
@@ -272,13 +481,28 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .sub-btn{align-self:flex-start;background:transparent;border:1px solid var(--gold-dim);color:var(--gold-mid);font-family:'Cinzel',serif;font-size:clamp(.36rem,.56vw,.5rem);letter-spacing:.3em;text-transform:uppercase;padding:.45rem 1rem;cursor:pointer;transition:all .3s;}
 .sub-btn:hover{background:var(--gold-faint);border-color:var(--gold);}
 
-/* ── FLIP LEAF ── */
-.leaf{position:absolute;top:0;left:var(--pw);width:var(--pw);height:var(--ph);transform-origin:left center;transform-style:preserve-3d;z-index:20;display:none;pointer-events:none;}
-.leaf-face,.leaf-back{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;}
+/* ═══════════════════════════════════════════
+   FLIP LEAF
+═══════════════════════════════════════════ */
+.leaf{
+  position:absolute;top:0;left:var(--pw);width:var(--pw);height:var(--ph);
+  transform-origin:left center;transform-style:preserve-3d;
+  z-index:20;display:none;pointer-events:none;
+}
+.leaf-face,.leaf-back{
+  position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;
+}
 .leaf-back{transform:rotateY(180deg)}
-.leaf-face::after,.leaf-back::after{content:"";position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,.4) 0%,transparent 25%,transparent 75%,rgba(0,0,0,.18) 100%);pointer-events:none;z-index:10;}
+/* Page turn shadow */
+.leaf-face::after,.leaf-back::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(0,0,0,.45) 0%,transparent 22%,transparent 78%,rgba(0,0,0,.18) 100%);
+  pointer-events:none;z-index:10;
+}
 
-/* ── NAV ── */
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
 .nav-row{display:flex;align-items:center;gap:clamp(.8rem,2.5vw,2rem);z-index:10;opacity:0;transition:opacity .5s;}
 .nav-row.show{opacity:1}
 .nav-btn{background:transparent;border:none;font-family:'Cinzel',serif;font-size:clamp(.38rem,.62vw,.54rem);letter-spacing:.28em;text-transform:uppercase;color:var(--ink3);cursor:pointer;padding:.3rem .4rem;transition:color .3s;}
@@ -288,19 +512,23 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .zone-l{left:0}.zone-r{right:0}
 .book-open .zone{display:block}
 
-/* ── MOBILE ── */
+/* ═══════════════════════════════════════════
+   MOBILE
+═══════════════════════════════════════════ */
 @media(max-width:700px){
   :root{--pw:clamp(240px,88vw,390px);--ph:calc(var(--pw)*1.54);--sw:12px;}
   .book-open.spread{width:var(--pw);}
   .pg-l,.book-spine{display:none;}
   .pg-r::after{display:none;}.pg-r{box-shadow:none;}
   .leaf{left:0;width:var(--pw);}
+  /* on mobile, journal page clips don't apply to pg-l/pg-r (hidden) */
+  .pg-r .p-journal{clip-path:none;}
   .pb{font-size:clamp(.95rem,3.8vw,1.12rem);line-height:1.88;}
   .pt{font-size:clamp(1.15rem,4.8vw,1.6rem);}
-  .j-body{font-size:clamp(1rem,4vw,1.2rem);line-height:1.75;}
-  .j-title{font-size:clamp(2rem,7vw,3.2rem);}
-  .jt-text{font-size:clamp(1rem,4vw,1.2rem);}
-  .jt-byline{font-size:clamp(.88rem,3.5vw,1.05rem);}
+  .j-body{font-size:clamp(1rem,4vw,1.2rem);line-height:1.72;}
+  .j-title{font-size:clamp(2rem,7vw,3rem);}
+  .scatter-text{font-size:clamp(1rem,4vw,1.2rem) !important;}
+  .st1,.st2,.st3,.st4{line-height:1.55;}
   .idx-t{font-size:clamp(.94rem,3.8vw,1.1rem);}
   .idx-item{padding:.7rem 0;}
   .ch-label{font-size:clamp(.46rem,1.9vw,.62rem);}
@@ -310,28 +538,30 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 <body>
 <div id="cr"></div><div id="cd"></div>
 <div class="scene">
-
   <div class="book" id="bookWrap">
+
+    <!-- ── CLOSED (diary cover) ── -->
     <div class="book-closed" id="bookClosed">
-      <div class="cover" id="coverEl">
+      <div class="cover">
+        <div class="cover-body"></div>
         <div class="cover-spine"></div>
-        <div class="cover-frame"></div>
-        <div class="c-corn tl"><svg viewBox="0 0 20 20" fill="none"><path d="M1 19 L1 1 L19 1" stroke="rgba(184,149,106,.6)" stroke-width="1.2"/><circle cx="1" cy="1" r="1.5" fill="rgba(184,149,106,.5)"/></svg></div>
-        <div class="c-corn tr"><svg viewBox="0 0 20 20" fill="none"><path d="M1 19 L1 1 L19 1" stroke="rgba(184,149,106,.6)" stroke-width="1.2"/><circle cx="1" cy="1" r="1.5" fill="rgba(184,149,106,.5)"/></svg></div>
-        <div class="c-corn bl"><svg viewBox="0 0 20 20" fill="none"><path d="M1 19 L1 1 L19 1" stroke="rgba(184,149,106,.6)" stroke-width="1.2"/><circle cx="1" cy="1" r="1.5" fill="rgba(184,149,106,.5)"/></svg></div>
-        <div class="c-corn br"><svg viewBox="0 0 20 20" fill="none"><path d="M1 19 L1 1 L19 1" stroke="rgba(184,149,106,.6)" stroke-width="1.2"/><circle cx="1" cy="1" r="1.5" fill="rgba(184,149,106,.5)"/></svg></div>
-        <div class="cover-content">
-          <p class="cov-eyebrow">Horror onírico</p>
-          <div class="cov-line"></div>
-          <h1 class="cov-title">El arte<br>de dormir<br>terriblemente<br>mal</h1>
-          <div class="cov-line"></div>
-          <p class="cov-sub">Experimental</p>
+        <div class="cover-elastic"></div>
+        <div class="cover-ribbon"></div>
+        <div class="cover-label">
+          <p class="label-eyebrow">relatos oníricos</p>
+          <div class="label-rule"></div>
+          <h1 class="label-title">El arte de dormir<br>terriblemente mal</h1>
+          <div class="label-rule"></div>
+          <p class="label-sub">experimental</p>
         </div>
-        <p class="cov-author">Maria E. Castillo</p>
+        <div class="cover-author">
+          <p class="cover-author-name">Maria E. Castillo</p>
+        </div>
         <div class="open-hint" id="openHint"></div>
       </div>
     </div>
 
+    <!-- ── OPEN BOOK ── -->
     <div class="book-open spread" id="bookOpen" style="display:none">
       <div class="pg pg-l" id="pageL"></div>
       <div class="book-spine"></div>
@@ -354,10 +584,14 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 </div>
 
 <script>
-const PAGES=["<div class=\"p p-journal\">\n  <div class=\"journal-bg\"></div>\n  <div class=\"journal-lines\"></div>\n  <div class=\"journal-content\">\n\n    <!-- hand-drawn ZZZ & eye doodles -->\n    <div class=\"doodle-area\" aria-hidden=\"true\">\n      <svg viewBox=\"0 0 220 200\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" class=\"doodle-svg\">\n        <!-- Rough hand-drawn ZZZs floating -->\n        <text class=\"hd-z hz1\" x=\"52\" y=\"88\" font-family=\"Caveat, cursive\" font-size=\"32\" fill=\"rgba(60,35,12,0.62)\" transform=\"rotate(-8,52,88)\">Z</text>\n        <text class=\"hd-z hz2\" x=\"88\" y=\"58\" font-family=\"Caveat, cursive\" font-size=\"22\" fill=\"rgba(60,35,12,0.48)\" transform=\"rotate(-6,88,58)\">z</text>\n        <text class=\"hd-z hz3\" x=\"114\" y=\"36\" font-family=\"Caveat, cursive\" font-size=\"15\" fill=\"rgba(60,35,12,0.32)\" transform=\"rotate(-5,114,36)\">z</text>\n        <!-- wobbly rising path between Zs -->\n        <path class=\"hd-trail\" d=\"M62 82 Q72 70 84 65 Q96 54 106 44\" stroke=\"rgba(60,35,12,0.18)\" stroke-width=\"1.2\" fill=\"none\" stroke-dasharray=\"3 3\"/>\n\n        <!-- Hand-drawn closed eye (simple sketch) -->\n        <g class=\"hd-eye\" transform=\"translate(50,130)\">\n          <!-- eye curve -->\n          <path d=\"M0 0 Q30 -14 60 0\" stroke=\"rgba(40,22,8,0.65)\" stroke-width=\"1.8\" fill=\"none\" stroke-linecap=\"round\"/>\n          <!-- lashes rough -->\n          <line x1=\"8\"  y1=\"-2\" x2=\"5\"  y2=\"-9\"  stroke=\"rgba(40,22,8,0.45)\" stroke-width=\"1.2\" stroke-linecap=\"round\"/>\n          <line x1=\"18\" y1=\"-6\" x2=\"17\" y2=\"-13\" stroke=\"rgba(40,22,8,0.45)\" stroke-width=\"1.2\" stroke-linecap=\"round\"/>\n          <line x1=\"30\" y1=\"-8\" x2=\"30\" y2=\"-16\" stroke=\"rgba(40,22,8,0.45)\" stroke-width=\"1.2\" stroke-linecap=\"round\"/>\n          <line x1=\"42\" y1=\"-6\" x2=\"44\" y2=\"-13\" stroke=\"rgba(40,22,8,0.45)\" stroke-width=\"1.2\" stroke-linecap=\"round\"/>\n          <line x1=\"52\" y1=\"-2\" x2=\"55\" y2=\"-9\"  stroke=\"rgba(40,22,8,0.45)\" stroke-width=\"1.2\" stroke-linecap=\"round\"/>\n          <!-- brow rough arc -->\n          <path d=\"M-2 -16 Q28 -28 62 -16\" stroke=\"rgba(40,22,8,0.28)\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"/>\n        </g>\n\n        <!-- scattered tiny stars hand-drawn -->\n        <g fill=\"none\" stroke=\"rgba(40,22,8,0.35)\" stroke-width=\"1.1\" stroke-linecap=\"round\">\n          <!-- star 1 -->\n          <line x1=\"148\" y1=\"50\"  x2=\"148\" y2=\"42\"/>\n          <line x1=\"144\" y1=\"46\"  x2=\"152\" y2=\"46\"/>\n          <!-- star 2 -->\n          <line x1=\"175\" y1=\"90\"  x2=\"175\" y2=\"83\"/>\n          <line x1=\"171\" y1=\"86\"  x2=\"179\" y2=\"86\"/>\n          <!-- star 3 small -->\n          <line x1=\"30\"  y1=\"165\" x2=\"30\"  y2=\"160\"/>\n          <line x1=\"27\"  y1=\"162\" x2=\"33\"  y2=\"162\"/>\n          <!-- crescent moon rough -->\n          <path d=\"M168 130 Q158 118 162 105 Q150 112 152 128 Q155 142 168 130Z\" stroke=\"rgba(40,22,8,0.3)\" stroke-width=\"1.3\" fill=\"rgba(40,22,8,0.05)\"/>\n        </g>\n\n        <!-- a few wavy dream lines -->\n        <path d=\"M10 108 Q35 100 55 108 Q75 116 95 108 Q115 100 135 108\" stroke=\"rgba(60,35,12,0.12)\" stroke-width=\".9\" fill=\"none\"/>\n        <path d=\"M140 148 Q158 142 175 150 Q192 158 205 148\" stroke=\"rgba(60,35,12,0.1)\" stroke-width=\".8\" fill=\"none\"/>\n      </svg>\n    </div>\n\n    <!-- handwritten tagline at bottom -->\n    <div class=\"journal-tagline\">\n      <p class=\"jt-text\">Esta es una colección de relatos oníricos, perturbadores e irónicos, donde el terror susurra, baila, lame y besa.</p>\n      <div class=\"jt-line\"></div>\n      <p class=\"jt-byline\">No la escribe una mente perturbada —<br>es solo un subconsciente con complejo de productor.</p>\n    </div>\n\n  </div>\n</div>", "<div class=\"p p-journal\">\n  <div class=\"journal-bg\"></div>\n  <div class=\"journal-lines\"></div>\n  <div class=\"journal-content journal-content-text\">\n\n    <h2 class=\"j-title\">Prólogo</h2>\n\n    <p class=\"j-body\">Alguna vez leí que todos los sueños tienen significado, pero yo creo que son mensajes codificados que mi subconsciente usa para arruinarme el día. Cada vez que me despertaba intranquila por alguno, abría inmediatamente Google y buscaba cosas como: <em>\"soñar con ver ballenas volando\"</em>.</p>\n\n    <p class=\"j-body\">Los resultados eran alentadores: <em>\"grandes proyectos se avecinan\"</em>, <em>\"épocas de creatividad\"</em>, <em>\"prosperidad\"</em>, etc. Genial, pensaba, eso es genial.</p>\n\n    <p class=\"j-body\">Aunque, en mis sueños, las ballenas eran extremadamente terroríficas y yo estaba en pleno mar, atrapada en una caja de cristal mientras ellas intentaban romperla. Exactamente eso no se encuentra en Google, detalles que no creo haya considerado quien decidió que soñar con ballenas voladoras es de buen augurio.</p>\n\n    <p class=\"j-body\">Mi oráculo moderno (Google) no me da las respuestas que necesito. Prefiero pensar que los sueños son historias que buscan ser contadas.</p>\n\n  </div>\n  <span class=\"pnum j-pnum\">ii</span>\n</div>", "<div class=\"p p-journal\">\n  <div class=\"journal-bg\"></div>\n  <div class=\"journal-lines\"></div>\n  <div class=\"journal-content journal-content-text\">\n\n    <p class=\"j-body\">Por ello, decidí plasmar parte de mi mundo onírico en relatos cortos. Quizás al escribirlos pueda entender por qué mi mente profunda insiste en mostrarme ballenas voladoras y cajas de cristal que se resquebrajan.</p>\n\n    <p class=\"j-body\">Y de paso, contribuir al arte y la ficción porque la ficción me ha salvado la vida en más de una ocasión y, si lo piensas bien, probablemente también haya salvado la tuya… y la de tu madre <em>(imagina un mundo sin novelas mexicanas: qué triste)</em></p>\n\n    <p class=\"j-body j-body-closing\">Así que, si te gustan las historias cortas, perturbadoras y sin gracia, bienvenido(a).</p>\n\n    <!-- signature doodle -->\n    <div class=\"j-sig-wrap\">\n      <svg viewBox=\"0 0 160 40\" fill=\"none\" class=\"j-sig-svg\">\n        <path d=\"M10 30 C20 10 35 8 50 20 C58 26 62 28 70 18 C80 6 95 12 100 22 C108 36 118 30 130 20 C138 14 145 18 150 25\" stroke=\"rgba(40,22,8,0.5)\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\"/>\n        <path d=\"M10 32 L150 32\" stroke=\"rgba(40,22,8,0.15)\" stroke-width=\".8\"/>\n      </svg>\n      <p class=\"j-sig-name\">Maria E. Castillo</p>\n    </div>\n\n  </div>\n  <span class=\"pnum j-pnum\">iii</span>\n</div>", "<div class=\"p\"><p class=\"ch-label\">Índice</p><h2 class=\"pt pt-sm\" style=\"margin-bottom:1.2rem\">Los relatos</h2><div class=\"idx-list\"><div class=\"idx-item\"><span class=\"idx-n\">01</span><span class=\"idx-t\">¿Y si yo soy la mala del cuento?</span></div><div class=\"idx-item\"><span class=\"idx-n\">02</span><span class=\"idx-t\">El gato</span></div><div class=\"idx-item\"><span class=\"idx-n\">03</span><span class=\"idx-t\">Ayúdame a matarlo</span></div><div class=\"idx-item\"><span class=\"idx-n\">04</span><span class=\"idx-t\">Noche críptica en Sepia</span></div><div class=\"idx-item\"><span class=\"idx-n\">05</span><span class=\"idx-t\">¿Desperté?</span></div><div class=\"idx-item\"><span class=\"idx-n\">06</span><span class=\"idx-t\">Microchip</span></div><div class=\"idx-item\"><span class=\"idx-n\">07</span><span class=\"idx-t\">Mi Miss Hyde</span></div><div class=\"idx-item\"><span class=\"idx-n\">08</span><span class=\"idx-t\">No quiero ser bella</span></div><div class=\"idx-item idx-more\"><span class=\"idx-more-txt\">continúa →</span></div></div><span class=\"pnum\">iv</span></div>", "<div class=\"p\"><div class=\"idx-list\" style=\"margin-top:clamp(2.5rem,5vw,4rem)\"><div class=\"idx-item\"><span class=\"idx-n\">09</span><span class=\"idx-t\">Adiós, Morfeo</span></div><div class=\"idx-item\"><span class=\"idx-n\">10</span><span class=\"idx-t\">¿Hay algún zombi en la sala?</span></div><div class=\"idx-item\"><span class=\"idx-n\">11</span><span class=\"idx-t\">Luces, cámara, terror</span></div><div class=\"idx-item\"><span class=\"idx-n\">12</span><span class=\"idx-t\">Efecto Glitch</span></div><div class=\"idx-item\"><span class=\"idx-n\">13</span><span class=\"idx-t\">Distopía en el Mall</span></div><div class=\"idx-item\"><span class=\"idx-n\">14</span><span class=\"idx-t\">Vaca in blue</span></div><div class=\"idx-item\"><span class=\"idx-n\">15</span><span class=\"idx-t\">No cruces la puerta</span></div><div class=\"idx-item\" style=\"margin-top:.8rem;border-top:1px solid var(--gold-faint);padding-top:.8rem\"><span class=\"idx-n\" style=\"color:var(--crimson2);font-style:italic\">b.</span><span class=\"idx-t\" style=\"font-style:italic;color:var(--ink2)\">Bonus Experimental</span></div><div class=\"idx-item\"><span class=\"idx-n\">16</span><span class=\"idx-t\">Pesadilla: La Incredulidad</span></div><div class=\"idx-item\"><span class=\"idx-n\">17</span><span class=\"idx-t\">Dejen Dormir</span></div></div><span class=\"pnum\">v</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 01</p><h2 class=\"pt\">¿Y si yo soy la mala del cuento?</h2><div class=\"hr\"></div><p class=\"pb\">Descendí las escaleras hacia el taller de mi padre. El silencio era intrigante; nunca había silencio cuando papá estaba allí. Al llegar, encontré a mi madre, mi padre y mis dos hermanos, inmóviles. No hablaban, solo se miraban entre sí con los ojos desmesuradamente abiertos. Durante los casi dos minutos que los observé, no parpadearon ni una sola vez. La situación era espeluznante.</p><br><p class=\"pb\">Miré hacia la calle y vi a un hombre con gabardina y sombrero gris. Llevaba una jeringa. En mi mente lo bauticé como <em>El Inyectador</em>.</p><span class=\"pnum\">1</span></div>", "<div class=\"p\"><p class=\"pb\">Este hombre inyectaba a la gente con una sustancia desconocida. Las personas inoculadas empezaban a comportarse de manera extraña, como mi familia: ojos abiertos de par en par, no hablaban, solo se miraban entre ellos y caminaban como si algo o alguien los manejara a control remoto, robotizados.</p><br><p class=\"pb\">Al intentar retroceder, me golpeé con un pedazo de madera. Mis ojos volvieron rápidamente hacia ellos. Me observaban con una mirada vacía, como si no me reconocieran. El Inyectador avanzaba hacia la casa, con sus ojos clavados en mí.</p><br><p class=\"pb\">Salí corriendo por la puerta trasera. Durante mi apresurado trayecto, vi cómo la luna descendía del cielo; era enorme, de un gris fantasmal y aterradoramente hermosa. El cielo tenía un color negro azulado, un contraste demasiado bello para una situación tan perturbadora. De fondo, se escuchaban unos... ¿sonidos de trompetas?</p><span class=\"pnum\">2</span></div>", "<div class=\"p\"><p class=\"pb\">Intenté pasar desapercibida mientras me dirigía a la casa de la vecina en busca de mis hermanas, con la mente enfocada únicamente en salvarlas. Varios niños saltaban y jugaban alegremente, entre ellos mis hermanas. Les dije que teníamos que irnos.</p><br><p class=\"pb\">Aparté la mirada solo unos segundos, lo suficiente para que mi hermana pequeña corriera hacia nuestro padre. La escena me golpeó en el estómago: ellos, tomados de la mano con los ojos escandalosamente abiertos, y a su lado, el Inyectador, mostrándome su maldita jeringa.</p><br><p class=\"pb\">Al ver a mi hermana pequeña convertida en… algo, se me estremeció el cuerpo. No pude salvarla. Tomé a la mayor de la mano y corrimos.</p><span class=\"pnum\">3</span></div>", "<div class=\"p\"><p class=\"pb\">La vi caer. —¡Mierda! ¡No puede ser! El cielo se tiñó de tonos naranjas y rojizos, creando el arrebol más hermoso que jamás había presenciado. Pero aquella belleza se desvaneció abruptamente con un sonido estrepitoso. El cielo se partió en dos.</p><br><p class=\"pb\">Tucutún, tucutún, tucutún. Y ella no se levantaba. —¡Levántate, por favor, levántate!</p><br><p class=\"pb\">Entre la masa de gente distinguí al Inyectador, abriéndose paso. ¿Acaso está flotando? ¿Esas son... alas? Lo mismo le empezó a pasar a otras personas.</p><br><p class=\"pb\">Al voltear, un escalofrío me recorrió la espalda; detrás de mí estaba el diablo. Un hombre enorme de piel roja. Su rostro permanecía oculto, pero recuerdo su enorme torso muy bien trabajado en los gimnasios del infierno.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">¿Y si la mala del cuento era yo?</p><span class=\"pnum\">4</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 02</p><h2 class=\"pt\">El gato</h2><div class=\"hr\"></div><p class=\"pb\">Un crujido inesperado me arrancó el sueño. Acaricié el pelaje sedoso del gato negro acurrucado en mi regazo, pero él se escurrió para sentarse a mi lado. Todo se volvió silencio — ese silencio que indica que está ocurriendo algo inminente.</p><br><p class=\"pb\">Algo se acercaba. No era un caballo real. Era su sombra, su espectro: una silueta sin cuerpo ni mirada.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">La dueña del gato era ella.</p><span class=\"pnum\">5</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 03</p><h2 class=\"pt\">Ayúdame a matarlo</h2><div class=\"hr\"></div><p class=\"pb\">Había un niño. Estaba dentro de mí — o eso parecía. Quería salir y yo lo sentía moverse, pero no era un niño de verdad.</p><br><div class=\"qblock\"><p class=\"qtext\">\"Soy sus miedos más ocultos, sus ganas de morir, las ganas que tiene de hacerle daño a otros, sus mentiras, sus prejuicios — todo lo negro de su alma soy yo.\"</p></div><br><p class=\"pb\">La voz, áspera y ronca, resonó con una gravedad inesperada. — Ayúdame a matarlo — supliqué.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">Nadie respondió. El silencio fue la respuesta.</p><span class=\"pnum\">6</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 04</p><h2 class=\"pt\">Noche críptica en Sepia</h2><div class=\"hr\"></div><p class=\"pb\">Las luces de los postes emanaban una luz tenue amarilla, envolviendo la noche en un filtro sepia. Como si el mundo estuviera teñido de una nostalgia amarga.</p><br><p class=\"pb\">Él estaba de espaldas a mí. La sangre, a pesar de su brillo dorado bajo la luz amarillenta, era la única evidencia de algo que no podía entender.</p><br><div class=\"qblock\"><p class=\"qtext\" style=\"font-size:.9em\">De fondo sonaba <em>Midnight City</em> de M83 — una canción que solía escuchar en noches menos complicadas.</p></div><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">Nunca puedo recordar su rostro.</p><span class=\"pnum\">7</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 05</p><h2 class=\"pt\">¿Desperté?</h2><div class=\"hr\"></div><p class=\"pb\">El espejo estaba roto. La tubería del lavabo también. El agua salpicaba de formas extrañas, como si quisiera alcanzarme. Intenté limpiarla pero mis manos atravesaban todo.</p><br><p class=\"pb\">Frente al espejo roto encontré algo. Un reflejo que se movía diferente — un segundo más lento, un grado más frío.</p><br><p class=\"pb\">Esa no era yo. O al menos, me veía — pero no me reconocía.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">¿Desperté? ¿O aún estoy ahí adentro?</p><span class=\"pnum\">8</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 06</p><h2 class=\"pt\">Microchip</h2><div class=\"hr\"></div><p class=\"pb\">Estaba en un consultorio de aspecto clínico. Tomé el bisturí sin vacilar y con total frialdad empecé a despojarme de las capas que protegían mi cabeza. No pensaba. Solo ejecutaba.</p><br><p class=\"pb\">Había algo ahí adentro. Un chip. Pequeño y frío, brillando con una luz que no debería existir dentro de un cráneo humano.</p><br><div class=\"qblock\"><p class=\"qtext\">\"¿Alguna vez terminarás lo que empiezas?\" — sollozó alguien sin levantar la mirada.</p></div><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">No respondí. Ya había terminado.</p><span class=\"pnum\">9</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 07</p><h2 class=\"pt\">Mi Miss Hyde</h2><div class=\"hr\"></div><p class=\"pb\">Con los ojos cerrados, dejé que el agua me recorriera. El vapor era denso, casi opaco. Cuando los abrí, su imagen me golpeó: una mujer diminuta, de joroba prominente, estaba a mi lado.</p><br><p class=\"pb\">Vestía de negro de pies a cabeza. Su inquietante sonrisa me causó una ternura inexplicable.</p><br><p class=\"pb\">Tomé su cabeza con mis manos y la introduje en mi pierna derecha. Ella entró sin resistencia.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">Ese era el lugar al que pertenecía. Despertamos.</p><span class=\"pnum\">10</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 08</p><h2 class=\"pt\">No quiero ser bella</h2><div class=\"hr\"></div><p class=\"pb\">Lea llevaba semanas insistiendo. \"Hazlo\", decía con esa sonrisa que no llegaba a sus ojos. \"Te vas a ver increíble.\" Cedí. El procedimiento fue rápido. Demasiado rápido.</p><br><p class=\"pb\">Cuando miré mi mano, dentro de la piel había unos gusanos blancos, muy pequeños. Empecé a sentir cómo se retorcían ahí dentro.</p><br><p class=\"pb\">Lea me sonrió. Su piel era perfecta.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">No quiero ser bella de esta manera.</p><span class=\"pnum\">11</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 09</p><h2 class=\"pt\">Adiós, Morfeo</h2><div class=\"hr\"></div><p class=\"pb\">La primera vez llegó con el cabello castaño y los ojos claros. La segunda vez, negro el cabello y los ojos — brillando. Cada vez que despertaba dentro del sueño, su apariencia cambiaba.</p><br><div class=\"qblock\"><p class=\"qtext\">\"Para mí son meses, incluso años. Para ti son minutos u horas.\"</p></div><br><p class=\"pb\">Vi su entrada para nada romántica: descendiendo por la pared como una araña.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">Tomé mi frazada y me fui a dormir a la sala.</p><span class=\"pnum\">12</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 10</p><h2 class=\"pt\">¿Hay algún zombi en la sala?</h2><div class=\"hr\"></div><p class=\"pb\">Los zombis se estaban alineando para hacer una coreografía. Empezó a sonar una melodía que reconocí de inmediato: <em>Take Me on the Floor</em>, de The Veronicas.</p><br><p class=\"pb\">Pisé algo blando. Era una mano cercenada. Me disculpé por reflejo.</p><br><div class=\"qblock\"><p class=\"qtext\">— ¿Eres persona? — susurró sin mirarme.<br>— Sí... sí lo soy.</p></div><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">Era el único humano en la sala. Y todos me dedicaban una sonrisa.</p><span class=\"pnum\">13</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 11</p><h2 class=\"pt\">Luces, cámara, terror</h2><div class=\"hr\"></div><p class=\"pb\">Todo comenzó normalmente. Luego noté las cámaras. Pequeñas, estratégicamente ubicadas, siguiendo cada uno de mis movimientos.</p><br><div class=\"qblock\"><p class=\"qtext\">\"Eres la protagonista de la serie más exitosa de todos los tiempos.\"</p></div><br><p class=\"pb\">Mi familia — mi falsa familia — me había torturado de la manera más aterradora posible. Y todo había sido grabado.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">Quizá ahora que sé que no es real, ya no les sirva como protagonista.</p><span class=\"pnum\">14</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 12</p><h2 class=\"pt\">Efecto Glitch</h2><div class=\"hr\"></div><p class=\"pb\">Caminaba entre la gente y nadie me veía. Mi presencia era un error en el sistema.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">Me sentí un glitch.</p><br><p class=\"pb\">Pude verme desde afuera: una silueta con bordes parpadeantes. Alguien levantó una jeringa enorme y la colocó contra mi sien. Para corregir el error, supongo.</p><br><p class=\"pb\">La violencia se repetía en ciclos. Sin avanzar. Sin salida.</p><span class=\"pnum\">15</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 13</p><h2 class=\"pt\">Distopía en el Mall</h2><div class=\"hr\"></div><p class=\"pb\">Era extraño ver a personas tan ridículamente atractivas atacando a otros en el centro comercial. No con violencia convencional — con sus lenguas.</p><br><p class=\"pb\">— Solo lamen — explicó el hombre a mi lado —. Te lamen la cara y en minutos eres guapo. Perfectamente simétrico.</p><br><p class=\"pb\">Vi a Lea entre ellos. Perfecta. Demasiado perfecta.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">Corrí. Alguien me rozó la mejilla con la lengua. Empecé a sentir el calor en mi cara.</p><span class=\"pnum\">16</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 14</p><h2 class=\"pt\">Vaca in blue</h2><div class=\"hr\"></div><p class=\"pb\">El campo era tranquilo hasta que las vi. Las vacas pastaban normalmente, pero sus cabezas eran deformes — rostros de seres humanos deformados, estirados sobre cráneos bovinos.</p><br><p class=\"pb\">La de la camisa azul marino me miró directamente. Su rostro era el de una mujer vieja y afligida. Sentí como si quisiera decirme algo urgente.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">Tenía que volver. No sé a dónde — pero tenía que volver.</p><span class=\"pnum\">17</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 15</p><h2 class=\"pt\">No cruces la puerta</h2><div class=\"hr\"></div><p class=\"pb\">La puerta marrón perfectamente tallada me causó intriga. La crucé. Treinta minutos, me dije.</p><br><div class=\"qblock\"><p class=\"qtext\">\"¿Dónde estuviste? Te buscamos tanto tiempo. Tantos años...\"</p></div><br><p class=\"pb\">Una mujer me abrazó. Sus manos temblaban. Miré a mi alrededor — todo había cambiado.</p><br><p class=\"pb\">— Solo me fui treinta minutos — dije.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">— Ya han pasado treinta años.</p><span class=\"pnum\">18</span></div>", "<div class=\"p\"><p class=\"ch-label\">Bonus Experimental</p><h2 class=\"pt pt-sm\" style=\"margin-bottom:.8rem\">Una advertencia breve</h2><p class=\"pb\" style=\"font-style:italic;color:var(--ink2)\">En los siguientes relatos encontrarás fragmentos de sueños y pensamientos donde la ironía, el sarcasmo y las crisis existenciales se entrelazan sin disculparse.</p><div class=\"hr\" style=\"margin:1.2rem 0\"></div><div class=\"qblock\"><p class=\"qtext\">\"Sin embargo, ¡cuántas cosas estamos a punto de descubrir si la cobardía y la dejadez no entorpecieran nuestra curiosidad!\"</p><p class=\"qcite\">— Mary Shelley · Frankenstein</p></div><div class=\"hr\" style=\"margin:1.2rem 0\"></div><p class=\"pb\" style=\"font-style:italic;color:var(--ink3)\">Continúa, si te atreves.</p><span class=\"pnum\">xix</span></div>", "<div class=\"p\"><p class=\"ch-label\">Bonus · Relato 16</p><h2 class=\"pt\">Pesadilla: La Incredulidad</h2><div class=\"hr\"></div><p class=\"pb\">No podía dormir. Llevaba horas mirando el techo cuando decidí levantarme.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">— ¡A la mierda el diablo y a la mierda todo! — dije en voz baja pero con una intensidad sorprendente.</p><br><p class=\"pb\">El pasillo que conducía a las habitaciones estaba lleno de siluetas. Bailaban iluminadas por luces multicolores — pero sin música. Solo movimiento. Solo cuerpos sin sonido.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">¿Esto era real o seguía soñando? Decidí no averiguarlo.</p><span class=\"pnum\">xx</span></div>", "<div class=\"p\"><p class=\"ch-label\">Bonus · Relato 17</p><h2 class=\"pt\">Dejen Dormir</h2><div class=\"hr\"></div><p class=\"pb\" style=\"font-style:italic;color:var(--ink2)\">¿Qué es peor? ¿Estar loca o ser acechada por lo sobrenatural? ¿Fantasmas o extraterrestres? ¿Demonios o espíritus?</p><br><p class=\"pb\">Ella seguía dando vueltas a estas preguntas mientras su cama se convertía, paradójicamente, en su único refugio seguro.</p><br><p class=\"pb\" style=\"font-style:italic;color:var(--ink3);font-size:.85em\">(Pensamiento del narrador: claramente todo lo anterior es un pensamiento suyo. Lo estoy diciendo yo — el narrador — porque ella ya se durmió.)</p><br><p class=\"pb\" style=\"text-align:center;letter-spacing:.4em;font-size:.9em;color:var(--ink2);margin-top:1rem\">Shhh.</p><div class=\"hr\" style=\"margin:1.5rem auto;width:28px\"></div><p class=\"pb\" style=\"text-align:center;font-style:italic;color:var(--crimson2)\">Fin.</p><span class=\"pnum\">xxi</span></div>", "<div class=\"p\"><p class=\"ch-label\">Suscribirse</p><h2 class=\"pt\" style=\"margin-bottom:.8rem\">No te pierdas lo que viene</h2><div class=\"hr\"></div><p class=\"pb\" style=\"margin-bottom:1.5rem\">Nuevas historias, cortos y cosas perturbadoras, directo a tu correo.</p><div class=\"sub-wrap\"><label class=\"sub-label\">Tu correo</label><input type=\"email\" class=\"sub-input\" placeholder=\"tu@correo.com\"/><button class=\"sub-btn\">Suscribirse</button></div><span class=\"pnum\">xxii</span></div>", "<div class=\"p p-deco\" style=\"display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;text-align:center\"><svg width=\"44\" height=\"52\" viewBox=\"0 0 200 240\" fill=\"none\"><g stroke=\"#7a6040\" stroke-linecap=\"round\" opacity=\".4\"><path stroke-width=\".9\" d=\"M100 28 C128 22 162 38 168 70 C174 102 152 128 132 138 C148 148 158 168 140 180 C122 192 98 178 84 162 C60 172 38 156 36 132 C34 108 52 88 68 80 C48 66 42 42 62 32 C78 24 92 30 100 28Z\"/></g><text x=\"100\" y=\"125\" text-anchor=\"middle\" font-size=\"18\" fill=\"rgba(201,64,64,.4)\" font-family=\"serif\">✦</text></svg><p style=\"font-family:'Cinzel',serif;font-size:clamp(.8rem,1.6vw,1.1rem);color:var(--gold);letter-spacing:.08em\">Maria E. Castillo</p><p style=\"font-size:.62em;color:var(--ink3);letter-spacing:.2em;font-family:'Cinzel',serif\">LIMA · MMXXV</p><div style=\"width:26px;height:1px;background:var(--gold-faint);margin:.4rem auto\"></div><p style=\"font-size:.58em;color:var(--ink3)\">© 2025 — Todos los sueños reservados</p></div>"];
-const FLIP=620;
-let cur=-2,busy=false;
+const PAGES=["<div class=\"p-journal p-doodle\">\n  <!-- paper texture layers -->\n  <div class=\"paper-grain\"></div>\n  <div class=\"paper-stain s1\"></div>\n  <div class=\"paper-stain s2\"></div>\n\n  <!-- hand-drawn doodles -->\n  <svg class=\"doodle-svg\" viewBox=\"0 0 300 420\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n    <!-- ZZZ chain floating up -->\n    <text class=\"hz1\" x=\"90\" y=\"200\" font-family=\"Caveat,cursive\" font-size=\"52\" fill=\"rgba(42,26,10,0.55)\" transform=\"rotate(-12,90,200)\">Z</text>\n    <text class=\"hz2\" x=\"138\" y=\"152\" font-family=\"Caveat,cursive\" font-size=\"34\" fill=\"rgba(42,26,10,0.38)\" transform=\"rotate(-9,138,152)\">z</text>\n    <text class=\"hz3\" x=\"172\" y=\"116\" font-family=\"Caveat,cursive\" font-size=\"22\" fill=\"rgba(42,26,10,0.24)\" transform=\"rotate(-7,172,116)\">z</text>\n    <!-- wobbly dotted trail between Zs -->\n    <path d=\"M104 190 Q118 175 132 162 Q148 146 164 128\" stroke=\"rgba(42,26,10,0.15)\" stroke-width=\"1.4\" stroke-dasharray=\"3 5\" fill=\"none\" stroke-linecap=\"round\"/>\n\n    <!-- closed eye sketch -->\n    <g transform=\"translate(58,268)\">\n      <path d=\"M0 0 Q40 -20 80 0\" stroke=\"rgba(35,18,5,0.6)\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/>\n      <!-- lashes -->\n      <line x1=\"10\"  y1=\"-3\"  x2=\"6\"   y2=\"-13\" stroke=\"rgba(35,18,5,0.42)\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n      <line x1=\"24\"  y1=\"-8\"  x2=\"22\"  y2=\"-18\" stroke=\"rgba(35,18,5,0.42)\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n      <line x1=\"40\"  y1=\"-10\" x2=\"40\"  y2=\"-21\" stroke=\"rgba(35,18,5,0.42)\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n      <line x1=\"56\"  y1=\"-8\"  x2=\"58\"  y2=\"-18\" stroke=\"rgba(35,18,5,0.42)\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n      <line x1=\"70\"  y1=\"-3\"  x2=\"74\"  y2=\"-13\" stroke=\"rgba(35,18,5,0.42)\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n      <!-- brow -->\n      <path d=\"M-5 -22 Q38 -36 84 -22\" stroke=\"rgba(35,18,5,0.22)\" stroke-width=\"1.4\" fill=\"none\" stroke-linecap=\"round\"/>\n    </g>\n\n    <!-- tiny hand-drawn stars -->\n    <g stroke=\"rgba(35,18,5,0.32)\" stroke-width=\"1.4\" stroke-linecap=\"round\">\n      <line x1=\"220\" y1=\"68\"  x2=\"220\" y2=\"58\"/><line x1=\"215\" y1=\"63\"  x2=\"225\" y2=\"63\"/>\n      <line x1=\"248\" y1=\"130\" x2=\"248\" y2=\"122\"/><line x1=\"244\" y1=\"126\" x2=\"252\" y2=\"126\"/>\n      <line x1=\"42\"  y1=\"340\" x2=\"42\"  y2=\"333\"/><line x1=\"38\"  y1=\"336\" x2=\"46\"  y2=\"336\"/>\n      <line x1=\"260\" y1=\"310\" x2=\"260\" y2=\"304\"/><line x1=\"256\" y1=\"307\" x2=\"264\" y2=\"307\"/>\n    </g>\n\n    <!-- crescent moon rough sketch -->\n    <path d=\"M232 200 Q218 184 222 166 Q208 176 210 196 Q212 216 232 200Z\"\n      stroke=\"rgba(35,18,5,0.28)\" stroke-width=\"1.5\" fill=\"rgba(35,18,5,0.05)\" stroke-linecap=\"round\"/>\n\n    <!-- wavy dream lines -->\n    <path d=\"M20 150 Q50 142 75 150 Q100 158 125 150 Q150 142 175 150\" stroke=\"rgba(42,26,10,0.1)\" stroke-width=\"1\" fill=\"none\"/>\n    <path d=\"M180 360 Q205 352 228 360 Q250 368 272 360\" stroke=\"rgba(42,26,10,0.08)\" stroke-width=\".9\" fill=\"none\"/>\n  </svg>\n\n  <!-- scattered burst text — no lines, placed freely -->\n  <div class=\"scatter-wrap\">\n    <p class=\"scatter-text st1\">Esta es una colección de relatos oníricos,<br>perturbadores e irónicos,</p>\n    <p class=\"scatter-text st2\">donde el terror susurra,<br>baila, lame y besa.</p>\n    <p class=\"scatter-text st3\">— No la escribe una mente perturbada.</p>\n    <p class=\"scatter-text st4\">Es solo un subconsciente<br>con complejo de productor.</p>\n  </div>\n</div>", "<div class=\"p-journal p-lined\">\n  <div class=\"paper-grain\"></div>\n  <div class=\"paper-stain s3\"></div>\n  <div class=\"journal-lines\"></div>\n  <div class=\"lined-content\">\n    <h2 class=\"j-title\">Prólogo</h2>\n    <p class=\"j-body\">Alguna vez leí que todos los sueños tienen significado, pero yo creo que son mensajes codificados que mi subconsciente usa para arruinarme el día. Cada vez que me despertaba intranquila por alguno, abría inmediatamente Google y buscaba cosas como: <em>\"soñar con ver ballenas volando\"</em>.</p>\n    <p class=\"j-body\">Los resultados eran alentadores: <em>\"grandes proyectos se avecinan\"</em>, <em>\"épocas de creatividad\"</em>, <em>\"prosperidad\"</em>, etc. Genial, pensaba, eso es genial.</p>\n    <p class=\"j-body\">Aunque, en mis sueños, las ballenas eran extremadamente terroríficas y yo estaba en pleno mar, atrapada en una caja de cristal mientras ellas intentaban romperla. Exactamente eso no se encuentra en Google, detalles que no creo haya considerado quien decidió que soñar con ballenas voladoras es de buen augurio.</p>\n    <p class=\"j-body\">Mi oráculo moderno (Google) no me da las respuestas que necesito. Prefiero pensar que los sueños son historias que buscan ser contadas.</p>\n    <span class=\"pnum j-pnum\">ii</span>\n  </div>\n</div>", "<div class=\"p-journal p-lined\">\n  <div class=\"paper-grain\"></div>\n  <div class=\"journal-lines\"></div>\n  <div class=\"lined-content\">\n    <p class=\"j-body\">Por ello, decidí plasmar parte de mi mundo onírico en relatos cortos. Quizás al escribirlos pueda entender por qué mi mente profunda insiste en mostrarme ballenas voladoras y cajas de cristal que se resquebrajan.</p>\n    <p class=\"j-body\">Y de paso, contribuir al arte y la ficción porque la ficción me ha salvado la vida en más de una ocasión y, si lo piensas bien, probablemente también haya salvado la tuya… y la de tu madre <em>(imagina un mundo sin novelas mexicanas: qué triste)</em></p>\n    <p class=\"j-body j-closing\">Así que, si te gustan las historias cortas, perturbadoras y sin gracia, bienvenido(a).</p>\n    <div class=\"j-sig-block\">\n      <svg viewBox=\"0 0 180 42\" fill=\"none\" class=\"j-sig-svg\">\n        <path d=\"M8 34 C18 12 36 8 54 22 C64 30 70 32 80 20 C92 6 110 14 116 26 C126 42 138 34 152 22 C162 14 170 20 175 28\" stroke=\"rgba(40,22,8,0.45)\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\"/>\n      </svg>\n      <p class=\"j-sig-name\">Maria E. Castillo</p>\n    </div>\n    <span class=\"pnum j-pnum\">iii</span>\n  </div>\n</div>", "<div class=\"p\"><p class=\"ch-label\">Índice</p><h2 class=\"pt pt-sm\" style=\"margin-bottom:1.2rem\">Los relatos</h2><div class=\"idx-list\"><div class=\"idx-item\"><span class=\"idx-n\">01</span><span class=\"idx-t\">¿Y si yo soy la mala del cuento?</span></div><div class=\"idx-item\"><span class=\"idx-n\">02</span><span class=\"idx-t\">El gato</span></div><div class=\"idx-item\"><span class=\"idx-n\">03</span><span class=\"idx-t\">Ayúdame a matarlo</span></div><div class=\"idx-item\"><span class=\"idx-n\">04</span><span class=\"idx-t\">Noche críptica en Sepia</span></div><div class=\"idx-item\"><span class=\"idx-n\">05</span><span class=\"idx-t\">¿Desperté?</span></div><div class=\"idx-item\"><span class=\"idx-n\">06</span><span class=\"idx-t\">Microchip</span></div><div class=\"idx-item\"><span class=\"idx-n\">07</span><span class=\"idx-t\">Mi Miss Hyde</span></div><div class=\"idx-item\"><span class=\"idx-n\">08</span><span class=\"idx-t\">No quiero ser bella</span></div><div class=\"idx-item idx-more\"><span class=\"idx-more-txt\">continúa →</span></div></div><span class=\"pnum\">iv</span></div>", "<div class=\"p\"><div class=\"idx-list\" style=\"margin-top:clamp(2.5rem,5vw,4rem)\"><div class=\"idx-item\"><span class=\"idx-n\">09</span><span class=\"idx-t\">Adiós, Morfeo</span></div><div class=\"idx-item\"><span class=\"idx-n\">10</span><span class=\"idx-t\">¿Hay algún zombi en la sala?</span></div><div class=\"idx-item\"><span class=\"idx-n\">11</span><span class=\"idx-t\">Luces, cámara, terror</span></div><div class=\"idx-item\"><span class=\"idx-n\">12</span><span class=\"idx-t\">Efecto Glitch</span></div><div class=\"idx-item\"><span class=\"idx-n\">13</span><span class=\"idx-t\">Distopía en el Mall</span></div><div class=\"idx-item\"><span class=\"idx-n\">14</span><span class=\"idx-t\">Vaca in blue</span></div><div class=\"idx-item\"><span class=\"idx-n\">15</span><span class=\"idx-t\">No cruces la puerta</span></div><div class=\"idx-item\" style=\"margin-top:.8rem;border-top:1px solid var(--gold-faint);padding-top:.8rem\"><span class=\"idx-n\" style=\"color:var(--crimson2);font-style:italic\">b.</span><span class=\"idx-t\" style=\"font-style:italic;color:var(--ink2)\">Bonus Experimental</span></div><div class=\"idx-item\"><span class=\"idx-n\">16</span><span class=\"idx-t\">Pesadilla: La Incredulidad</span></div><div class=\"idx-item\"><span class=\"idx-n\">17</span><span class=\"idx-t\">Dejen Dormir</span></div></div><span class=\"pnum\">v</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 01</p><h2 class=\"pt\">¿Y si yo soy la mala del cuento?</h2><div class=\"hr\"></div><p class=\"pb\">Descendí las escaleras hacia el taller de mi padre. El silencio era intrigante; nunca había silencio cuando papá estaba allí. Al llegar, encontré a mi madre, mi padre y mis dos hermanos, inmóviles. No hablaban, solo se miraban entre sí con los ojos desmesuradamente abiertos. Durante los casi dos minutos que los observé, no parpadearon ni una sola vez.</p><br><p class=\"pb\">Miré hacia la calle y vi a un hombre con gabardina y sombrero gris. Llevaba una jeringa. En mi mente lo bauticé como <em>El Inyectador</em>. Este hombre inyectaba a la gente con una sustancia desconocida. Las personas inoculadas empezaban a comportarse de manera extraña, como mi familia.</p><span class=\"pnum\">1</span></div>", "<div class=\"p\"><p class=\"pb\">Al intentar retroceder, me golpeé con un pedazo de madera. El Inyectador avanzaba hacia la casa. Salí corriendo por la puerta trasera. Vi cómo la luna descendía del cielo; era enorme, de un gris fantasmal y aterradoramente hermosa. El cielo tenía un color negro azulado, un contraste demasiado bello para una situación tan perturbadora. De fondo, se escuchaban unos... ¿sonidos de trompetas?</p><br><p class=\"pb\">Varios niños saltaban entre ellos mis hermanas. Les dije que teníamos que irnos. La vi caer. — ¡Mierda! ¡No puede ser!</p><br><p class=\"pb\">El cielo se partió en dos. Tucutún, tucutún, tucutún. Entre la masa de gente distinguí al Inyectador. ¿Acaso está flotando? ¿Esas son... alas?</p><br><p class=\"pb\">Al voltear, un escalofrío me recorrió la espalda. Detrás de mí estaba el diablo. Un hombre enorme de piel roja. Su rostro permanecía oculto, pero recuerdo su enorme torso muy bien trabajado en los gimnasios del infierno.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">¿Y si la mala del cuento era yo?</p><span class=\"pnum\">2</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 02</p><h2 class=\"pt\">El gato</h2><div class=\"hr\"></div><p class=\"pb\">Un crujido inesperado me arrancó el sueño. Acaricié el pelaje sedoso del gato negro acurrucado en mi regazo, pero él se escurrió para sentarse a mi lado. Todo se volvió silencio — ese silencio que indica que está ocurriendo algo inminente.</p><br><p class=\"pb\">Algo se acercaba. No era un caballo real. Era su sombra, su espectro: una silueta sin cuerpo ni mirada.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">La dueña del gato era ella.</p><span class=\"pnum\">3</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 03</p><h2 class=\"pt\">Ayúdame a matarlo</h2><div class=\"hr\"></div><p class=\"pb\">Había un niño. Estaba dentro de mí — o eso parecía. Quería salir y yo lo sentía moverse, pero no era un niño de verdad.</p><br><div class=\"qblock\"><p class=\"qtext\">\"Soy sus miedos más ocultos, sus ganas de morir, las ganas que tiene de hacerle daño a otros, sus mentiras, sus prejuicios — todo lo negro de su alma soy yo.\"</p></div><br><p class=\"pb\">La voz, áspera y ronca, resonó con una gravedad inesperada.</p><br><p class=\"pb\">— Ayúdame a matarlo — supliqué.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">Nadie respondió. El silencio fue la respuesta.</p><span class=\"pnum\">4</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 04</p><h2 class=\"pt\">Noche críptica en Sepia</h2><div class=\"hr\"></div><p class=\"pb\">Las luces de los postes emanaban una luz tenue amarilla, envolviendo la noche en un filtro sepia. Como si el mundo estuviera teñido de una nostalgia amarga. Él estaba de espaldas a mí. La sangre, a pesar de su brillo dorado bajo la luz amarillenta, era la única evidencia de algo que no podía entender.</p><br><div class=\"qblock\"><p class=\"qtext\">De fondo sonaba <em>Midnight City</em> de M83 — una canción que solía escuchar en noches menos complicadas.</p></div><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">Nunca puedo recordar su rostro.</p><span class=\"pnum\">5</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 05</p><h2 class=\"pt\">¿Desperté?</h2><div class=\"hr\"></div><p class=\"pb\">El espejo estaba roto. La tubería del lavabo también. El agua salpicaba de formas extrañas. Intenté limpiarla pero mis manos atravesaban todo.</p><br><p class=\"pb\">Frente al espejo roto encontré algo. Un reflejo que se movía diferente — un segundo más lento, un grado más frío. Esa no era yo. O al menos, me veía — pero no me reconocía.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">¿Desperté? ¿O aún estoy ahí adentro?</p><span class=\"pnum\">6</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 06</p><h2 class=\"pt\">Microchip</h2><div class=\"hr\"></div><p class=\"pb\">Estaba en un consultorio de aspecto clínico. Tomé el bisturí sin vacilar y con total frialdad empecé a despojarme de las capas que protegían mi cabeza. No pensaba. Solo ejecutaba. Había algo ahí adentro. Un chip. Pequeño y frío.</p><br><div class=\"qblock\"><p class=\"qtext\">\"¿Alguna vez terminarás lo que empiezas?\" — sollozó alguien sin levantar la mirada.</p></div><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">No respondí. Ya había terminado.</p><span class=\"pnum\">7</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 07</p><h2 class=\"pt\">Mi Miss Hyde</h2><div class=\"hr\"></div><p class=\"pb\">Con los ojos cerrados, dejé que el agua me recorriera. Cuando los abrí, su imagen me golpeó: una mujer diminuta, de joroba prominente, estaba a mi lado. Vestía de negro de pies a cabeza. Su inquietante sonrisa me causó una ternura inexplicable.</p><br><p class=\"pb\">Tomé su cabeza con mis manos y la introduje en mi pierna derecha. Ella entró sin resistencia.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">Ese era el lugar al que pertenecía. Despertamos.</p><span class=\"pnum\">8</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 08</p><h2 class=\"pt\">No quiero ser bella</h2><div class=\"hr\"></div><p class=\"pb\">Lea llevaba semanas insistiendo. \"Hazlo\", decía con esa sonrisa que no llegaba a sus ojos. \"Te vas a ver increíble.\" Cedí. El procedimiento fue rápido. Demasiado rápido. Cuando miré mi mano, dentro de la piel había unos gusanos blancos, muy pequeños. Empecé a sentir cómo se retorcían ahí dentro.</p><br><p class=\"pb\">Lea me sonrió. Su piel era perfecta.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">No quiero ser bella de esta manera.</p><span class=\"pnum\">9</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 09</p><h2 class=\"pt\">Adiós, Morfeo</h2><div class=\"hr\"></div><p class=\"pb\">La primera vez llegó con el cabello castaño y los ojos claros. La segunda vez, negro el cabello y los ojos — brillando. Cada vez que despertaba dentro del sueño, su apariencia cambiaba.</p><br><div class=\"qblock\"><p class=\"qtext\">\"Para mí son meses, incluso años. Para ti son minutos u horas.\"</p></div><br><p class=\"pb\">Vi su entrada para nada romántica: descendiendo por la pared como una araña.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">Tomé mi frazada y me fui a dormir a la sala.</p><span class=\"pnum\">10</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 10</p><h2 class=\"pt\">¿Hay algún zombi en la sala?</h2><div class=\"hr\"></div><p class=\"pb\">Los zombis se estaban alineando para hacer una coreografía. Empezó a sonar una melodía que reconocí: <em>Take Me on the Floor</em>, de The Veronicas. Pisé algo blando. Era una mano cercenada. Me disculpé por reflejo.</p><br><div class=\"qblock\"><p class=\"qtext\">— ¿Eres persona? — susurró sin mirarme.<br>— Sí... sí lo soy.</p></div><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">Era el único humano en la sala. Y todos me dedicaban una sonrisa.</p><span class=\"pnum\">11</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 11</p><h2 class=\"pt\">Luces, cámara, terror</h2><div class=\"hr\"></div><p class=\"pb\">Todo comenzó normalmente. Luego noté las cámaras. Pequeñas, estratégicamente ubicadas, siguiendo cada uno de mis movimientos.</p><br><div class=\"qblock\"><p class=\"qtext\">\"Eres la protagonista de la serie más exitosa de todos los tiempos.\"</p></div><br><p class=\"pb\">Mi familia — mi falsa familia — me había torturado de la manera más aterradora posible. Y todo había sido grabado.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">Quizá ahora que sé que no es real, ya no les sirva como protagonista.</p><span class=\"pnum\">12</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 12</p><h2 class=\"pt\">Efecto Glitch</h2><div class=\"hr\"></div><p class=\"pb\">Caminaba entre la gente y nadie me veía. Mi presencia era un error en el sistema.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">Me sentí un glitch.</p><br><p class=\"pb\">Pude verme desde afuera: una silueta con bordes parpadeantes. Alguien levantó una jeringa enorme y la colocó contra mi sien. La violencia se repetía en ciclos. Sin avanzar. Sin salida.</p><span class=\"pnum\">13</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 13</p><h2 class=\"pt\">Distopía en el Mall</h2><div class=\"hr\"></div><p class=\"pb\">Era extraño ver a personas tan ridículamente atractivas atacando a otros en el centro comercial. No con violencia convencional — con sus lenguas.</p><br><p class=\"pb\">— Solo lamen — explicó el hombre a mi lado —. Te lamen la cara y en minutos eres guapo. Perfectamente simétrico.</p><br><p class=\"pb\">Vi a Lea entre ellos. Perfecta. Demasiado perfecta.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">Corrí. Alguien me rozó la mejilla. Empecé a sentir el calor en mi cara.</p><span class=\"pnum\">14</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 14</p><h2 class=\"pt\">Vaca in blue</h2><div class=\"hr\"></div><p class=\"pb\">El campo era tranquilo hasta que las vi. Las vacas pastaban normalmente, pero sus cabezas eran deformes — rostros de seres humanos estirados sobre cráneos bovinos. La de la camisa azul marino me miró directamente. Su rostro era el de una mujer vieja y afligida. Sentí como si quisiera decirme algo urgente.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">Tenía que volver. No sé a dónde — pero tenía que volver.</p><span class=\"pnum\">15</span></div>", "<div class=\"p\"><p class=\"ch-label\">Relato 15</p><h2 class=\"pt\">No cruces la puerta</h2><div class=\"hr\"></div><p class=\"pb\">La puerta marrón perfectamente tallada me causó intriga. La crucé. Treinta minutos, me dije.</p><br><div class=\"qblock\"><p class=\"qtext\">\"¿Dónde estuviste? Te buscamos tanto tiempo. Tantos años...\"</p></div><br><p class=\"pb\">Una mujer me abrazó. Sus manos temblaban. Miré a mi alrededor — todo había cambiado.</p><br><p class=\"pb\">— Solo me fui treinta minutos — dije.<br><br></p><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">— Ya han pasado treinta años.</p><span class=\"pnum\">16</span></div>", "<div class=\"p\"><p class=\"ch-label\">Bonus Experimental</p><p class=\"pb\" style=\"font-style:italic;color:var(--ink2);margin-bottom:1rem\">En los siguientes relatos encontrarás fragmentos de sueños y pensamientos donde la ironía, el sarcasmo y las crisis existenciales se entrelazan sin disculparse.</p><div class=\"hr\" style=\"margin:1rem 0\"></div><div class=\"qblock\"><p class=\"qtext\">\"Sin embargo, ¡cuántas cosas estamos a punto de descubrir si la cobardía y la dejadez no entorpecieran nuestra curiosidad!\"</p><p class=\"qcite\">— Mary Shelley · Frankenstein</p></div><div class=\"hr\" style=\"margin:1rem 0\"></div><p class=\"pb\" style=\"font-style:italic;color:var(--ink3)\">Continúa, si te atreves.</p><span class=\"pnum\">xix</span></div>", "<div class=\"p\"><p class=\"ch-label\">Bonus · Relato 16</p><h2 class=\"pt\">Pesadilla: La Incredulidad</h2><div class=\"hr\"></div><p class=\"pb\">No podía dormir. Llevaba horas mirando el techo cuando decidí levantarme.</p><br><p class=\"pb\" style=\"color:var(--ink);font-style:italic\">— ¡A la mierda el diablo y a la mierda todo! — dije en voz baja pero con una intensidad sorprendente.</p><br><p class=\"pb\">El pasillo que conducía a las habitaciones estaba lleno de siluetas. Bailaban iluminadas por luces multicolores — pero sin música. Solo movimiento. Solo cuerpos sin sonido.</p><br><p class=\"pb\" style=\"color:var(--ink2);font-style:italic\">¿Esto era real o seguía soñando? Decidí no averiguarlo.</p><span class=\"pnum\">xx</span></div>", "<div class=\"p\"><p class=\"ch-label\">Bonus · Relato 17</p><h2 class=\"pt\">Dejen Dormir</h2><div class=\"hr\"></div><p class=\"pb\" style=\"font-style:italic;color:var(--ink2)\">¿Qué es peor? ¿Estar loca o ser acechada por lo sobrenatural? ¿Fantasmas o extraterrestres? ¿Demonios o espíritus?</p><br><p class=\"pb\">Ella seguía dando vueltas a estas preguntas mientras su cama se convertía, paradójicamente, en su único refugio seguro.</p><br><p class=\"pb\" style=\"font-style:italic;color:var(--ink3);font-size:.85em\">(Pensamiento del narrador: claramente todo lo anterior es un pensamiento suyo. Lo estoy diciendo yo — el narrador — porque ella ya se durmió.)</p><br><p class=\"pb\" style=\"text-align:center;letter-spacing:.4em;font-size:.9em;color:var(--ink2);margin-top:1rem\">Shhh.</p><div class=\"hr\" style=\"margin:1.5rem auto;width:28px\"></div><p class=\"pb\" style=\"text-align:center;font-style:italic;color:var(--crimson2)\">Fin.</p><span class=\"pnum\">xxi</span></div>", "<div class=\"p\"><p class=\"ch-label\">Suscribirse</p><h2 class=\"pt\" style=\"margin-bottom:.8rem\">No te pierdas lo que viene</h2><div class=\"hr\"></div><p class=\"pb\" style=\"margin-bottom:1.5rem\">Nuevas historias, cortos y cosas perturbadoras, directo a tu correo.</p><div class=\"sub-wrap\"><label class=\"sub-label\">Tu correo</label><input type=\"email\" class=\"sub-input\" placeholder=\"tu@correo.com\"/><button class=\"sub-btn\">Suscribirse</button></div><span class=\"pnum\">xxii</span></div>", "<div class=\"p p-deco\" style=\"display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;text-align:center\"><svg width=\"44\" height=\"52\" viewBox=\"0 0 200 240\" fill=\"none\"><g stroke=\"#7a6040\" stroke-linecap=\"round\" opacity=\".4\"><path stroke-width=\".9\" d=\"M100 28 C128 22 162 38 168 70 C174 102 152 128 132 138 C148 148 158 168 140 180 C122 192 98 178 84 162 C60 172 38 156 36 132 C34 108 52 88 68 80 C48 66 42 42 62 32 C78 24 92 30 100 28Z\"/></g><text x=\"100\" y=\"125\" text-anchor=\"middle\" font-size=\"18\" fill=\"rgba(201,64,64,.4)\" font-family=\"serif\">✦</text></svg><p style=\"font-family:'Caveat',cursive;font-size:clamp(1.2rem,2.5vw,1.8rem);color:var(--gold);letter-spacing:.04em\">Maria E. Castillo</p><p style=\"font-size:.6em;color:var(--ink3);letter-spacing:.2em;font-family:'Cinzel',serif\">LIMA · MMXXV</p><div style=\"width:26px;height:1px;background:var(--gold-faint);margin:.4rem auto\"></div><p style=\"font-size:.58em;color:var(--ink3)\">© 2025 — Todos los sueños reservados</p></div>"];
+// Pages 0,1,2 are journal pages — use 3D flip
+// Rest use fade transition
+const JOURNAL_PAGES = 3;
+const FLIP=640, FADE=380;
+let cur=-2, busy=false;
 const mob=()=>window.innerWidth<=700;
+
 const bookClosed=document.getElementById('bookClosed');
 const bookOpen=document.getElementById('bookOpen');
 const pageL=document.getElementById('pageL');
@@ -373,6 +607,7 @@ const zoneL=document.getElementById('zoneL');
 const zoneR=document.getElementById('zoneR');
 
 function reZ(){pageR.appendChild(zoneL);pageR.appendChild(zoneR);}
+
 function renderPages(idx){
   const m=mob();
   pageL.innerHTML=(!m&&idx>=0&&idx<PAGES.length)?PAGES[idx]:'';
@@ -380,66 +615,121 @@ function renderPages(idx){
   pageR.innerHTML=(ri>=0&&ri<PAGES.length)?PAGES[ri]:'';
   reZ();
 }
+
+function isJournalTransition(fromIdx, toIdx){
+  // Use flip if either spread involves journal pages
+  const m = mob();
+  const maxJ = m ? JOURNAL_PAGES : JOURNAL_PAGES + 1;
+  return fromIdx < maxJ || toIdx < maxJ;
+}
+
 function maxCur(){return PAGES.length-(mob()?1:2);}
 function step(){return mob()?1:2;}
+
 function updateNav(){
   navPrev.disabled=(cur<=-1);
   navNext.disabled=(cur>=maxCur());
   if(cur>=0){const ri=mob()?cur:cur+1;navLabel.textContent=(ri+1)+' / '+PAGES.length;}
   else navLabel.textContent='';
 }
+
 function showCover(){
   bookOpen.style.display='none';
   bookClosed.style.display='';
-  bookClosed.style.opacity='0';bookClosed.style.transform='scale(.97)';
+  bookClosed.style.opacity='0';
+  bookClosed.style.transform='scale(.96)';
   navRow.classList.remove('show');
   requestAnimationFrame(()=>{
-    bookClosed.style.transition='opacity .4s,transform .4s';
-    bookClosed.style.opacity='1';bookClosed.style.transform='scale(1)';
+    bookClosed.style.transition='opacity .45s,transform .45s';
+    bookClosed.style.opacity='1';
+    bookClosed.style.transform='scale(1)';
   });
   cur=-2;
 }
+
 function openBook(){
   if(busy||cur>=0)return;
-  busy=true;cur=0;
+  busy=true; cur=0;
   bookClosed.style.transition='opacity .4s,transform .4s';
-  bookClosed.style.opacity='0';bookClosed.style.transform='scale(.97)';
+  bookClosed.style.opacity='0';
+  bookClosed.style.transform='scale(.96)';
   setTimeout(()=>{
-    bookClosed.style.display='none';bookClosed.style.transition='';
-    bookOpen.style.display='flex';renderPages(cur);navRow.classList.add('show');updateNav();busy=false;
+    bookClosed.style.display='none';
+    bookClosed.style.transition='';
+    bookOpen.style.display='flex';
+    renderPages(cur);
+    navRow.classList.add('show');
+    updateNav(); busy=false;
   },420);
 }
+
+function doFlip(isNext){
+  const m=mob(); 
+  const next = isNext ? cur+step() : Math.max(0,cur-step());
+  const useFlip = isJournalTransition(cur, next);
+  const dur = useFlip ? FLIP : FADE;
+
+  if(isNext){
+    leafFace.innerHTML=m?PAGES[cur]:(cur+1<PAGES.length?PAGES[cur+1]:'');
+    leafBack.innerHTML=m?PAGES[next]:(next<PAGES.length?PAGES[next]:'');
+    const nextRi=m?next:next+1;
+    pageR.innerHTML=nextRi<PAGES.length?PAGES[nextRi]:'';
+    if(!m)pageL.innerHTML=next<PAGES.length?PAGES[next]:'';
+    reZ();
+
+    if(useFlip){
+      leaf.style.display='block';
+      leaf.style.transition='none';
+      leaf.style.transform='rotateY(0deg)';
+      leaf.getBoundingClientRect();
+      leaf.style.transition=`transform ${dur}ms cubic-bezier(.645,.045,.355,1)`;
+      leaf.style.transform='rotateY(-180deg)';
+    } else {
+      // fade: hide current right, show new content
+      leaf.style.display='none';
+    }
+  } else {
+    const prevRi=m?next:next+1;
+    leafFace.innerHTML=prevRi<PAGES.length?PAGES[prevRi]:'';
+    leafBack.innerHTML=m?PAGES[cur]:(cur<PAGES.length?PAGES[cur]:'');
+    if(!m)pageL.innerHTML=next<PAGES.length?PAGES[next]:'';
+
+    if(useFlip){
+      leaf.style.display='block';
+      leaf.style.transition='none';
+      leaf.style.transform='rotateY(-180deg)';
+      leaf.getBoundingClientRect();
+      leaf.style.transition=`transform ${dur}ms cubic-bezier(.645,.045,.355,1)`;
+      leaf.style.transform='rotateY(0deg)';
+    } else {
+      leaf.style.display='none';
+    }
+  }
+
+  setTimeout(()=>{
+    leaf.style.display='none';
+    leaf.style.transform='';
+    cur=next; renderPages(cur); updateNav(); busy=false;
+  }, dur+20);
+}
+
 function flipNext(){
   if(busy||cur<0||cur>=maxCur())return;
-  busy=true;const m=mob();const next=cur+step();
-  leafFace.innerHTML=m?PAGES[cur]:(cur+1<PAGES.length?PAGES[cur+1]:'');
-  leafBack.innerHTML=m?PAGES[next]:(next<PAGES.length?PAGES[next]:'');
-  const nextRi=m?next:next+1;
-  pageR.innerHTML=nextRi<PAGES.length?PAGES[nextRi]:'';
-  if(!m)pageL.innerHTML=next<PAGES.length?PAGES[next]:'';
-  reZ();
-  leaf.style.display='block';leaf.style.transition='none';leaf.style.transform='rotateY(0deg)';
-  leaf.getBoundingClientRect();
-  leaf.style.transition=`transform ${FLIP}ms cubic-bezier(.645,.045,.355,1)`;leaf.style.transform='rotateY(-180deg)';
-  setTimeout(()=>{leaf.style.display='none';leaf.style.transform='';cur=next;renderPages(cur);updateNav();busy=false;},FLIP+20);
+  busy=true; doFlip(true);
 }
 function flipPrev(){
   if(busy)return;
   if(cur<=0){if(cur===0)showCover();return;}
-  busy=true;const m=mob();const prev=Math.max(0,cur-step());
-  const prevRi=m?prev:prev+1;
-  leafFace.innerHTML=prevRi<PAGES.length?PAGES[prevRi]:'';
-  leafBack.innerHTML=m?PAGES[cur]:(cur<PAGES.length?PAGES[cur]:'');
-  if(!m)pageL.innerHTML=prev<PAGES.length?PAGES[prev]:'';
-  leaf.style.display='block';leaf.style.transition='none';leaf.style.transform='rotateY(-180deg)';
-  leaf.getBoundingClientRect();
-  leaf.style.transition=`transform ${FLIP}ms cubic-bezier(.645,.045,.355,1)`;leaf.style.transform='rotateY(0deg)';
-  setTimeout(()=>{leaf.style.display='none';leaf.style.transform='';cur=prev;renderPages(cur);updateNav();busy=false;},FLIP+20);
+  busy=true; doFlip(false);
 }
+
 document.getElementById('openHint').addEventListener('click',openBook);
-document.getElementById('coverEl').addEventListener('click',openBook);
-navNext.addEventListener('click',flipNext);navPrev.addEventListener('click',flipPrev);
-zoneR.addEventListener('click',flipNext);zoneL.addEventListener('click',flipPrev);
+document.getElementById('bookClosed').addEventListener('click',openBook);
+navNext.addEventListener('click',flipNext);
+navPrev.addEventListener('click',flipPrev);
+zoneR.addEventListener('click',flipNext);
+zoneL.addEventListener('click',flipPrev);
+
 document.addEventListener('keydown',e=>{
   if(cur<0){if(e.key==='Enter'||e.key===' ')openBook();return;}
   if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();flipNext();}
@@ -449,6 +739,8 @@ let tx=0;
 document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
 document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40){dx<0?flipNext():flipPrev();}},{passive:true});
 window.addEventListener('resize',()=>{if(cur>=0)renderPages(cur);});
+
+// cursor
 const cd=document.getElementById('cd'),cr=document.getElementById('cr');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';});
