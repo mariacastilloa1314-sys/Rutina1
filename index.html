@@ -1200,43 +1200,14 @@ const zoneL=$('zoneL'), zoneR=$('zoneR');
 
 function reZ(){pageR.appendChild(zoneL);pageR.appendChild(zoneR);}
 function renderPages(idx){
-  // Stop music when changing pages (will restart if needed below)
-  const prevPageHasMusic = (cur === 7 || cur === 13) || (cur === 6 || cur === 12);
-  if(prevPageHasMusic) stopAllMusic();
-
   const m=mob();
   pageL.innerHTML=(!m&&idx>=0&&idx<PAGES.length)?PAGES[idx]:'';
   const ri=m?idx:idx+1;
   pageR.innerHTML=(ri>=0&&ri<PAGES.length)?PAGES[ri]:'';
   reZ();
   const isJ = idx < 4;
-  if(window.onMusicPageChange) window.onMusicPageChange(mob()?idx:idx);
   bookOpen.classList.toggle('journal-spread', isJ);
-
-  // ── Music activation ──
-  const leftIdx  = mob() ? idx : idx;
-  const rightIdx = mob() ? idx : idx + 1;
-
-  // Relato 04 (Noche críptica) = page index 7
-  if(leftIdx === 7 || rightIdx === 7) {
-    setTimeout(() => {
-      bindMusicControls('midnight');
-      showMusicPlayer('midnight');
-      startTrack('midnight', 62);
-    }, 600);
-  } else {
-    hideMusicPlayer('midnight');
-  }
-
-  // Relato 10 (Zombi) = page index 13
-  if(leftIdx === 13 || rightIdx === 13) {
-    setTimeout(() => {
-      bindMusicControls('floor');
-    }, 400);
-    // Music starts when lyrics paragraph enters view (via IntersectionObserver below)
-  } else {
-    hideMusicPlayer('floor');
-  }
+  if(window.onMusicPageChange) window.onMusicPageChange(idx);
 
   // ── Index item clicks ──
   document.querySelectorAll('.j-idx-item[data-target]').forEach(el=>{
@@ -1433,7 +1404,7 @@ function doFlip(isNext){
     cur=next;renderPages(cur);updateNav();busy=false;
   }
 }
-function flipNext(){if(busy||cur<0||cur>=maxCur())return;busy=true;doFlip(true);}
+function flipNext(){if(busy||cur<0||cur>=maxCur())return;busy=true;userInteracted=true;doFlip(true);}
 function flipPrev(){
   if(busy)return;
   if(cur<=0){if(cur===0)showCover();return;}
@@ -1518,6 +1489,7 @@ const mNotice  = document.getElementById('music-autoplay-notice');
 document.addEventListener('click', () => { userInteracted = true; }, { once: true });
 document.addEventListener('keydown', () => { userInteracted = true; }, { once: true });
 document.addEventListener('touchstart', () => { userInteracted = true; }, { once: true, passive: true });
+document.addEventListener('pointerdown', () => { userInteracted = true; }, { once: true });
 
 // Load YouTube IFrame API
 (function loadYT() {
@@ -1540,10 +1512,7 @@ window.onYouTubeIframeAPIReady = function () {
       events: {
         onReady: (e) => {
           e.target.setVolume(0);
-          // Pre-buffer
-          e.target.mute();
-          e.target.playVideo();
-          setTimeout(() => { e.target.pauseVideo(); e.target.unMute(); e.target.setVolume(0); }, 1200);
+          e.target.unMute();
         },
         onStateChange: (e) => {
           if (e.data === YT.PlayerState.ENDED) {
@@ -1676,29 +1645,23 @@ mBtn.addEventListener('click', () => {
 window.onMusicPageChange = function(pageIdx) {
   const prevPage = currentMusicPage;
 
-  // Stop previous if different
+  // Stop previous music if leaving a music page
   if (prevPage !== null && prevPage !== pageIdx) {
-    stopMusic(prevPage, 1800);
+    stopMusic(prevPage, 1200);
   }
 
-  if (MUSIC_PAGES[pageIdx]) {
-    const cfg = MUSIC_PAGES[pageIdx];
+  const cfg = MUSIC_PAGES[pageIdx];
+  if (cfg) {
     if (cfg.autoStart) {
-      // Relato 4: start immediately
-      startMusic(pageIdx, 600);
+      startMusic(pageIdx, 800);
     } else {
-      // Relato 10: start at first lyric paragraph via IntersectionObserver
-      // The observer will call window.triggerZombieMusic()
+      // Show widget; music fires via IntersectionObserver on lyric paragraph
       mWidget.classList.add('mw-show');
       mLabel.textContent = '♪ ' + cfg.title;
-      // Prepare player (seek to 0)
-      try { if(players[pageIdx]) players[pageIdx].seekTo(0); } catch(e) {}
+      try { if(players[pageIdx]) { players[pageIdx].seekTo(0); } } catch(e) {}
     }
   } else {
-    // Non-music page — hide widget
-    if (prevPage === null) {
-      mWidget.classList.remove('mw-show');
-    }
+    mWidget.classList.remove('mw-show');
   }
 };
 
