@@ -1103,7 +1103,6 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 #music-autoplay-notice.show { display: block; }
 #music-autoplay-notice:hover { background: rgba(245,238,215,1); }
 </style>
-  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 <div id="cr"></div><div id="cd"></div>
@@ -1425,10 +1424,14 @@ function doFlip(isNext){
       leaf.style.transform='rotateY(0deg)';
     }
   }
-  setTimeout(()=>{
-    leaf.style.display='none';leaf.style.transform='';
+  if(useFlip){
+    setTimeout(()=>{
+      leaf.style.display='none';leaf.style.transform='';
+      cur=next;renderPages(cur);updateNav();busy=false;
+    },dur+20);
+  } else {
     cur=next;renderPages(cur);updateNav();busy=false;
-  },dur+20);
+  }
 }
 function flipNext(){if(busy||cur<0||cur>=maxCur())return;busy=true;doFlip(true);}
 function flipPrev(){
@@ -1475,10 +1478,6 @@ document.querySelectorAll('a,button,input,.open-hint,.book-closed,.zone').forEac
 </script>
 <div id="yt-container"><div id="yt-midnight"></div><div id="yt-floor"></div></div>
 
-<!-- ═══ MUSIC SYSTEM ═══ -->
-<div id="yt-midnight" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;"></div>
-<div id="yt-zombies" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;"></div>
-
 <div id="music-widget">
   <div id="music-track-label">♪ </div>
   <button id="music-btn" title="Música">
@@ -1500,7 +1499,7 @@ document.querySelectorAll('a,button,input,.open-hint,.book-closed,.zone').forEac
 ═══════════════════════════════════════════════════ */
 const MUSIC_PAGES = {
   7:  { ytId: 'dX3k_QDnzHE', title: 'Midnight City — M83',          autoStart: true,  container: 'yt-midnight' },
-  13: { ytId: 'OoAOPUO3QTo', title: 'Take Me on the Floor — The Veronicas', autoStart: false, container: 'yt-zombies' }
+  13: { ytId: 'OoAOPUO3QTo', title: 'Take Me on the Floor — The Veronicas', autoStart: false, container: 'yt-floor' }
 };
 
 let ytApiReady = false;
