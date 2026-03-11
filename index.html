@@ -33,9 +33,10 @@
 html,body{height:100%;overflow:hidden}
 body{
   background:
-    radial-gradient(ellipse at 25% 25%,#160a04 0%,transparent 55%),
-    radial-gradient(ellipse at 75% 75%,#0c0810 0%,transparent 55%),
-    #07050a;
+    radial-gradient(ellipse at 50% 42%,#2a1208 0%,#150805 35%,transparent 65%),
+    radial-gradient(ellipse at 25% 25%,#1a0d06 0%,transparent 50%),
+    radial-gradient(ellipse at 75% 78%,#100810 0%,transparent 50%),
+    #06040a;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   user-select:none;min-height:100vh;
   font-family:'Crimson Pro',serif;
@@ -46,7 +47,17 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 #cd,#cr{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
 #cd{width:4px;height:4px;background:var(--gold);border-radius:50%}
 #cr{width:22px;height:22px;border:1px solid rgba(184,149,106,.35);border-radius:50%;transition:width .25s,height .25s,border-color .25s}
-.scene{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(.6rem,1.5vh,1.2rem);width:100%;height:100%;}
+.scene{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(.4rem,1vh,0.8rem);width:100%;height:100%;
+}
+/* Subtle radial vignette on scene edges */
+.scene::before{
+  content:"";pointer-events:none;
+  position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse at 50% 50%, transparent 50%, rgba(0,0,0,.45) 100%);
+}
 
 /* ═══════════════════════════════════════
    DIARY COVER — thick book texture
@@ -218,12 +229,20 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .book-open{
   display:none;position:relative;flex-direction:row;
   width:calc(var(--pw)*2 + var(--sw));height:var(--ph);
-  filter:drop-shadow(-6px 16px 52px rgba(0,0,0,.82)) drop-shadow(2px 4px 16px rgba(0,0,0,.5));
+  filter:drop-shadow(-8px 20px 60px rgba(0,0,0,.9)) drop-shadow(0 2px 8px rgba(0,0,0,.6));
+}
+/* Ambient warm glow under book */
+.book-open::after{
+  content:"";pointer-events:none;
+  position:absolute;bottom:-30px;left:10%;right:10%;height:60px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(120,50,20,.25) 0%,transparent 70%);
+  filter:blur(12px);z-index:-1;
 }
 .pg{width:var(--pw);height:var(--ph);position:relative;overflow:hidden;flex-shrink:0;}
 .pg-l{
   background:linear-gradient(to right,#120c08,#0d0a06);
   box-shadow:inset -8px 0 20px rgba(0,0,0,.55);
+  border-radius:4px 0 0 4px;
 }
 /* Page curve shadow — simulates book center curvature */
 .pg-l::after{
@@ -236,7 +255,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   background:linear-gradient(to left,transparent,rgba(0,0,0,.18));
   pointer-events:none;z-index:2;
 }
-.pg-r{background:linear-gradient(to left,#120c08,#0d0a06);box-shadow:inset 8px 0 20px rgba(0,0,0,.55);}
+.pg-r{background:linear-gradient(to left,#120c08,#0d0a06);box-shadow:inset 8px 0 20px rgba(0,0,0,.55);border-radius:0 4px 4px 0;}
 .pg-r::after{
   content:"";position:absolute;top:2px;bottom:2px;right:-11px;width:11px;
   background:repeating-linear-gradient(to right,#ddd0b0 0px,#e8dcc0 3px,#ccc0a0 3px,#ddd0b0 5px,#e0d4b8 5px,#ccc0a0 7px,#ddd0b0 7px,#e8dcc0 9px,#cac0a0 9px,#ddd0b0 11px);
@@ -1479,6 +1498,10 @@ document.querySelectorAll('a,button,input,.open-hint,.book-closed,.zone').forEac
 });
 </script>
 <div id="yt-container"><div id="yt-midnight"></div><div id="yt-floor"></div><div id="yt-zombies"></div></div>
+<!-- Audio nativo para Relato 10 (reemplaza YouTube si embedding está bloqueado) -->
+<audio id="audio-zombie" preload="none" loop
+  src="https://archive.org/download/the-veronicas-take-me-on-the-floor-warner-records/The%20Veronicas%20-%20Take%20Me%20On%20The%20Floor-Warner%20Records.mp3">
+</audio>
 
 <div id="music-widget">
   <div id="music-track-label">♪ </div>
@@ -1575,12 +1598,14 @@ function fadeVolume(player, fromVol, toVol, durationMs, onDone) {
   }, interval);
 }
 
-function startMusic(pageIdx, delay = 0) {
+function startMusic(pageIdx, delay = 0, seekTime) {
   const cfg = MUSIC_PAGES[pageIdx];
-  if (!cfg || !ytApiReady) return;
-  const player = players[pageIdx];
-  if (!player || typeof player.playVideo !== 'function') return;
-  if (currentMusicPage === pageIdx && isPlaying) return; // ya suena
+  if (!cfg) return;
+  if (currentMusicPage === pageIdx && isPlaying) {
+    // Ya suena — solo seek si se pide
+    if (seekTime != null) _musicSeek(pageIdx, seekTime);
+    return;
+  }
 
   currentMusicPage = pageIdx;
   mLabel.textContent = '♪ ' + cfg.title;
@@ -1588,26 +1613,59 @@ function startMusic(pageIdx, delay = 0) {
   mNotice.classList.remove('show');
 
   function doPlay() {
-    try {
-      // Muted autoplay siempre funciona (política de navegadores)
-      player.mute();
-      player.setVolume(0);
-      player.playVideo();
-      isPlaying = true;
-      mWidget.classList.add('mw-playing');
-      mBtn.title = 'Pausar música';
-      // Unmute + fade-in tras breve delay
-      setTimeout(() => {
-        try {
-          player.unMute();
-          fadeVolume(player, 0, 72, 2400);
-        } catch(e) {}
-      }, 400);
-    } catch(e) {}
+    // Intentar audio nativo primero (más confiable que YT embedding)
+    const audioEl = document.getElementById('audio-' + (pageIdx === 13 ? 'zombie' : ''));
+    if (audioEl && audioEl.src && !audioEl.src.includes('REEMPLAZAR')) {
+      audioEl.volume = 0;
+      audioEl.currentTime = seekTime || 0;
+      audioEl.play().then(() => {
+        _fadeAudio(audioEl, 0, 0.72, 2400);
+        isPlaying = true;
+        mWidget.classList.add('mw-playing');
+        mBtn.title = 'Pausar música';
+      }).catch(() => _startYT(pageIdx, seekTime));
+      return;
+    }
+    _startYT(pageIdx, seekTime);
   }
 
   if (delay > 0) setTimeout(doPlay, delay);
   else doPlay();
+}
+
+function _startYT(pageIdx, seekTime) {
+  if (!ytApiReady) return;
+  const player = players[pageIdx];
+  if (!player || typeof player.playVideo !== 'function') return;
+  try {
+    if (seekTime != null) player.seekTo(seekTime, true);
+    player.mute();
+    player.setVolume(0);
+    player.playVideo();
+    isPlaying = true;
+    mWidget.classList.add('mw-playing');
+    mBtn.title = 'Pausar música';
+    setTimeout(() => {
+      try { player.unMute(); fadeVolume(player, 0, 72, 2400); } catch(e) {}
+    }, 400);
+  } catch(e) {}
+}
+
+function _fadeAudio(el, from, to, ms) {
+  const steps = 30, interval = ms / steps;
+  let s = 0;
+  const t = setInterval(() => {
+    s++;
+    el.volume = Math.max(0, Math.min(1, from + (to - from) * s / steps));
+    if (s >= steps) clearInterval(t);
+  }, interval);
+}
+
+function _musicSeek(pageIdx, time) {
+  const audioEl = document.getElementById('audio-' + (pageIdx === 13 ? 'zombie' : ''));
+  if (audioEl && !audioEl.paused) { audioEl.currentTime = time; return; }
+  const p = players[pageIdx];
+  if (p) try { p.seekTo(time, true); } catch(e) {}
 }
 
 function tryAutoplay(pageIdx, doPlay) {
@@ -1656,19 +1714,27 @@ mBtn.addEventListener('click', () => {
   userInteracted = true;
   if (!currentMusicPage && !isPlaying) return;
   const pg = currentMusicPage;
+  // Check native audio first
+  const audioEl = document.getElementById('audio-' + (pg === 13 ? 'zombie' : ''));
+  if (audioEl && audioEl.src && !audioEl.src.includes('REEMPLAZAR')) {
+    if (!audioEl.paused) {
+      audioEl.pause(); isPlaying = false;
+      mWidget.classList.remove('mw-playing'); mBtn.title = 'Reproducir música';
+    } else {
+      audioEl.play(); isPlaying = true;
+      mWidget.classList.add('mw-playing'); mBtn.title = 'Pausar música';
+    }
+    return;
+  }
   if (!pg || !players[pg]) return;
   try {
     const state = players[pg].getPlayerState();
     if (state === YT.PlayerState.PLAYING) {
       players[pg].pauseVideo();
-      isPlaying = false;
-      mWidget.classList.remove('mw-playing');
-      mBtn.title = 'Reproducir música';
+      isPlaying = false; mWidget.classList.remove('mw-playing'); mBtn.title = 'Reproducir música';
     } else {
       players[pg].playVideo();
-      isPlaying = true;
-      mWidget.classList.add('mw-playing');
-      mBtn.title = 'Pausar música';
+      isPlaying = true; mWidget.classList.add('mw-playing'); mBtn.title = 'Pausar música';
     }
   } catch(e) {}
 });
