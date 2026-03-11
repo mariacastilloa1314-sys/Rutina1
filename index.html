@@ -17,7 +17,7 @@
   --gold-dim:   #5a4530;
   --gold-faint: #2e2010;
   --ink:        #d0c4a8;
-  --ink2:       #8a7a62;
+  --ink2:       #4a3828;
   --ink3:       #52402e;
   --crimson:    #8a1e1e;
   --crimson2:   #c44040;
@@ -664,19 +664,19 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 /* Warm dim: dusk atmosphere */
 .p-story.atmos-warm .story-scroll .pb,
 .p-story.atmos-warm .story-scroll .pd {
-  color: rgba(215,185,118,.92);
+  color: rgba(38,20,8,.88);
 }
 /* Dark: deep night — ink becomes amber */
 .p-story.atmos-dark .story-scroll .pb,
 .p-story.atmos-dark .story-scroll .pd {
-  color: rgba(195,155,75,.90);
-  text-shadow: 0 0 12px rgba(180,130,40,.12);
+  color: rgba(218,185,105,.95);
+  text-shadow: 0 1px 8px rgba(0,0,0,.4);
 }
 /* Horror: crimson tinge */
 .p-story.atmos-horror .story-scroll .pb,
 .p-story.atmos-horror .story-scroll .pd {
-  color: rgba(185,135,60,.88);
-  text-shadow: 0 0 18px rgba(160,20,5,.10);
+  color: rgba(225,195,120,.95);
+  text-shadow: 0 1px 10px rgba(0,0,0,.5);
 }
 
 /* Chapter label */
@@ -701,6 +701,14 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   margin-bottom: .3em;
   filter: blur(.15px);
   transition: text-shadow 2s ease, color 2s ease;
+}
+/* Story title on dark/warm backgrounds */
+.p-story.atmos-dark .story-scroll .pt,
+.p-story.atmos-horror .story-scroll .pt {
+  color: rgba(200,148,60,.95);
+}
+.p-story.atmos-warm .story-scroll .pt {
+  color: rgba(90,40,12,.92);
 }
 .p-story.atmos-dark .story-scroll .pt {
   color: rgba(200,100,60,.90);
@@ -1767,30 +1775,39 @@ window.onMusicPageChange = function(pageIdx, rightIdx) {
 
 
 function initMusicTriggers(){
-  // Music already started via autoStart. This observer only seeks to timestamps.
   const triggers = document.querySelectorAll(".music-trigger");
   if(!triggers.length) return;
-  // Use viewport as root — more reliable than scroll container
+
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if(entry.isIntersecting && !entry.target.classList.contains("music-active")){
         entry.target.classList.add("music-active");
         const time = parseFloat(entry.target.dataset.time) || 0;
-        const p = players[13];
-        if(!p) return;
-        try{
-          // If music is already playing, seek to timestamp
-          if(typeof p.seekTo === 'function') p.seekTo(time, true);
-          // If not playing yet, start it
-          if(typeof p.getPlayerState === 'function'){
-            const state = p.getPlayerState();
-            if(state !== 1) startMusic(13, 0); // 1 = PLAYING
-          }
-        }catch(e){}
+        // Seek native audio
+        const audioEl = document.getElementById('audio-zombie');
+        if(audioEl && !audioEl.src.includes('REEMPLAZAR')) {
+          if(!audioEl.paused) audioEl.currentTime = time;
+        }
       }
     });
-  },{threshold:0.2});
+  },{threshold:0.25});
   triggers.forEach(t => observer.observe(t));
+
+  // Fade-out observer: cuando el ÚLTIMO trigger sale del área visible, bajar volumen
+  const lastTrigger = triggers[triggers.length - 1];
+  const fadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(!entry.isIntersecting && lastTrigger.classList.contains("music-active")){
+        // El lector pasó la última letra — fade out lento
+        const audioEl = document.getElementById('audio-zombie');
+        if(audioEl && !audioEl.paused){
+          _fadeAudio(audioEl, audioEl.volume, 0, 4500);
+          setTimeout(() => { try{ audioEl.pause(); }catch(e){} }, 4600);
+        }
+      }
+    });
+  },{threshold:0.1});
+  fadeObserver.observe(lastTrigger);
 }
 
 window.triggerZombieMusic = function() {
