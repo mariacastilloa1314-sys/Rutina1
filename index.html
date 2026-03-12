@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cinzel:wght@400;600&family=Cinzel+Decorative&family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=Special+Elite&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --ph:  clamp(360px, min(72vh, 600px), 600px);
+  --ph:  clamp(500px, min(88vh, 820px), 820px);
   --pw:  calc(var(--ph) / 1.54);
   --sw:  clamp(14px,1.8vw,22px);
   --gold:       #b8956a;
@@ -616,9 +616,8 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 /* Layer 2: Vignette — deepens with darkness */
 .story-vignette {
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(10,5,3,.14) 100%);
-  transition: opacity 2.5s ease;
-  opacity: 1;
+  background: none;
+  opacity: 0;
 }
 .p-story.atmos-deep .story-vignette { opacity: 1; }
 
@@ -1158,15 +1157,15 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 html { height: 100% !important; }
 html, body { background: #12181f !important; }
 .scene {
-  padding: 2.5vh 3vw 1.5vh !important;
+  padding: 1.5vh 2vw 1vh !important;
   box-sizing: border-box !important;
+  min-height: 100vh !important;
   background: radial-gradient(ellipse at 50% 45%, #1a2535 0%, #12181f 65%) !important;
 }
 
 /* ── LIBRO MÁS GRANDE: que respire y llene la pantalla ── */
 :root {
-  --ph: clamp(480px, min(84vh, 760px), 760px) !important;
-  --pw: calc(var(--ph) / 1.45) !important;
+  /* --ph set directly in :root */
 }
 
 /* ── LIBRO: borde gris-azulado como El Libro Total ── */
@@ -1201,10 +1200,7 @@ html, body { background: #12181f !important; }
 /* ── FONDO PAPEL: gradiente cálido sutil ── */
 .story-base-paper,
 .pg-paper-fill {
-  background:
-    radial-gradient(ellipse at 10% 8%,  rgba(240,225,185,.35) 0%, transparent 40%),
-    radial-gradient(ellipse at 90% 92%, rgba(220,205,165,.20) 0%, transparent 35%),
-    #f7f2e8 !important;
+  background: #f7f2e8 !important;
 }
 
 /* ── LOMO: oscuro y fino ── */
@@ -1246,8 +1242,9 @@ html, body { background: #12181f !important; }
   color: rgba(218,185,105,.95) !important;
 }
 
-/* ── ATMÓSFERA: desactivada ── */
-.story-atmos-layer { opacity: 0 !important; }
+/* ── ATMÓSFERA: desactivada completamente ── */
+.story-atmos-layer { opacity: 0 !important; display: none !important; }
+.story-base-paper { background: #f7f2e8 !important; }
 
 /* ── NAV ── */
 .nav-btn { color: rgba(160,185,210,.65) !important; }
@@ -1256,34 +1253,30 @@ html, body { background: #12181f !important; }
 /* ── DOBLEZ INFERIOR — esquinas inferiores, triángulo blanco-crema ──
    Igual que El Libro Total: triángulo pequeño doblado hacia adentro  */
 .pg-l::before,
+/* ── DOBLEZ INFERIOR: esquinas inferiores como El Libro Total ── */
+.pg-l::before,
 .pg-r::before {
   content: "" !important;
   position: absolute !important;
   bottom: 0 !important;
-  width: 40px !important;
-  height: 40px !important;
+  width: 44px !important;
+  height: 44px !important;
   pointer-events: none !important;
   z-index: 30 !important;
 }
 .pg-l::before {
   left: 0 !important;
-  background:
-    linear-gradient(to top right,
-      #b8aa88 0%,
-      #cfc099 35%,
-      #f7f2e8 50%,
-      transparent 50%
-    ) !important;
+  background: linear-gradient(
+    to top right,
+    #a89868 0%, #c8b888 38%, #f7f2e8 52%, transparent 52%
+  ) !important;
 }
 .pg-r::before {
   right: 0 !important;
-  background:
-    linear-gradient(to top left,
-      #b8aa88 0%,
-      #cfc099 35%,
-      #f7f2e8 50%,
-      transparent 50%
-    ) !important;
+  background: linear-gradient(
+    to top left,
+    #a89868 0%, #c8b888 38%, #f7f2e8 52%, transparent 52%
+  ) !important;
 }
 
 /* ── GRAIN: textura muy sutil ── */
