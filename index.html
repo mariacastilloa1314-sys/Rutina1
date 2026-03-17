@@ -1315,7 +1315,6 @@ html, body {
 .p-story {
   z-index: 20 !important;
   position: relative !important;
-  overflow: hidden !important;
 }
 .story-base-paper,
 .pg-paper-fill {
@@ -1638,6 +1637,12 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
     height: 100% !important;
     min-height: 0 !important;
     align-self: stretch !important;
+  }
+  /* p-story fills pg-r and scrolls on touch */
+  .pg-r .p-story {
+    height: 100% !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
   /* pg must also fill height on mobile */
   .pg {
