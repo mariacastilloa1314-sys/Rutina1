@@ -1626,8 +1626,8 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
   /* ── COVER ── */
   .book-closed {
     width: clamp(200px, 62vw, 320px) !important;
-    height: auto !important;
-    aspect-ratio: 1 / 1.54 !important;
+    height: calc(clamp(200px, 62vw, 320px) * 1.54) !important;
+    max-height: calc(100vh - 100px) !important;
     flex-shrink: 0 !important;
   }
 
@@ -2153,6 +2153,7 @@ function flipPrev(){
 }
 $('openHint').addEventListener('click',openBook);
 bookClosed.addEventListener('click',openBook);
+bookClosed.addEventListener('touchend',function(e){e.preventDefault();openBook();},{passive:false});
 navNext.addEventListener('click',flipNext);navPrev.addEventListener('click',flipPrev);
 navHome.addEventListener('click',()=>{
   if(busy) return;
