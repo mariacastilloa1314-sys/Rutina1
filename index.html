@@ -1008,10 +1008,12 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 /* Hidden YouTube iframe container */
 #yt-container {
   position: fixed;
-  top: -9999px; left: -9999px;
+  bottom: 0; right: 0;
   width: 1px; height: 1px;
-  opacity: 0; pointer-events: none;
+  opacity: 0.01;
+  pointer-events: none;
   overflow: hidden;
+  z-index: 1;
 }
 
 /* ════════════════════════════════════════
@@ -2270,7 +2272,7 @@ window.onYouTubeIframeAPIReady = function () {
       playerVars: {
         autoplay: 0, controls: 0, disablekb: 1,
         fs: 0, iv_load_policy: 3, modestbranding: 1,
-        rel: 0, origin: location.origin
+        rel: 0
       },
       events: {
         onReady: (e) => {
