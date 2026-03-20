@@ -1901,90 +1901,28 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
 }
 
 /* ── Modal de reacción ── */
-#reaction-modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(18,24,31,.55);
-  z-index: 10000;
-  align-items: flex-end;
-  justify-content: center;
-}
-#reaction-modal-overlay.open {
-  display: flex;
-}
-#reaction-modal {
-  background: #f6f0e2;
-  border-radius: 18px 18px 0 0;
-  padding: 24px 20px 32px;
-  width: 100%;
-  max-width: 480px;
-  box-shadow: 0 -4px 32px rgba(0,0,0,.25);
-  animation: slideUp .25s ease;
-}
-@keyframes slideUp {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
-}
-#reaction-modal-title {
-  font-family: 'Caveat', cursive;
-  font-size: 1.15rem;
-  color: #3d0000;
-  margin-bottom: 12px;
-  font-weight: 700;
-  text-align: center;
-}
-#reaction-textarea {
-  width: 100%;
-  min-height: 90px;
-  background: rgba(255,255,255,.70);
-  border: 1.5px solid rgba(107,0,0,.20);
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-family: 'Caveat', cursive;
-  font-size: 1rem;
-  color: #1e3260;
-  resize: none;
-  box-sizing: border-box;
-  line-height: 1.5;
-}
-#reaction-textarea:focus {
-  outline: none;
-  border-color: rgba(107,0,0,.45);
-}
-#reaction-modal-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-#reaction-anon-label {
-  font-family: 'Caveat', cursive;
-  font-size: 0.82em;
-  color: rgba(107,0,0,.55);
-}
-#reaction-submit {
-  background: #6b0000;
-  color: #f6f0e2;
-  border: none;
-  border-radius: 20px;
-  padding: 8px 22px;
-  font-family: 'Caveat', cursive;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background .2s;
-}
-#reaction-submit:hover { background: #3d0000; }
-#reaction-cancel {
-  background: none;
-  border: none;
-  color: rgba(107,0,0,.45);
-  font-family: 'Caveat', cursive;
-  font-size: 0.85em;
-  cursor: pointer;
-  padding: 4px 8px;
-}
+#reaction-modal-overlay{display:none;position:fixed;inset:0;background:rgba(18,24,31,.60);z-index:10000;align-items:flex-end;justify-content:center;}
+#reaction-modal-overlay.open{display:flex;}
+#reaction-modal{background:#f6f0e2;border-radius:18px 18px 0 0;padding:0 0 32px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto;box-shadow:0 -4px 32px rgba(0,0,0,.30);animation:slideUp .25s ease;}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+#reaction-modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;border-bottom:1px solid rgba(107,0,0,.10);position:sticky;top:0;background:#f6f0e2;z-index:2;}
+#reaction-modal-title{font-family:'Caveat',cursive;font-size:1.1rem;color:#3d0000;font-weight:700;}
+#reaction-cancel{background:rgba(107,0,0,.08);border:none;color:rgba(107,0,0,.60);font-size:1rem;cursor:pointer;padding:4px 9px;border-radius:50%;line-height:1;}
+#reaction-existing{padding:10px 18px 4px;display:flex;flex-direction:column;gap:8px;}
+.reaction-existing-bubble{background:rgba(255,255,255,.55);border-radius:10px;padding:8px 12px;font-family:'Caveat',cursive;font-size:.88em;color:#2a0808;line-height:1.45;}
+.reaction-existing-author{font-size:.72em;color:rgba(107,0,0,.60);font-weight:700;margin-bottom:3px;}
+.reaction-empty-msg{font-family:'Caveat',cursive;font-size:.82em;color:rgba(107,0,0,.35);font-style:italic;}
+#reaction-name-section{padding:10px 18px 6px;border-top:1px solid rgba(107,0,0,.08);}
+#reaction-name-label{font-family:'Caveat',cursive;font-size:.85em;color:rgba(107,0,0,.70);font-weight:700;margin-bottom:7px;}
+#reaction-name-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.name-chip{font-family:'Caveat',cursive;font-size:.80em;padding:4px 11px;border-radius:14px;border:1.5px solid rgba(107,0,0,.22);background:rgba(255,255,255,.50);color:rgba(107,0,0,.65);cursor:pointer;transition:all .15s;}
+.name-chip.selected{background:#6b0000;color:#f6f0e2;border-color:#6b0000;}
+#reaction-write-section{padding:10px 18px 0;}
+#reaction-textarea{width:100%;min-height:80px;background:rgba(255,255,255,.70);border:1.5px solid rgba(107,0,0,.18);border-radius:10px;padding:10px 12px;font-family:'Caveat',cursive;font-size:1rem;color:#1e3260;resize:none;box-sizing:border-box;line-height:1.5;}
+#reaction-textarea:focus{outline:none;border-color:rgba(107,0,0,.40);}
+#reaction-modal-footer{display:flex;justify-content:flex-end;margin-top:10px;}
+#reaction-submit{background:#6b0000;color:#f6f0e2;border:none;border-radius:20px;padding:9px 26px;font-family:'Caveat',cursive;font-size:1rem;font-weight:700;cursor:pointer;}
+#reaction-submit:active{background:#3d0000;}
 
 /* ── Doodle / journaling pages ── */
 .p-doodle-real {
@@ -2895,14 +2833,20 @@ function stopAllMusic() {
 
 
 <!-- ── Modal reacciones ── -->
-<div id="reaction-modal-overlay">
+<div id="reaction-modal-overlay" style="display:none">
   <div id="reaction-modal">
-    <div id="reaction-modal-title">Escribe tu reacción, ¿encontraste algún error? — anónimo&nbsp;:)</div>
-    <textarea id="reaction-textarea" placeholder="¿Qué sentiste aquí? ¿Viste algún error? Sin filtros. Nadie sabe quién eres." maxlength="280"></textarea>
-    <div id="reaction-modal-footer">
-      <button id="reaction-cancel">cancelar</button>
-      <span id="reaction-anon-label">📝 como <span id="reaction-anon-name"></span></span>
-      <button id="reaction-submit">dejar reacción</button>
+    <div id="reaction-modal-header">
+      <span id="reaction-modal-title">&#128172; Reacciones</span>
+      <button id="reaction-cancel">&#x2715;</button>
+    </div>
+    <div id="reaction-existing"></div>
+    <div id="reaction-name-section">
+      <div id="reaction-name-label">&#x2192; Elige tu personaje:</div>
+      <div id="reaction-name-chips"></div>
+    </div>
+    <div id="reaction-write-section">
+      <textarea id="reaction-textarea" placeholder="¿Qué sentiste? ¿Encontraste un error? Ya me duelen los ojos de tanto leer, así que cuéntame." maxlength="280"></textarea>
+      <div id="reaction-modal-footer"><button id="reaction-submit">dejar reacción</button></div>
     </div>
   </div>
 </div>
@@ -3040,11 +2984,33 @@ function startOneWayTicket(){
   currentMusicPage=23;
   a.currentTime=0;a.volume=0;
   a.play().then(function(){fadeAudio(a,0,0.65,2000);}).catch(function(){});
+  // Typewriter effect for easter text
+  var lines=document.querySelectorAll('#easter-text p, #easter-text .easter-tap-wrap');
+  lines.forEach(function(el){el.style.opacity='0';el.style.transition='opacity .6s ease';});
+  var delay=400;
+  lines.forEach(function(el){
+    setTimeout(function(){el.style.opacity='1';},delay);
+    delay+=el.textContent.length>60?800:el.textContent.length>30?600:400;
+  });
 }
 // Easter egg
 function openEasterEgg(){
   var o=document.getElementById('easter-overlay');
-  if(o){o.style.display='block';o.classList.add('open');}
+  if(o){
+    o.style.display='block';o.classList.add('open');
+    // Hide all lines initially for typewriter
+    var lines=document.querySelectorAll('#easter-text p, #easter-text .easter-tap-wrap');
+    lines.forEach(function(el){el.style.opacity='0';el.style.transition='none';});
+    // Show first 2 lines immediately (before "toca aquí")
+    setTimeout(function(){
+      if(lines[0])lines[0].style.opacity='1';
+      if(lines[1])setTimeout(function(){lines[1].style.opacity='1';},500);
+      if(lines[2]){setTimeout(function(){
+        lines[2].style.transition='opacity .6s ease';
+        lines[2].style.opacity='1';
+      },1000);}
+    },300);
+  }
 }
 document.addEventListener('DOMContentLoaded',function(){
   var eb=document.getElementById('easter-close');
@@ -3099,7 +3065,14 @@ document.addEventListener('DOMContentLoaded',function(){
           setTimeout(function(){yr.classList.add('struck');},300);
           setTimeout(function(){
             document.getElementById('trailer-paper-wrap').classList.add('unfolded');
-            setTimeout(function(){typeEl('trailer-quien','¿QUIÉN ES REN?',95,null);},700);
+            setTimeout(function(){
+              typeEl('trailer-quien','¿Quién es Ren?',95,function(){
+                setTimeout(function(){
+                  var cw=document.getElementById('trailer-comment-wrap');
+                  if(cw){cw.style.opacity='1';}
+                },700);
+              });
+            },700);
           },900);
         },400);
       });},500);
