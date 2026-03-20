@@ -1391,10 +1391,11 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
   background: rgba(10,14,22,.92) !important;
   backdrop-filter: blur(10px) !important;
   box-sizing: border-box !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
   z-index: 200 !important;
   border-top: 1px solid rgba(184,149,106,.18) !important;
+  transition: opacity .4s !important;
 }
 .nav-progress-wrap {
   flex: 1;
