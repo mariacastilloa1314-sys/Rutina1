@@ -588,6 +588,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: rgba(148,12,12,.20) transparent;
+  padding-bottom: 80px;
 }
 .p-story::-webkit-scrollbar { width: 3px; }
 /* curl moved to pg-l::before / pg-r::before */}
@@ -647,6 +648,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   position: relative; z-index: 5;
   padding: clamp(.6rem,2vw,1.2rem) clamp(.8rem,2.5vw,1.6rem) clamp(2rem,5vw,3.5rem);
   min-height: 100%;
+  padding-bottom: 2rem;
 }
 
 /* ── CINEMATIC INK TRANSITIONS ── */
@@ -857,9 +859,11 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 
 /* ── Real doodle illustration ── */
 .p-doodle-real {
+  position: relative;
   display: flex;
-  align-items: stretch;
-  justify-content: stretch;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 .doodle-real-img {
   position: absolute;
@@ -1672,7 +1676,7 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
     height: auto !important;
     min-height: 100% !important;
     overflow: visible !important;
-    padding-bottom: 60px !important;
+    padding-bottom: 100px !important;
   }
 
   /* ── No page-curl on mobile ── */
@@ -1870,26 +1874,30 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
   flex-direction: column;
   gap: 4px;
   margin-top: 6px;
-  padding-left: 4px;
+  padding-left: 0;
+  border-left: none;
 }
-.para-reaction-wrap.comments-open .reaction-bubbles {
+/* Always show bubbles if there are comments */
+.para-reaction-wrap.has-comments .reaction-bubbles {
   display: flex;
 }
 .reaction-bubble {
-  background: rgba(240,232,208,.70);
-  border-left: 2px solid rgba(107,0,0,.25);
+  background: rgba(240,232,208,.60);
+  border-left: 2px solid rgba(107,0,0,.20);
   border-radius: 0 6px 6px 0;
-  padding: 5px 8px;
+  padding: 4px 8px 4px 10px;
   font-family: 'Caveat', cursive;
-  font-size: 0.80em;
+  font-size: 0.78em;
   color: #2a0808;
   line-height: 1.4;
+  margin-top: 4px;
 }
 .reaction-bubble-author {
-  font-size: 0.72em;
-  color: rgba(107,0,0,.55);
-  margin-bottom: 2px;
-  font-weight: 600;
+  font-size: 0.70em;
+  color: rgba(107,0,0,.50);
+  margin-bottom: 1px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 /* ── Modal de reacción ── */
@@ -2794,36 +2802,48 @@ function startTokioHotel() {
   _playArchiveItem(audio, id, 7);
 }
 
-// Fetch MP3 filename from archive.org XML and play
+// Play from archive.org using HTML directory listing (avoids CORS XML issue)
 function _playArchiveItem(audioEl, identifier, seekSecs) {
-  const xmlUrl = 'https://archive.org/download/' + identifier + '/' + identifier + '_files.xml';
-  fetch(xmlUrl)
+  // Try fetching the directory listing page to find the MP3 filename
+  const dirUrl = 'https://archive.org/download/' + identifier + '/';
+  fetch(dirUrl)
     .then(r => r.text())
-    .then(xml => {
-      // Find first .mp3 file in XML
-      const match = xml.match(/name="([^"]+\.mp3)"/i);
-      if (!match) throw new Error('No MP3 found');
-      const filename = match[1];
-      const url = 'https://archive.org/download/' + identifier + '/' + encodeURIComponent(filename);
-      audioEl.src = url;
+    .then(html => {
+      // Find .mp3 href in listing
+      const match = html.match(/href="([^"]+\.mp3)"/i);
+      if (!match) throw new Error('No MP3 in listing');
+      // href may be just the filename or full path
+      let filename = match[1];
+      if (!filename.startsWith('http')) {
+        filename = 'https://archive.org/download/' + identifier + '/' + filename;
+      }
+      audioEl.src = filename;
       audioEl.load();
+      return _waitAndPlay(audioEl, seekSecs);
+    })
+    .catch(() => {
+      // Fallback 1: identifier.mp3
+      audioEl.src = 'https://archive.org/download/' + identifier + '/' + identifier + '.mp3';
+      audioEl.load();
+      _waitAndPlay(audioEl, seekSecs).catch(() => {
+        // Fallback 2: try serve/download redirect
+        audioEl.src = 'https://archive.org/serve/' + identifier;
+        audioEl.load();
+        _waitAndPlay(audioEl, seekSecs).catch(()=>{});
+      });
+    });
+}
+
+function _waitAndPlay(audioEl, seekSecs) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
       audioEl.currentTime = seekSecs || 0;
       audioEl.volume = 0;
-      return audioEl.play();
-    })
-    .then(() => fadeAudio(audioEl, 0, 0.55, 2000))
-    .catch(err => {
-      console.log('Archive.org fetch failed, trying direct URL:', err);
-      // Fallback: try identifier as filename
-      const fallback = 'https://archive.org/download/' + identifier + '/' + identifier + '.mp3';
-      audioEl.src = fallback;
-      audioEl.load();
-      setTimeout(() => {
-        audioEl.currentTime = seekSecs || 0;
-        audioEl.volume = 0;
-        audioEl.play().then(() => fadeAudio(audioEl, 0, 0.55, 2000)).catch(()=>{});
-      }, 300);
-    });
+      audioEl.play()
+        .then(() => { fadeAudio(audioEl, 0, 0.55, 2000); resolve(); })
+        .catch(reject);
+    }, 400);
+  });
 }
 
 function stopAllMusic() {
@@ -2847,7 +2867,7 @@ function stopAllMusic() {
 <div id="reaction-modal-overlay">
   <div id="reaction-modal">
     <div id="reaction-modal-title">Escribe tu reacción, ¿encontraste algún error? — anónimo&nbsp;:)</div>
-    <textarea id="reaction-textarea" placeholder="¿Qué sentiste aquí? ¿Viste algún error? Sin filtros. Nadie sabe quién sos." maxlength="280"></textarea>
+    <textarea id="reaction-textarea" placeholder="¿Qué sentiste aquí? ¿Viste algún error? Sin filtros. Nadie sabe quién eres." maxlength="280"></textarea>
     <div id="reaction-modal-footer">
       <button id="reaction-cancel">cancelar</button>
       <span id="reaction-anon-label">📝 como <span id="reaction-anon-name"></span></span>
@@ -2936,6 +2956,9 @@ function stopAllMusic() {
 
     saveComment(activeParagraphId, text, myName);
     loadComments(activeParagraphId);
+    // Show the bubbles right away
+    const savedWrap = document.querySelector('[data-reaction-id="' + activeParagraphId + '"]');
+    if (savedWrap) savedWrap.classList.add('has-comments', 'comments-open');
     closeModal();
   });
 
