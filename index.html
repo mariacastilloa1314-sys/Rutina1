@@ -2070,27 +2070,26 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
 
 /* ── Trailer ── */
 #trailer-overlay{display:none;position:fixed;inset:0;z-index:6000;
-  background:repeating-linear-gradient(transparent,transparent 27px,rgba(148,174,210,.18) 27px,rgba(148,174,210,.18) 28px),
-  radial-gradient(ellipse at 20% 10%,rgba(230,210,160,.32) 0%,transparent 38%),#f0ead8;
-  flex-direction:column;align-items:center;justify-content:flex-start;}
+  background:repeating-linear-gradient(transparent,transparent 27px,rgba(148,174,210,.18) 27px,rgba(148,174,210,.18) 28px),radial-gradient(ellipse at 20% 10%,rgba(230,210,160,.32) 0%,transparent 38%),#f0ead8;
+  overflow:hidden;flex-direction:column;align-items:center;justify-content:center;}
 #trailer-overlay.open{display:flex;}
-#trailer-close{position:fixed;top:14px;right:18px;background:none;border:none;color:rgba(107,0,0,.40);font-size:.80rem;cursor:pointer;z-index:6001;font-family:'Caveat',cursive;letter-spacing:.05em;transition:color .3s;}
-#trailer-close:hover{color:rgba(107,0,0,.80);}
-#trailer-intro-text{font-family:'Caveat',cursive;font-size:clamp(.85rem,2.5vw,1rem);color:rgba(107,0,0,.55);text-align:center;padding:2.5rem 2rem 1.5rem;line-height:1.9;max-width:400px;}
-#trailer-tap{font-family:'Caveat',cursive;font-size:1rem;color:rgba(107,0,0,.75);border-bottom:1.5px dashed rgba(107,0,0,.40);cursor:pointer;position:relative;display:inline-block;margin-top:.6rem;}
+#trailer-close{position:fixed;top:14px;right:18px;background:none;border:none;color:rgba(107,0,0,.35);font-size:.80rem;cursor:pointer;z-index:6001;font-family:'Caveat',cursive;}
+#trailer-close:hover{color:rgba(107,0,0,.75);}
+#trailer-intro-wrap{text-align:center;padding:2rem;}
+#trailer-intro-text{font-family:'Caveat',cursive;font-size:clamp(.9rem,2.5vw,1.05rem);color:rgba(107,0,0,.60);line-height:1.9;max-width:380px;margin:0 auto 1rem;}
+#trailer-tap{font-family:'Caveat',cursive;font-size:1.05rem;color:rgba(107,0,0,.75);border-bottom:1.5px dashed rgba(107,0,0,.45);cursor:pointer;position:relative;display:inline-block;margin-top:.3rem;}
 .trailer-tap-hint{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-size:.72em;color:rgba(107,0,0,.45);white-space:nowrap;pointer-events:none;}
-#trailer-stage{flex:1;width:100%;max-width:460px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem 2rem 6rem;position:relative;overflow:hidden;}
-.trailer-active{font-family:'IM Fell English',serif;font-size:clamp(1.1rem,4vw,1.45rem);color:rgba(107,0,0,.0);line-height:1.6;text-align:center;font-style:italic;transition:color 1s ease;position:relative;z-index:2;}
-.trailer-active.visible{color:rgba(107,0,0,.88);}
-#trailer-past{position:absolute;bottom:1.5rem;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:0 2rem;}
-.trailer-past-line{font-family:'Caveat',cursive;font-size:clamp(.60rem,1.8vw,.74rem);color:rgba(107,0,0,.38);text-align:center;line-height:1.4;opacity:0;transform:translateY(6px);transition:opacity .6s ease,transform .6s ease;}
-.trailer-past-line.shown{opacity:1;transform:translateY(0);}
-#trailer-final{display:none;flex-direction:column;align-items:center;justify-content:center;position:absolute;inset:0;padding:2rem;text-align:center;}
+#trailer-stage{position:fixed;inset:0;display:none;overflow:hidden;}
+#trailer-stage.running{display:block;}
+.trailer-paper{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:rgba(107,0,0,.0);line-height:1.5;text-align:center;max-width:270px;transition:color .8s ease,opacity 1.2s ease;pointer-events:none;}
+.trailer-paper.visible{color:rgba(107,0,0,.85);}
+.trailer-paper.fading{opacity:0;}
+#trailer-final{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(240,232,210,.0);transition:background 1s ease;}
 #trailer-final.show{display:flex;}
-#trailer-prox{font-family:'Caveat',cursive;font-size:clamp(.75rem,2.5vw,.92rem);color:rgba(107,0,0,.50);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.2rem;opacity:0;transition:opacity 1.5s ease;}
-#trailer-quien{font-family:'Cinzel',serif;font-size:clamp(1.2rem,5vw,2rem);color:rgba(107,0,0,.0);letter-spacing:.10em;transition:color 2s ease;text-align:center;}
-#trailer-prox.vis{opacity:1;}
-#trailer-quien.vis{color:rgba(107,0,0,.82);}
+#trailer-final.fadein{background:rgba(240,232,210,.97);}
+#trailer-prox{font-family:'Caveat',cursive;font-size:clamp(.75rem,2.5vw,.90rem);color:rgba(107,0,0,.0);letter-spacing:.14em;text-transform:uppercase;margin-bottom:1.5rem;transition:color 1.5s ease;}
+#trailer-prox.vis{color:rgba(107,0,0,.50);}
+#trailer-quien{font-family:'Caveat',cursive;font-size:clamp(1.8rem,7vw,3rem);color:rgba(107,0,0,.82);letter-spacing:.05em;text-align:center;font-weight:700;line-height:1.3;}
 </style>
 </head>
 <body>
@@ -2528,82 +2527,6 @@ document.querySelectorAll('a,button,input,.open-hint,.book-closed,.zone').forEac
   el.addEventListener('mouseenter',()=>{cr.style.width='34px';cr.style.height='34px';cr.style.borderColor='rgba(184,149,106,.65)';});
   el.addEventListener('mouseleave',()=>{cr.style.width='22px';cr.style.height='22px';cr.style.borderColor='rgba(184,149,106,.35)';});
 });
-
-  // Trailer
-  var FRASES = ["Hola, yo soy Martha la Loca o La loca Martha \u00bfc\u00f3mo suena mejor?", "Ni siquiera pude despedirme.", "Vive\u2026 por favor, vive y d\u00e9jame descansar, mi amor.", "En ese momento, la cordura era un lujo que ya no me pod\u00eda permitir.", "La verdad, no puedo decir que has perdido la cabeza\u2026 eso me har\u00eda desaparecer.", "Antiguas culturas cre\u00edan que los espejos abr\u00edan portales.", "\u00bfPero si crees que un espejo puede cambiarlo todo\u2026 \u00bfpor qu\u00e9 no?", "Yo no mat\u00e9 a nadie.", "S\u00e9 feliz por m\u00ed.", "Soy Ren. Ren de Nana\u2026 o Ren de Martha.", "M\u00edrenme.", "\u00bfLa locura es contagiosa o me enamor\u00e9 a primera vista?", "\u00bfLe han dicho que suena como robot?", "Ten\u00eda que salir de ah\u00ed. Esta mierda no pod\u00eda ser real.", "\u00bfNo me creen? Traigan mi espejo."];
-  var _tIdx = -1, _tRunning = false, _tTimer = null;
-
-  function openTrailer() {
-    var o = document.getElementById('trailer-overlay');
-    if (!o) return;
-    o.classList.add('open');
-    _tIdx = -1; _tRunning = false;
-    document.getElementById('trailer-intro-text').style.display = 'block';
-    document.getElementById('trailer-active-line').textContent = '';
-    document.getElementById('trailer-active-line').classList.remove('visible');
-    document.getElementById('trailer-past').innerHTML = '';
-    document.getElementById('trailer-final').classList.remove('show');
-    document.getElementById('trailer-prox').classList.remove('vis');
-    document.getElementById('trailer-quien').classList.remove('vis');
-    var a = document.getElementById('audio-ojos');
-    if (a) { a.currentTime=0; a.volume=0; a.play().then(function(){fadeAudio(a,0,0.55,2500);}).catch(function(){}); }
-  }
-
-  function _tNext() {
-    _tIdx++;
-    if (_tIdx >= FRASES.length) {
-      setTimeout(function(){
-        var p=document.getElementById('trailer-past');
-        p.style.transition='opacity 1.5s'; p.style.opacity='0';
-        document.getElementById('trailer-active-line').style.opacity='0';
-      },400);
-      setTimeout(function(){
-        document.getElementById('trailer-final').classList.add('show');
-        setTimeout(function(){document.getElementById('trailer-prox').classList.add('vis');},500);
-        setTimeout(function(){document.getElementById('trailer-quien').classList.add('vis');},1400);
-      },2000);
-      return;
-    }
-    var frase = FRASES[_tIdx];
-    var al = document.getElementById('trailer-active-line');
-    var pd = document.getElementById('trailer-past');
-    if (_tIdx > 0) {
-      var pl = document.createElement('p'); pl.className='trailer-past-line';
-      pl.textContent = FRASES[_tIdx-1]; pd.appendChild(pl);
-      setTimeout(function(){pl.classList.add('shown');},50);
-      var all = pd.querySelectorAll('.trailer-past-line');
-      if (all.length > 4) {
-        var old = all[0]; old.style.opacity='0';
-        setTimeout(function(){if(old.parentNode)old.parentNode.removeChild(old);},600);
-      }
-    }
-    al.classList.remove('visible'); al.textContent = frase;
-    setTimeout(function(){al.classList.add('visible');},100);
-    var dur = frase.length > 60 ? 3800 : frase.length > 30 ? 3000 : 2400;
-    _tTimer = setTimeout(_tNext, dur);
-  }
-
-  function _closeTrailer() {
-    var o = document.getElementById('trailer-overlay');
-    if (o) o.classList.remove('open');
-    var a = document.getElementById('audio-ojos');
-    if (a && !a.paused) fadeAudio(a, a.volume, 0, 1200, function(){a.pause();a.currentTime=0;});
-    if (_tTimer) { clearTimeout(_tTimer); _tTimer=null; }
-    _tRunning = false;
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var c = document.getElementById('trailer-close');
-    if (c) c.addEventListener('click', _closeTrailer);
-    var t = document.getElementById('trailer-tap');
-    if (t) t.addEventListener('click', function() {
-      if (_tRunning) return; _tRunning=true;
-      document.getElementById('trailer-intro-text').style.display='none';
-      _tNext();
-    });
-    var ov = document.getElementById('trailer-overlay');
-    if (ov) ov.addEventListener('click', function(e){if(e.target===e.currentTarget)_closeTrailer();});
-  });
 </script>
 
 
@@ -2619,6 +2542,8 @@ document.querySelectorAll('a,button,input,.open-hint,.book-closed,.zone').forEac
 <audio id="audio-midnight" preload="none" loop
   src="https://archive.org/download/m-83-midnight-city-lyrics/M83%20-%20Midnight%20City%20(Lyrics).mp3">
 </audio>
+<audio id="audio-ticket" preload="none" src="https://ia902900.us.archive.org/5/items/eruption-one-way-ticket-sub-espanol-ingles-video-hd/Eruption%20-%20One%20Way%20Ticket%20%20Sub%20Espa%C3%B1ol%20%26%20Ingl%C3%A9s%20%20Video%20HD.mp3"></audio>
+<audio id="audio-angel" preload="auto" src="https://ia601507.us.archive.org/19/items/real-life-send-me-an-angel-extended-dance-mix/Real%20Life%20-%20Send%20Me%20An%20Angel%20%28Extended%20Dance%20Mix%29.mp3" loop></audio>
 <audio id="audio-ojos" preload="auto" src="https://ia601507.us.archive.org/22/items/elsa-y-elmar-ojos-noche-audio/Elsa%20y%20Elmar%20-%20Ojos%20Noche%20%5BAudio%5D.mp3" loop></audio>
 
 <div id="music-widget">
@@ -2942,6 +2867,18 @@ function _setAndPlay(audioEl, url, seekSecs) {
   });
 }
 
+function startOneWayTicket() {
+  var audio = document.getElementById('audio-ticket');
+  if (!audio) return;
+  var trigger = document.querySelector('[onclick="startOneWayTicket()"]');
+  if (trigger) trigger.classList.add('played');
+  mLabel.textContent = '\u266a One Way Ticket \u2014 Eruption';
+  mWidget.classList.add('mw-show','mw-playing');
+  currentMusicPage = 23;
+  audio.currentTime = 0; audio.volume = 0;
+  audio.play().then(function(){ fadeAudio(audio,0,0.65,2000); }).catch(function(){});
+}
+
 function stopAllMusic() {
   stopMidnightCity();
   stopZombie();
@@ -3167,23 +3104,130 @@ function stopAllMusic() {
 
 <div id="trailer-overlay">
   <button id="trailer-close">&#x2715; cerrar</button>
-  <div id="trailer-intro-text">
-    Hola, gracias por curiosear.<br>
-    Estoy escribiendo una novela. De verdad. (Ha-ha)<br>
-    Aquí, el trailer de lo que se viene.<br><br>
+  <div id="trailer-intro-wrap">
+    <div id="trailer-intro-text">
+      Hola, gracias por curiosear.<br>
+      Estoy escribiendo una novela. De verdad. (Ha-ha)<br><br>
+    </div>
     <span id="trailer-tap">
       <span class="trailer-tap-hint">toca aquí</span>
-      → y comienza todo
+      Toca aquí si quieres saber de qué se trata.
     </span>
   </div>
-  <div id="trailer-stage">
-    <p class="trailer-active" id="trailer-active-line"></p>
-    <div id="trailer-past"></div>
-    <div id="trailer-final">
-      <p id="trailer-prox">PRÓXIMAMENTE (no sé en qué año)</p>
-      <p id="trailer-quien">¿QUIÉN ES REN?</p>
-    </div>
+  <div id="trailer-stage"></div>
+  <div id="trailer-final">
+    <p id="trailer-prox">PRÓXIMAMENTE (no sé en qué año)</p>
+    <p id="trailer-quien"></p>
   </div>
 </div>
+<script>
+(function(){
+  var FRASES = ["Hola, yo soy Martha la Loca o La loca Martha \u00bfc\u00f3mo suena mejor?", "Ni siquiera pude despedirme.", "Vive\u2026 por favor, vive y d\u00e9jame descansar, mi amor.", "En ese momento, la cordura era un lujo que ya no me pod\u00eda permitir.", "La verdad, no puedo decir que has perdido la cabeza\u2026 eso me har\u00eda desaparecer.", "Antiguas culturas cre\u00edan que los espejos abr\u00edan portales.", "\u00bfPero si crees que un espejo puede cambiarlo todo\u2026 \u00bfpor qu\u00e9 no?", "Yo no mat\u00e9 a nadie.", "S\u00e9 feliz por m\u00ed.", "Soy Ren. Ren de Nana\u2026 o Ren de Martha.", "M\u00edrenme.", "\u00bfLa locura es contagiosa o me enamor\u00e9 a primera vista?", "\u00bfLe han dicho que suena como robot?", "Ten\u00eda que salir de ah\u00ed. Esta mierda no pod\u00eda ser real.", "\u00bfNo me creen? Traigan mi espejo."];
+  var OJOS_IDX = [1, 2];
+  var _tIdx = -1, _tTimeout = null, _tPapers = [], _tRunning = false;
+
+  window.openTrailer = function() {
+    var o = document.getElementById('trailer-overlay');
+    if (!o) return;
+    o.classList.add('open');
+    _tIdx=-1; _tRunning=false; _tPapers=[];
+    document.getElementById('trailer-intro-wrap').style.display='block';
+    var stage=document.getElementById('trailer-stage');
+    stage.innerHTML=''; stage.classList.remove('running');
+    var fin=document.getElementById('trailer-final');
+    fin.classList.remove('show','fadein');
+    document.getElementById('trailer-prox').classList.remove('vis');
+    document.getElementById('trailer-quien').textContent='';
+    var angel=document.getElementById('audio-angel');
+    if(angel){angel.currentTime=0;angel.volume=0;angel.play().then(function(){fadeAudio(angel,0,0.35,3000);}).catch(function(){});}
+  };
+
+  function startSeq(){
+    if(_tRunning)return; _tRunning=true;
+    document.getElementById('trailer-intro-wrap').style.display='none';
+    document.getElementById('trailer-stage').classList.add('running');
+    nextPaper();
+  }
+
+  function nextPaper(){
+    _tIdx++;
+    if(_tIdx>=FRASES.length){endTrailer();return;}
+    var frase=FRASES[_tIdx];
+    var isOjos=OJOS_IDX.indexOf(_tIdx)>=0;
+    var angel=document.getElementById('audio-angel');
+    var ojos=document.getElementById('audio-ojos');
+    if(isOjos){
+      if(angel&&!angel.paused)fadeAudio(angel,angel.volume,0.08,1000);
+      if(ojos){ojos.currentTime=0.10;ojos.volume=0;ojos.play().then(function(){fadeAudio(ojos,0,0.55,1200);}).catch(function(){});}
+    } else if(_tIdx===OJOS_IDX[OJOS_IDX.length-1]+1){
+      if(ojos&&!ojos.paused)fadeAudio(ojos,ojos.volume,0,1500,function(){ojos.pause();});
+      if(angel)fadeAudio(angel,angel.volume,0.70,2000);
+    }
+    var stage=document.getElementById('trailer-stage');
+    var paper=document.createElement('div');
+    paper.className='trailer-paper';
+    var fs=(Math.random()*0.4+0.85).toFixed(2);
+    var rot=(Math.random()*10-5).toFixed(1);
+    var left=(Math.random()*38+12).toFixed(1);
+    var top=(Math.random()*38+22).toFixed(1);
+    paper.style.cssText='font-size:'+fs+'rem;transform:rotate('+rot+'deg);left:'+left+'%;top:'+top+'%;';
+    paper.textContent=frase;
+    stage.appendChild(paper);
+    _tPapers.push(paper);
+    setTimeout(function(){paper.classList.add('visible');},80);
+    if(_tPapers.length>5){
+      var old=_tPapers[_tPapers.length-6];
+      if(old)old.classList.add('fading');
+    }
+    var dur=frase.length>60?4000:frase.length>35?3200:2600;
+    _tTimeout=setTimeout(nextPaper,dur);
+  }
+
+  function endTrailer(){
+    _tPapers.forEach(function(p){p.classList.add('fading');});
+    var angel=document.getElementById('audio-angel');
+    if(angel)fadeAudio(angel,angel.volume,0.85,1500);
+    setTimeout(function(){
+      var fin=document.getElementById('trailer-final');
+      fin.classList.add('show');
+      setTimeout(function(){fin.classList.add('fadein');},100);
+      setTimeout(function(){document.getElementById('trailer-prox').classList.add('vis');},800);
+      setTimeout(function(){typeTitle('¿QUIÉN ES REN?',110);},1800);
+    },1200);
+  }
+
+  function typeTitle(text,speed){
+    var el=document.getElementById('trailer-quien');
+    el.textContent='';
+    var i=0;
+    function next(){
+      if(i>=text.length)return;
+      el.textContent+=text[i++];
+      setTimeout(next,speed+(Math.random()*70-35));
+    }
+    next();
+  }
+
+  function closeTrailer(){
+    var o=document.getElementById('trailer-overlay');
+    if(o){o.classList.remove('open');}
+    var angel=document.getElementById('audio-angel');
+    var ojos=document.getElementById('audio-ojos');
+    if(angel&&!angel.paused)fadeAudio(angel,angel.volume,0,1000,function(){angel.pause();angel.currentTime=0;});
+    if(ojos&&!ojos.paused)fadeAudio(ojos,ojos.volume,0,800,function(){ojos.pause();ojos.currentTime=0;});
+    if(_tTimeout){clearTimeout(_tTimeout);_tTimeout=null;}
+    _tRunning=false;
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){
+    var cb=document.getElementById('trailer-close');
+    if(cb)cb.addEventListener('click',closeTrailer);
+    var tap=document.getElementById('trailer-tap');
+    if(tap)tap.addEventListener('click',startSeq);
+    var ov=document.getElementById('trailer-overlay');
+    if(ov)ov.addEventListener('click',function(e){if(e.target===e.currentTarget)closeTrailer();});
+  });
+})();
+</script>
 </body>
 </html>
