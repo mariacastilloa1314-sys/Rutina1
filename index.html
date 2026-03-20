@@ -1391,11 +1391,10 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
   background: rgba(10,14,22,.92) !important;
   backdrop-filter: blur(10px) !important;
   box-sizing: border-box !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
   z-index: 200 !important;
   border-top: 1px solid rgba(184,149,106,.18) !important;
-  transition: opacity .4s !important;
 }
 .nav-progress-wrap {
   flex: 1;
@@ -1697,6 +1696,9 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
     padding: 3px 12px 5px !important;
     gap: 8px !important;
   }
+
+  .nav-btn{background:rgba(184,149,106,.20) !important;border:1px solid rgba(184,149,106,.40) !important;color:rgba(255,235,180,.95) !important;font-size:1.1rem !important;padding:5px 16px !important;border-radius:18px !important;font-weight:700 !important;}
+  .nav-label{color:rgba(184,149,106,.70) !important;font-size:.78rem !important;min-width:50px !important;text-align:center !important;}
 }
 
 /* ── Tachones effect ── */
@@ -1902,90 +1904,28 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
 }
 
 /* ── Modal de reacción ── */
-#reaction-modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(18,24,31,.55);
-  z-index: 10000;
-  align-items: flex-end;
-  justify-content: center;
-}
-#reaction-modal-overlay.open {
-  display: flex;
-}
-#reaction-modal {
-  background: #f6f0e2;
-  border-radius: 18px 18px 0 0;
-  padding: 24px 20px 32px;
-  width: 100%;
-  max-width: 480px;
-  box-shadow: 0 -4px 32px rgba(0,0,0,.25);
-  animation: slideUp .25s ease;
-}
-@keyframes slideUp {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
-}
-#reaction-modal-title {
-  font-family: 'Caveat', cursive;
-  font-size: 1.15rem;
-  color: #3d0000;
-  margin-bottom: 12px;
-  font-weight: 700;
-  text-align: center;
-}
-#reaction-textarea {
-  width: 100%;
-  min-height: 90px;
-  background: rgba(255,255,255,.70);
-  border: 1.5px solid rgba(107,0,0,.20);
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-family: 'Caveat', cursive;
-  font-size: 1rem;
-  color: #1e3260;
-  resize: none;
-  box-sizing: border-box;
-  line-height: 1.5;
-}
-#reaction-textarea:focus {
-  outline: none;
-  border-color: rgba(107,0,0,.45);
-}
-#reaction-modal-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-#reaction-anon-label {
-  font-family: 'Caveat', cursive;
-  font-size: 0.82em;
-  color: rgba(107,0,0,.55);
-}
-#reaction-submit {
-  background: #6b0000;
-  color: #f6f0e2;
-  border: none;
-  border-radius: 20px;
-  padding: 8px 22px;
-  font-family: 'Caveat', cursive;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background .2s;
-}
-#reaction-submit:hover { background: #3d0000; }
-#reaction-cancel {
-  background: none;
-  border: none;
-  color: rgba(107,0,0,.45);
-  font-family: 'Caveat', cursive;
-  font-size: 0.85em;
-  cursor: pointer;
-  padding: 4px 8px;
-}
+#reaction-modal-overlay{display:none;position:fixed;inset:0;background:rgba(18,24,31,.60);z-index:10000;align-items:flex-end;justify-content:center;}
+#reaction-modal-overlay.open{display:flex;}
+#reaction-modal{background:#f6f0e2;border-radius:18px 18px 0 0;padding:0 0 32px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto;box-shadow:0 -4px 32px rgba(0,0,0,.30);animation:slideUp .25s ease;}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+#reaction-modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;border-bottom:1px solid rgba(107,0,0,.10);position:sticky;top:0;background:#f6f0e2;z-index:2;}
+#reaction-modal-title{font-family:'Caveat',cursive;font-size:1.1rem;color:#3d0000;font-weight:700;}
+#reaction-cancel{background:rgba(107,0,0,.08);border:none;color:rgba(107,0,0,.60);font-size:1rem;cursor:pointer;padding:4px 9px;border-radius:50%;line-height:1;}
+#reaction-existing{padding:10px 18px 4px;display:flex;flex-direction:column;gap:8px;}
+.reaction-existing-bubble{background:rgba(255,255,255,.55);border-radius:10px;padding:8px 12px;font-family:'Caveat',cursive;font-size:.88em;color:#2a0808;line-height:1.45;}
+.reaction-existing-author{font-size:.72em;color:rgba(107,0,0,.60);font-weight:700;margin-bottom:3px;}
+.reaction-empty-msg{font-family:'Caveat',cursive;font-size:.82em;color:rgba(107,0,0,.35);font-style:italic;}
+#reaction-name-section{padding:10px 18px 6px;border-top:1px solid rgba(107,0,0,.08);}
+#reaction-name-label{font-family:'Caveat',cursive;font-size:.85em;color:rgba(107,0,0,.70);font-weight:700;margin-bottom:7px;}
+#reaction-name-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.name-chip{font-family:'Caveat',cursive;font-size:.80em;padding:4px 11px;border-radius:14px;border:1.5px solid rgba(107,0,0,.22);background:rgba(255,255,255,.50);color:rgba(107,0,0,.65);cursor:pointer;transition:all .15s;}
+.name-chip.selected{background:#6b0000;color:#f6f0e2;border-color:#6b0000;}
+#reaction-write-section{padding:10px 18px 0;}
+#reaction-textarea{width:100%;min-height:80px;background:rgba(255,255,255,.70);border:1.5px solid rgba(107,0,0,.18);border-radius:10px;padding:10px 12px;font-family:'Caveat',cursive;font-size:1rem;color:#1e3260;resize:none;box-sizing:border-box;line-height:1.5;}
+#reaction-textarea:focus{outline:none;border-color:rgba(107,0,0,.40);}
+#reaction-modal-footer{display:flex;justify-content:flex-end;margin-top:10px;}
+#reaction-submit{background:#6b0000;color:#f6f0e2;border:none;border-radius:20px;padding:9px 26px;font-family:'Caveat',cursive;font-size:1rem;font-weight:700;cursor:pointer;}
+#reaction-submit:active{background:#3d0000;}
 
 /* ── Doodle / journaling pages ── */
 .p-doodle-real {
@@ -2860,208 +2800,121 @@ function stopAllMusic() {
 
 
 <!-- ── Modal reacciones ── -->
-<div id="reaction-modal-overlay">
+<div id="reaction-modal-overlay" style="display:none">
   <div id="reaction-modal">
-    <div id="reaction-modal-title">Escribe tu reacción, ¿encontraste algún error? — anónimo&nbsp;:)</div>
-    <textarea id="reaction-textarea" placeholder="¿Qué sentiste aquí? ¿Viste algún error? Sin filtros. Nadie sabe quién eres." maxlength="280"></textarea>
-    <div id="reaction-modal-footer">
-      <button id="reaction-cancel">cancelar</button>
-      <span id="reaction-anon-label">📝 como <span id="reaction-anon-name"></span></span>
-      <button id="reaction-submit">dejar reacción</button>
+    <div id="reaction-modal-header">
+      <span id="reaction-modal-title">&#128172; Reacciones</span>
+      <button id="reaction-cancel">&#x2715;</button>
+    </div>
+    <div id="reaction-existing"></div>
+    <div id="reaction-name-section">
+      <div id="reaction-name-label">&#x2192; Elige tu personaje:</div>
+      <div id="reaction-name-chips"></div>
+    </div>
+    <div id="reaction-write-section">
+      <textarea id="reaction-textarea" placeholder="Sin filtros. Nadie sabe quién eres." maxlength="280"></textarea>
+      <div id="reaction-modal-footer"><button id="reaction-submit">dejar reacción</button></div>
     </div>
   </div>
 </div>
 
 <script>
-/* ══════════════════════════════
-   REACCIONES ANÓNIMAS
-══════════════════════════════ */
+/* REACCIONES */
 (function() {
-  const SPIRITS = [
-    'Alma anónima','Sombra anónima','Espíritu libre y anónimo',
-    'Zombi anónimo','Pensador anónimo','Espectro anónimo',
-    'Gatito anónimo','Pez payaso anónimo','Detector de humo anónimo'
-  ];
+  var SPIRITS = ['Alma anónima','Sombra anónima','Espíritu libre y anónimo','Zombi anónimo','Pensador anónimo','Espectro anónimo','Gatito anónimo','Pez payaso anónimo','Detector de humo anónimo'];
+  var myName = localStorage.getItem('reaction_name');
+  if (!myName || SPIRITS.indexOf(myName) < 0) { myName = SPIRITS[Math.floor(Math.random()*SPIRITS.length)]; localStorage.setItem('reaction_name', myName); }
+  var activeParagraphId = null;
 
-  // Name: persistent per device, but user can change it
-  let myName = localStorage.getItem('reaction_name');
-  if (!myName) {
-    myName = SPIRITS[Math.floor(Math.random() * SPIRITS.length)];
-    localStorage.setItem('reaction_name', myName);
+  function renderChips() {
+    var chips = document.getElementById('reaction-name-chips'); if (!chips) return; chips.innerHTML = '';
+    SPIRITS.forEach(function(name) {
+      var c = document.createElement('button'); c.className = 'name-chip'+(name===myName?' selected':''); c.textContent = name;
+      c.onclick = function() { myName=name; localStorage.setItem('reaction_name',myName); renderChips(); };
+      chips.appendChild(c);
+    });
   }
-  
-  // Render name as clickable selector
-  const nameEl = document.getElementById('reaction-anon-name');
-  function renderName() {
-    nameEl.innerHTML = '<span style="cursor:pointer;border-bottom:1px dashed rgba(107,0,0,.4)" title="Cambiar nombre">' + myName + ' ✎</span>';
-    nameEl.querySelector('span').onclick = () => {
-      // Show a mini selector
-      const sel = document.createElement('select');
-      sel.style.cssText = 'font-family:Caveat,cursive;font-size:.9em;color:#3d0000;background:#f6f0e2;border:1px solid rgba(107,0,0,.3);border-radius:6px;padding:2px 4px;';
-      SPIRITS.forEach(s => {
-        const opt = document.createElement('option');
-        opt.value = s; opt.textContent = s;
-        if (s === myName) opt.selected = true;
-        sel.appendChild(opt);
-      });
-      sel.onchange = () => {
-        myName = sel.value;
-        localStorage.setItem('reaction_name', myName);
-        nameEl.innerHTML = '';
-        nameEl.appendChild(sel);
-        renderName();
-      };
-      nameEl.innerHTML = '';
-      nameEl.appendChild(sel);
-    };
+
+  function renderExisting(paraId) {
+    var el = document.getElementById('reaction-existing'); if (!el) return;
+    var comments = JSON.parse(localStorage.getItem('reactions_'+paraId)||'[]');
+    el.innerHTML = '';
+    if (!comments.length) { el.innerHTML = '<p class="reaction-empty-msg">Sé el primero en reaccionar aquí.</p>'; return; }
+    comments.forEach(function(c) {
+      var b = document.createElement('div'); b.className = 'reaction-existing-bubble';
+      b.innerHTML = '<div class="reaction-existing-author">'+esc(c.author)+'</div>'+esc(c.text);
+      el.appendChild(b);
+    });
   }
-  renderName();
 
-  let activeParagraphId = null;
+  function openModal(paraId) {
+    activeParagraphId = paraId;
+    var o = document.getElementById('reaction-modal-overlay');
+    document.getElementById('reaction-textarea').value = '';
+    renderChips(); renderExisting(paraId);
+    o.style.display = 'flex'; o.classList.add('open');
+    setTimeout(function(){ document.getElementById('reaction-textarea').focus(); }, 300);
+  }
+  function closeModal() {
+    var o = document.getElementById('reaction-modal-overlay');
+    o.style.display = 'none'; o.classList.remove('open'); activeParagraphId = null;
+  }
+  document.getElementById('reaction-cancel').addEventListener('click', closeModal);
+  document.getElementById('reaction-modal-overlay').addEventListener('click', function(e){ if(e.target===e.currentTarget) closeModal(); });
 
-  // ── Attach reaction buttons to all story paragraphs ──
+  document.getElementById('reaction-submit').addEventListener('click', function() {
+    var ta = document.getElementById('reaction-textarea'); var text = ta.value.trim();
+    if (!text || !activeParagraphId) return;
+    var key = 'reactions_'+activeParagraphId;
+    var ex = JSON.parse(localStorage.getItem(key)||'[]');
+    ex.push({text:text, author:myName, ts:Date.now()});
+    localStorage.setItem(key, JSON.stringify(ex));
+    ta.value = ''; loadComments(activeParagraphId); renderExisting(activeParagraphId);
+  });
+
+  function loadComments(paraId) {
+    var container = document.getElementById('bubbles_'+paraId); if (!container) return;
+    var comments = JSON.parse(localStorage.getItem('reactions_'+paraId)||'[]');
+    container.innerHTML = '';
+    comments.forEach(function(c) {
+      var b = document.createElement('div'); b.className = 'reaction-bubble';
+      b.innerHTML = '<div class="reaction-bubble-author">'+esc(c.author)+'</div>'+esc(c.text);
+      container.appendChild(b);
+    });
+    var wrap = container.parentNode;
+    if (comments.length > 0 && wrap) {
+      wrap.classList.add('has-comments');
+      var btn = wrap.querySelector('.reaction-btn');
+      if (btn) { var icon = String.fromCodePoint(128172); btn.textContent = icon + comments.length; }
+    }
+  }
+
+  function esc(t) { return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
   function attachReactions() {
-    const storyEl = document.querySelector('#pageR .story-atmos-layer');
-    const storyId = storyEl ? storyEl.id.replace('sa_','') : 'pg';
-    document.querySelectorAll('#pageR .p-story .pb, #pageR .p-story .pd').forEach((p, i) => {
-      if (p.dataset.reactionId) return; // already attached
-      // Stable ID: storyId + paragraph index (not timestamp)
-      const id = 'rp_' + storyId + '_' + i;
-      p.dataset.reactionId = id;
-
-      // Wrap in relative container
-      const wrap = document.createElement('span');
-      wrap.className = 'para-reaction-wrap';
-      wrap.style.display = 'block';
-      p.parentNode.insertBefore(wrap, p);
-      wrap.appendChild(p);
-
-      // Add button
-      const btn = document.createElement('button');
-      btn.className = 'reaction-btn';
-      btn.innerHTML = '💬';
-      btn.title = 'Reaccionar';
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openModal(id, wrap);
-      });
+    var storyEl = document.querySelector('#pageR .story-atmos-layer');
+    var storyId = storyEl ? storyEl.id.replace('sa_','') : 'pg';
+    document.querySelectorAll('#pageR .p-story .pb, #pageR .p-story .pd').forEach(function(p, i) {
+      if (p.dataset.reactionId) return;
+      var id = 'rp_'+storyId+'_'+i; p.dataset.reactionId = id;
+      var wrap = document.createElement('span'); wrap.className='para-reaction-wrap'; wrap.style.display='block';
+      p.parentNode.insertBefore(wrap, p); wrap.appendChild(p);
+      var btn = document.createElement('button'); btn.className='reaction-btn';
+      btn.textContent = String.fromCodePoint(128172); btn.title='Reaccionar';
+      btn.addEventListener('click', function(e){ e.stopPropagation(); openModal(id); });
       wrap.appendChild(btn);
-
-      // Add bubbles container
-      const bubbles = document.createElement('div');
-      bubbles.className = 'reaction-bubbles';
-      bubbles.id = 'bubbles_' + id;
+      var bubbles = document.createElement('div'); bubbles.className='reaction-bubbles'; bubbles.id='bubbles_'+id;
       wrap.appendChild(bubbles);
-
-      // Load existing comments
       loadComments(id);
     });
   }
 
-  // ── Open modal ──
-  function openModal(paraId, wrap) {
-    activeParagraphId = paraId;
-    const overlay = document.getElementById('reaction-modal-overlay');
-    const ta = document.getElementById('reaction-textarea');
-    ta.value = '';
-    overlay.classList.add('open');
-    setTimeout(() => ta.focus(), 300);
-
-    // Toggle comments visibility
-    if (wrap) {
-      wrap.classList.toggle('comments-open');
-    }
-  }
-
-  // ── Submit ──
-  document.getElementById('reaction-submit').addEventListener('click', () => {
-    const ta = document.getElementById('reaction-textarea');
-    const text = ta.value.trim();
-    if (!text || !activeParagraphId) return;
-
-    saveComment(activeParagraphId, text, myName);
-    loadComments(activeParagraphId);
-    // Show the bubbles right away
-    const savedWrap = document.querySelector('[data-reaction-id="' + activeParagraphId + '"]');
-    if (savedWrap) savedWrap.classList.add('has-comments', 'comments-open');
-    closeModal();
+  var _o = window.renderPages;
+  window.renderPages = function(idx) { _o(idx); setTimeout(attachReactions, 200); };
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('reaction-modal-overlay').style.display = 'none';
+    setTimeout(attachReactions, 500);
   });
-
-  document.getElementById('reaction-cancel').addEventListener('click', closeModal);
-  document.getElementById('reaction-modal-overlay').addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) closeModal();
-  });
-
-  function closeModal() {
-    document.getElementById('reaction-modal-overlay').classList.remove('open');
-    document.getElementById('reaction-textarea').value = '';
-    activeParagraphId = null;
-  }
-
-  // ── Storage (localStorage) ──
-  function saveComment(paraId, text, author) {
-    const key = 'reactions_' + paraId;
-    const existing = JSON.parse(localStorage.getItem(key) || '[]');
-    existing.push({ text, author, ts: Date.now() });
-    localStorage.setItem(key, JSON.stringify(existing));
-  }
-
-  function loadComments(paraId) {
-    const key = 'reactions_' + paraId;
-    const comments = JSON.parse(localStorage.getItem(key) || '[]');
-    const container = document.getElementById('bubbles_' + paraId);
-    const wrap = container && container.parentNode;
-    if (!container) return;
-
-    container.innerHTML = '';
-    comments.forEach(c => {
-      const bubble = document.createElement('div');
-      bubble.className = 'reaction-bubble';
-      bubble.innerHTML = '<div class="reaction-bubble-author">' + c.author + '</div>' + escHtml(c.text);
-      container.appendChild(bubble);
-    });
-
-    if (comments.length > 0 && wrap) {
-      wrap.classList.add('has-comments');
-    }
-  }
-
-  function escHtml(t) {
-    return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
-
-  // ── Re-attach on every renderPages ──
-  const _origRender = window.renderPages;
-  window.renderPages = function(idx) {
-    _origRender(idx);
-    setTimeout(attachReactions, 150);
-    setTimeout(_addTapeStrips, 100);
-  };
-
-  function _addTapeStrips() {
-    document.querySelectorAll('.p-doodle-real').forEach(function(el) {
-      if (el.querySelector('.doodle-tape')) return;
-      [
-        {t:'40%', l:'10px', w:'38px', h:'12px', r:'-88deg'},
-        {t:'20px', l:'auto', ri:'24px', w:'44px', h:'13px', r:'1.5deg'},
-        {t:'auto', b:'35%', l:'14px', w:'36px', h:'11px', r:'92deg'},
-      ].forEach(function(cfg) {
-        var d = document.createElement('div');
-        d.className = 'doodle-tape';
-        d.style.position = 'absolute';
-        d.style.width = cfg.w; d.style.height = cfg.h;
-        d.style.transform = 'rotate('+cfg.r+')';
-        if (cfg.t && cfg.t !== 'auto') d.style.top = cfg.t; else d.style.top = 'auto';
-        if (cfg.b) d.style.bottom = cfg.b;
-        if (cfg.l && cfg.l !== 'auto') d.style.left = cfg.l; else d.style.left = 'auto';
-        if (cfg.ri) d.style.right = cfg.ri;
-        el.appendChild(d);
-      });
-    });
-  }
-
-  // Also attach on first load
-  document.addEventListener('DOMContentLoaded', () => setTimeout(attachReactions, 500));
 })();
 </script>
 </body>
