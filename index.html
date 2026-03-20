@@ -2081,6 +2081,92 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
 .trailer-tap-hint{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-size:.72em;color:rgba(107,0,0,.45);white-space:nowrap;pointer-events:none;}
 #trailer-stage{position:fixed;inset:0;display:none;overflow:hidden;}
 #trailer-stage.running{display:block;}
+
+/* Paper phrase — drops from above with bounce */
+.trailer-paper{
+  position:absolute;
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  color:rgba(107,0,0,.0);
+  line-height:1.6;
+  text-align:center;
+  width:clamp(220px,60vw,360px);
+  left:50%;
+  font-size:clamp(1.1rem,3.5vw,1.5rem);
+  pointer-events:none;
+  transform:translateX(-50%) translateY(-120px) rotate(var(--rot));
+  opacity:0;
+  transition:none;
+}
+.trailer-paper.dropping{
+  transition:transform .55s cubic-bezier(.22,1.8,.36,1), opacity .3s ease, color .6s ease;
+  transform:translateX(-50%) translateY(0) rotate(var(--rot));
+  opacity:1;
+  color:rgba(107,0,0,.88);
+}
+.trailer-paper.scratching{
+  text-decoration:line-through;
+  text-decoration-color:rgba(107,0,0,.80);
+  text-decoration-thickness:3px;
+  transition:opacity .35s ease;
+  opacity:0;
+}
+
+/* Final */
+#trailer-final{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(240,232,210,.0);transition:background .8s ease;}
+#trailer-final.show{display:flex;}
+#trailer-final.fadein{background:rgba(240,232,210,.97);}
+#trailer-prox{font-family:'Special Elite',monospace,cursive;font-size:clamp(.8rem,2.5vw,.95rem);
+  color:rgba(107,0,0,.70);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.3rem;min-height:1.4em;}
+#trailer-year{font-family:'Caveat',cursive;font-size:clamp(.85rem,2.5vw,1rem);
+  color:rgba(107,0,0,.55);margin-bottom:2rem;display:inline-block;position:relative;min-height:1.4em;}
+#trailer-year.struck{text-decoration:line-through;text-decoration-color:rgba(107,0,0,.80);text-decoration-thickness:2px;}
+
+/* Folded paper for title */
+#trailer-paper-wrap{
+  width:clamp(200px,65vw,320px);
+  opacity:0;
+  position:relative;
+  background:#f0e8d0;
+  padding:1.8rem 2rem;
+  text-align:center;
+  box-shadow:3px 5px 20px rgba(0,0,0,.22);
+  /* Folded corner effect */
+  clip-path:polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+  transform:rotate(-6deg) scale(0.6) translateY(40px);
+  transition:transform .8s cubic-bezier(.34,1.4,.64,1), opacity .5s ease;
+}
+#trailer-paper-wrap::before{
+  content:'';position:absolute;top:0;right:0;
+  width:22px;height:22px;
+  background:linear-gradient(225deg,#d4c8a8 50%,transparent 50%);
+}
+/* Red ink splashes */
+#trailer-paper-wrap::after{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(140,0,0,.18) 0%,transparent 25%),
+    radial-gradient(circle at 85% 75%,rgba(140,0,0,.14) 0%,transparent 20%),
+    radial-gradient(circle at 70% 15%,rgba(140,0,0,.10) 0%,transparent 15%);
+  pointer-events:none;
+}
+#trailer-paper-wrap.unfolded{
+  transform:rotate(-2deg) scale(1) translateY(0);
+  opacity:1;
+}
+#trailer-quien{
+  font-family:'Caveat',cursive;
+  font-size:clamp(1.6rem,6vw,2.5rem);
+  color:rgba(120,0,0,.90);
+  font-weight:700;
+  letter-spacing:.04em;
+  position:relative;
+  z-index:1;
+  min-height:1.4em;
+}
+.ink-dot{position:absolute;border-radius:50%;background:rgba(140,20,20,.22);}
+
 /* Paper phrase */
 .trailer-paper{position:absolute;font-family:'IM Fell English',serif;font-style:italic;
   color:rgba(107,0,0,.0);line-height:1.55;text-align:center;max-width:280px;
@@ -3179,7 +3265,7 @@ function stopAllMusic() {
 </div>
 <script>
 (function(){
-  var FRASES = ["Hola, yo soy Martha la Loca o La loca Martha \u00bfc\u00f3mo suena mejor?", "Ni siquiera pude despedirme.", "Vive\u2026 por favor, vive y d\u00e9jame descansar, mi amor.", "En ese momento, la cordura era un lujo que ya no me pod\u00eda permitir.", "La verdad, no puedo decir que has perdido la cabeza\u2026 eso me har\u00eda desaparecer.", "Antiguas culturas cre\u00edan que los espejos abr\u00edan portales.", "\u00bfPero si crees que un espejo puede cambiarlo todo\u2026 \u00bfpor qu\u00e9 no?", "Yo no mat\u00e9 a nadie.", "S\u00e9 feliz por m\u00ed.", "Soy Ren. Ren de Nana\u2026 o Ren de Martha.", "M\u00edrenme.", "\u00bfLa locura es contagiosa o me enamor\u00e9 a primera vista?", "\u00bfLe han dicho que suena como robot?", "Ten\u00eda que salir de ah\u00ed. Esta mierda no pod\u00eda ser real.", "\u00bfNo me creen? Traigan mi espejo."];
+  var FRASES = ["Hola, yo soy Martha la Loca o La loca Martha \u00bfc\u00f3mo suena mejor?", "Ni siquiera pude despedirme.", "Vive\u2026 por favor, vive y d\u00e9jame descansar, mi amor.", "En ese momento, la cordura era un lujo que ya no me pod\u00eda permitir.", "La verdad, no puedo decir que has perdido la cabeza\u2026 eso me har\u00eda desaparecer.", "Antiguas culturas cre\u00edan que los espejos abr\u00edan portales.", "\u00bfPero si crees que un espejo puede cambiarlo todo\u2026 \u00bfpor qu\u00e9 no?", "Yo no mat\u00e9 a nadie.", "\u00bfQu\u00e9 te parece Martha Muchos Mundos? Me gusta. Es mejor que Martha la Loca.", "Soy Ren. Ren de Nana\u2026 o Ren de Martha.", "M\u00edrenme.", "\u00bfLa locura es contagiosa o me enamor\u00e9 a primera vista?", "\u00bfLe han dicho que suena como robot?", "Ten\u00eda que salir de ah\u00ed. Esta mierda no pod\u00eda ser real.", "\u00bfNo me creen? Traigan mi espejo."];
   var _tIdx=-1, _tTimeout=null, _tPaper=null, _tRunning=false;
 
   window.openTrailer = function(){
@@ -3197,7 +3283,6 @@ function stopAllMusic() {
     document.getElementById('trailer-year').classList.remove('struck');
     document.getElementById('trailer-quien').textContent='';
     document.getElementById('trailer-paper-wrap').classList.remove('unfolded');
-    // Start angel
     var angel=document.getElementById('audio-angel');
     if(angel){angel.currentTime=0;angel.volume=0;angel.play().then(function(){fadeAudio(angel,0,0.40,3000);}).catch(function(){});}
   };
@@ -3215,59 +3300,66 @@ function stopAllMusic() {
     var frase=FRASES[_tIdx];
     var stage=document.getElementById('trailer-stage');
 
-    // Remove previous paper
-    var old=stage.querySelector('.trailer-paper');
-    if(old){
-      // Scratch effect: add scratch class then remove
+    // Remove old with scratch
+    if(_tPaper){
+      var old=_tPaper;
+      old.classList.remove('dropping');
       old.classList.add('scratching');
-      setTimeout(function(){if(old.parentNode)old.parentNode.removeChild(old);},500);
+      setTimeout(function(){if(old.parentNode)old.parentNode.removeChild(old);},400);
     }
 
-    // Create new paper
+    // Create new — drop from top with random rotation
     var paper=document.createElement('div');
     paper.className='trailer-paper';
-    var fs=(Math.random()*0.35+1.0).toFixed(2);
-    var rot=(Math.random()*8-4).toFixed(1);
-    var left=(Math.random()*30+20).toFixed(1);
-    var top=(Math.random()*30+25).toFixed(1);
-    paper.style.cssText='font-size:'+fs+'rem;transform:rotate('+rot+'deg);left:'+left+'%;top:'+top+'%;';
+    var rot=(Math.random()*7-3.5).toFixed(1);
+    var topPct=(Math.random()*25+32).toFixed(1); // 32-57% from top
+    paper.style.cssText='--rot:'+rot+'deg;top:'+topPct+'%;';
     paper.textContent=frase;
     stage.appendChild(paper);
-    setTimeout(function(){paper.classList.add('visible');},80);
+    _tPaper=paper;
+    // Trigger drop on next frame
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        paper.classList.add('dropping');
+      });
+    });
 
-    var dur=frase.length>60?4500:frase.length>35?3500:2800;
-    _tTimeout=setTimeout(nextPaper,dur);
+    // Variable duration — shorter for punchy lines, longer for long ones
+    var base = frase.length > 60 ? 4800 : frase.length > 35 ? 3800 : 2800;
+    var jitter = Math.random()*600 - 300;
+    _tTimeout=setTimeout(nextPaper, base + jitter);
   }
 
   function endTrailer(){
-    // Clear stage
-    var stage=document.getElementById('trailer-stage');
-    var last=stage.querySelector('.trailer-paper');
-    if(last)last.classList.add('scratching');
-    setTimeout(function(){stage.innerHTML='';},500);
-
-    // Boost angel for finale
+    if(_tPaper){
+      _tPaper.classList.add('scratching');
+      setTimeout(function(){if(_tPaper&&_tPaper.parentNode)_tPaper.parentNode.removeChild(_tPaper);},400);
+    }
     var angel=document.getElementById('audio-angel');
-    if(angel)fadeAudio(angel,angel.volume,0.85,2000);
+    if(angel)fadeAudio(angel,angel.volume,0.90,2000);
 
     setTimeout(function(){
       var fin=document.getElementById('trailer-final');
       fin.classList.add('show');
       setTimeout(function(){fin.classList.add('fadein');},100);
-      // Type PRÓXIMAMENTE
-      setTimeout(function(){typeEl('trailer-prox','PRÓXIMAMENTE',60,function(){
-        // Then "(no sé en qué año)" appears and gets struck
-        setTimeout(function(){
-          var yr=document.getElementById('trailer-year');
-          yr.textContent='(no sé en qué año)';
-          setTimeout(function(){yr.classList.add('struck');},600);
-          // Then paper unfolds with title
+      // Typewriter PRÓXIMAMENTE
+      setTimeout(function(){
+        typeEl('trailer-prox','PRÓXIMAMENTE',55,function(){
+          // "(no sé en qué año)" appears then struck immediately
           setTimeout(function(){
-            document.getElementById('trailer-paper-wrap').classList.add('unfolded');
-            setTimeout(function(){typeEl('trailer-quien','¿QUIÉN ES REN?',110,null);},800);
-          },1200);
-        },500);
-      });},600);
+            var yr=document.getElementById('trailer-year');
+            yr.textContent='(no sé en qué año)';
+            setTimeout(function(){yr.classList.add('struck');},300);
+            // Paper unfolds
+            setTimeout(function(){
+              document.getElementById('trailer-paper-wrap').classList.add('unfolded');
+              setTimeout(function(){
+                typeEl('trailer-quien','¿QUIÉN ES REN?',95,null);
+              },700);
+            },900);
+          },400);
+        });
+      },500);
     },1000);
   }
 
@@ -3276,9 +3368,12 @@ function stopAllMusic() {
     el.textContent='';
     var i=0;
     function next(){
-      if(i>=text.length){if(cb)cb();return;}
+      if(i>=text.length){if(cb)setTimeout(cb,200);return;}
       el.textContent+=text[i++];
-      setTimeout(next,speed+(Math.random()*40-20));
+      var delay=speed+(Math.random()*50-25);
+      // Occasional longer pause for drama
+      if(Math.random()<0.08)delay+=180;
+      setTimeout(next,delay);
     }
     next();
   }
@@ -3289,7 +3384,7 @@ function stopAllMusic() {
     var angel=document.getElementById('audio-angel');
     if(angel&&!angel.paused)fadeAudio(angel,angel.volume,0,1000,function(){angel.pause();angel.currentTime=0;});
     if(_tTimeout){clearTimeout(_tTimeout);_tTimeout=null;}
-    _tRunning=false;
+    _tRunning=false; _tPaper=null;
   }
 
   document.addEventListener('DOMContentLoaded',function(){
