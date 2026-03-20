@@ -1131,8 +1131,6 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .pb:hover .reaction-btn, .pd:hover .reaction-btn { opacity:1; }
 
 /* Modal */
-#reaction-modal-overlay { display:none; position:fixed; inset:0; background:rgba(18,24,31,.60); z-index:10000; align-items:flex-end; justify-content:center; }
-#reaction-modal-overlay.open { display:flex; }
 #reaction-modal { background:#f6f0e2; border-radius:18px 18px 0 0; padding:0 0 32px; width:100%; max-width:480px; max-height:82vh; overflow-y:auto; box-shadow:0 -4px 32px rgba(0,0,0,.30); animation:slideUp .25s ease; }
 @keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
 #reaction-modal-header { display:flex; align-items:center; justify-content:space-between; padding:14px 18px 10px; border-bottom:1px solid rgba(107,0,0,.10); position:sticky; top:0; background:#f6f0e2; z-index:2; }
@@ -1181,8 +1179,8 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .pb:hover .reaction-btn,.pd:hover .reaction-btn{opacity:1;}
 
 /* ── Reaction modal ── */
-#reaction-modal-overlay{display:none;position:fixed;inset:0;background:rgba(18,24,31,.60);z-index:2000;align-items:flex-end;justify-content:center;}
-#reaction-modal-overlay.open{display:flex;}
+#reaction-modal-overlay{display:none !important;position:fixed;inset:0;background:rgba(18,24,31,.60);z-index:2000;align-items:flex-end;justify-content:center;}
+#reaction-modal-overlay.open{display:flex !important;}
 #reaction-modal{background:#f6f0e2;border-radius:18px 18px 0 0;padding:0 0 32px;width:100%;max-width:480px;max-height:82vh;overflow-y:auto;box-shadow:0 -4px 32px rgba(0,0,0,.30);animation:slideUp .25s ease;}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 #reaction-modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;border-bottom:1px solid rgba(107,0,0,.10);position:sticky;top:0;background:#f6f0e2;z-index:2;}
@@ -1788,22 +1786,10 @@ function stopAllMusic() {
   src="https://archive.org/download/evil-morty-theme-season-5-version-rick-morty-unreleased-music/Evil%20Morty%20Theme%20(Season%205%20Version)%20-%20Rick%20%26%20Morty%20Unreleased%20Music.mp3"></audio>
 
 
-    <div id="reaction-existing"></div>
-    <div id="reaction-name-section">
-      <div id="reaction-name-label">¿Quién eres tú?</div>
-      <div id="reaction-name-chips"></div>
-    </div>
-    <div id="reaction-modal-title-2">Escribe tu reacción — ¿encontraste algún error?</div>
-    <textarea id="reaction-textarea" placeholder="Sin filtros. Nadie sabe quién eres." maxlength="280"></textarea>
-    <div id="reaction-modal-footer">
-      <button id="reaction-submit">dejar reacción</button>
-    </div>
-  </div>
-</div>
 
 
 <!-- Modal reacciones -->
-<div id="reaction-modal-overlay">
+<div id="reaction-modal-overlay" style="display:none">
   <div id="reaction-modal">
     <div id="reaction-modal-header">
       <div id="reaction-modal-title">&#128172; Reacciones</div>
@@ -1953,7 +1939,12 @@ function stopAllMusic() {
     setTimeout(addTapeStrips, 100);
   };
 
-  document.addEventListener('DOMContentLoaded', function() { setTimeout(attachReactions, 600); });
+  document.addEventListener('DOMContentLoaded', function() {
+    // Ensure modal is hidden on load
+    var overlay = document.getElementById('reaction-modal-overlay');
+    if (overlay) overlay.classList.remove('open');
+    setTimeout(attachReactions, 600);
+  });
 })();
 </script>
 
