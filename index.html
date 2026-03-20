@@ -2026,7 +2026,7 @@ body.txt-lg .story-scroll .pd { font-size: clamp(1.38rem, 2.2vw, 1.62rem) !impor
     <button class="rh-btn" id="rhToc" title="Índice" onclick="document.getElementById('navHome').click()">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="16" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
-    <button class="rh-btn rh-aa" id="rhAA" title="Tamaño de texto">
+    <button class="rh-btn rh-aa" id="rhAA" title="Tamaño de texto" onclick="openEasterEgg()">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><text x="2" y="17" font-size="14" fill="currentColor" stroke="none" font-family="serif">A</text><text x="11" y="19" font-size="9" fill="currentColor" stroke="none" font-family="serif">A</text></svg>
     </button>
     <button class="rh-btn" id="rhBookmark" title="Marcar página">
@@ -2445,6 +2445,25 @@ document.querySelectorAll('a,button,input,.open-hint,.book-closed,.zone').forEac
   el.addEventListener('mouseenter',()=>{cr.style.width='34px';cr.style.height='34px';cr.style.borderColor='rgba(184,149,106,.65)';});
   el.addEventListener('mouseleave',()=>{cr.style.width='22px';cr.style.height='22px';cr.style.borderColor='rgba(184,149,106,.35)';});
 });
+
+  // ── Easter egg ──
+  function openEasterEgg() {
+    var o = document.getElementById('easter-overlay');
+    o.classList.add('open');
+    o.style.display = 'block';
+  }
+  document.getElementById('easter-close').addEventListener('click', function() {
+    var o = document.getElementById('easter-overlay');
+    o.classList.remove('open');
+    o.style.display = 'none';
+    // Stop ticket if playing
+    var audio = document.getElementById('audio-ticket');
+    if (audio && !audio.paused) {
+      audio.pause(); audio.currentTime = 0;
+      var mw = document.getElementById('music-widget');
+      if (mw) mw.classList.remove('mw-show','mw-playing');
+    }
+  });
 </script>
 
 
